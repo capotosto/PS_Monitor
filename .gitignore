@@ -1,0 +1,45 @@
+*.log
+*.tmp
+
+# ==========================================
+# KiCad (Hardware)
+# ==========================================
+# Ignore backup files created by KiCad
+*.bak
+*-bak
+*.bck
+*.kicad_pcb-bak
+*.sch-bak
+
+# Ignore local review and manufacturing outputs
+*_saved
+fp-info-cache
+*.net
+*.prm
+
+# ==========================================
+# Firmware
+# ==========================================
+.build/
+build/
+bin/
+*.hex
+*.elf
+*.eep
+.aym
+.vscode/
+
+# ==========================================
+# EPICS IOC Configuration
+# ==========================================
+bin/
+dbd/
+include/
+lib/
+O.*/
+.dbd.d
+*.o
+*.a
+
+# Ignore local configuration edits
+envPaths
