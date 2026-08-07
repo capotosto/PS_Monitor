@@ -1,0 +1,6595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2026-08-03 23:47:11 by Mike-->
+<display version="2.0.0">
+  <name>Arduino GIGA Multi-Rail Power Monitor</name>
+  <macros>
+    <P>TEST:</P>
+    <R>GIGA</R>
+  </macros>
+  <width>1240</width>
+  <height>820</height>
+  <background_color>
+    <color red="12" green="18" blue="25">
+    </color>
+  </background_color>
+  <widget type="rectangle" version="2.0.0">
+    <name>Header_Background</name>
+    <width>1240</width>
+    <height>90</height>
+    <line_width>0</line_width>
+    <line_color>
+      <color red="22" green="35" blue="48">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="22" green="35" blue="48">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Title</name>
+    <text>MULTI-RAIL POWER MONITOR</text>
+    <x>25</x>
+    <y>14</y>
+    <width>760</width>
+    <height>40</height>
+    <font>
+      <font name="Title_font" family="Liberation Sans" style="BOLD" size="25.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Subtitle</name>
+    <text>Remote Operator Display</text>
+    <x>27</x>
+    <y>54</y>
+    <width>540</width>
+    <height>24</height>
+    <font>
+      <font name="Subtitle_font" family="Liberation Sans" style="REGULAR" size="13.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="177" green="195" blue="210">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Connection_Badge</name>
+    <text>CONNECTION</text>
+    <x>805</x>
+    <y>18</y>
+    <width>150</width>
+    <height>48</height>
+    <font>
+      <font name="Connection_Badge_font" family="Liberation Sans" style="BOLD" size="15.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="154" green="40" blue="48">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="Connected color" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Connected" red="27" green="116" blue="72">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):CONNECTED</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Connection_State</name>
+    <text>DISCONNECTED</text>
+    <x>965</x>
+    <y>18</y>
+    <width>245</width>
+    <height>48</height>
+    <font>
+      <font name="Connection_State_font" family="Liberation Sans" style="BOLD" size="17.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Disconnected" red="154" green="40" blue="48">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="Connection text" prop_id="text" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>CONNECTED</value>
+        </exp>
+        <pv_name>$(P)$(R):CONNECTED</pv_name>
+      </rule>
+      <rule name="Connection color" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Connected" red="27" green="116" blue="72">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):CONNECTED</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>6VA_Panel</name>
+    <x>25</x>
+    <y>115</y>
+    <width>380</width>
+    <height>320</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="76" green="96" blue="115">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="31" green="43" blue="56">
+      </color>
+    </background_color>
+    <corner_width>14</corner_width>
+    <corner_height>14</corner_height>
+    <rules>
+      <rule name="Alarm background" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Major Alarm" red="104" green="28" blue="36">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VA:ANY_ALARM</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_Title</name>
+    <text>+6 V A</text>
+    <x>40</x>
+    <y>125</y>
+    <width>220</width>
+    <height>32</height>
+    <font>
+      <font name="6VA_Title_font" family="Liberation Sans" style="BOLD" size="21.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="250" green="252" blue="253">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_OVL_Badge</name>
+    <text>OVL</text>
+    <x>220</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_OVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VA:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_UVL_Badge</name>
+    <text>UVL</text>
+    <x>255</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_UVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VA:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_OCL_Badge</name>
+    <text>OCL</text>
+    <x>290</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_OCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==8">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VA:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_UCL_Badge</name>
+    <text>UCL</text>
+    <x>325</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_UCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VA:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_I2C_Badge</name>
+    <text>I2C</text>
+    <x>360</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_I2C_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="I2C active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==16">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VA:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_Voltage_Label</name>
+    <text>VOLTAGE</text>
+    <x>41</x>
+    <y>170</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="6VA_Voltage_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="151" green="205" blue="235">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VA_Voltage</name>
+    <pv_name>$(P)$(R):6VA:VOLT</pv_name>
+    <x>41</x>
+    <y>193</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="6VA_Voltage_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="84" green="201" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_Current_Label</name>
+    <text>CURRENT</text>
+    <x>229</x>
+    <y>170</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="6VA_Current_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="215" green="220" blue="226">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VA_Current</name>
+    <pv_name>$(P)$(R):6VA:CURR</pv_name>
+    <x>229</x>
+    <y>193</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="6VA_Current_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_Limit_Header</name>
+    <text>ALARM LIMIT</text>
+    <x>40</x>
+    <y>255</y>
+    <width>115</width>
+    <height>24</height>
+    <font>
+      <font name="6VA_Limit_Header_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_SP_Header</name>
+    <text>SETPOINT</text>
+    <x>190</x>
+    <y>255</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="6VA_SP_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_RBV_Header</name>
+    <text>READBACK</text>
+    <x>295</x>
+    <y>255</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="6VA_RBV_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_VLOW_SP_Label</name>
+    <text>V LOW</text>
+    <x>41</x>
+    <y>286</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VA_VLOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VA_VLOW_SP</name>
+    <pv_name>$(P)$(R):6VA:VLOW_SP</pv_name>
+    <x>170</x>
+    <y>284</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_VLOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VA_VLOW_RBV</name>
+    <pv_name>$(P)$(R):6VA:VLOW_RBV</pv_name>
+    <x>295</x>
+    <y>284</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_VLOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_VHIGH_SP_Label</name>
+    <text>V HIGH</text>
+    <x>41</x>
+    <y>320</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VA_VHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VA_VHIGH_SP</name>
+    <pv_name>$(P)$(R):6VA:VHIGH_SP</pv_name>
+    <x>170</x>
+    <y>318</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_VHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VA_VHIGH_RBV</name>
+    <pv_name>$(P)$(R):6VA:VHIGH_RBV</pv_name>
+    <x>295</x>
+    <y>318</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_VHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_ILOW_SP_Label</name>
+    <text>I LOW</text>
+    <x>41</x>
+    <y>354</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VA_ILOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VA_ILOW_SP</name>
+    <pv_name>$(P)$(R):6VA:ILOW_SP</pv_name>
+    <x>170</x>
+    <y>352</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_ILOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VA_ILOW_RBV</name>
+    <pv_name>$(P)$(R):6VA:ILOW_RBV</pv_name>
+    <x>295</x>
+    <y>352</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_ILOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VA_IHIGH_SP_Label</name>
+    <text>I HIGH</text>
+    <x>41</x>
+    <y>388</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VA_IHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VA_IHIGH_SP</name>
+    <pv_name>$(P)$(R):6VA:IHIGH_SP</pv_name>
+    <x>170</x>
+    <y>386</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_IHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VA_IHIGH_RBV</name>
+    <pv_name>$(P)$(R):6VA:IHIGH_RBV</pv_name>
+    <x>295</x>
+    <y>386</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VA_IHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>6VB_Panel</name>
+    <x>25</x>
+    <y>455</y>
+    <width>380</width>
+    <height>320</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="76" green="96" blue="115">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="31" green="43" blue="56">
+      </color>
+    </background_color>
+    <corner_width>14</corner_width>
+    <corner_height>14</corner_height>
+    <rules>
+      <rule name="Alarm background" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Major Alarm" red="104" green="28" blue="36">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VB:ANY_ALARM</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_Title</name>
+    <text>+6 V B</text>
+    <x>40</x>
+    <y>465</y>
+    <width>220</width>
+    <height>32</height>
+    <font>
+      <font name="6VB_Title_font" family="Liberation Sans" style="BOLD" size="21.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="250" green="252" blue="253">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_OVL_Badge</name>
+    <text>OVL</text>
+    <x>220</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_OVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VB:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_UVL_Badge</name>
+    <text>UVL</text>
+    <x>255</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_UVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VB:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_OCL_Badge</name>
+    <text>OCL</text>
+    <x>290</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_OCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==8">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VB:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_UCL_Badge</name>
+    <text>UCL</text>
+    <x>325</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_UCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VB:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_I2C_Badge</name>
+    <text>I2C</text>
+    <x>360</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_I2C_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="I2C active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==16">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):6VB:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_Voltage_Label</name>
+    <text>VOLTAGE</text>
+    <x>41</x>
+    <y>510</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="6VB_Voltage_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="151" green="205" blue="235">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VB_Voltage</name>
+    <pv_name>$(P)$(R):6VB:VOLT</pv_name>
+    <x>41</x>
+    <y>533</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="6VB_Voltage_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="84" green="201" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_Current_Label</name>
+    <text>CURRENT</text>
+    <x>229</x>
+    <y>510</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="6VB_Current_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="215" green="220" blue="226">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VB_Current</name>
+    <pv_name>$(P)$(R):6VB:CURR</pv_name>
+    <x>229</x>
+    <y>533</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="6VB_Current_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_Limit_Header</name>
+    <text>ALARM LIMIT</text>
+    <x>40</x>
+    <y>595</y>
+    <width>115</width>
+    <height>24</height>
+    <font>
+      <font name="6VB_Limit_Header_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_SP_Header</name>
+    <text>SETPOINT</text>
+    <x>190</x>
+    <y>595</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="6VB_SP_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_RBV_Header</name>
+    <text>READBACK</text>
+    <x>295</x>
+    <y>595</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="6VB_RBV_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_VLOW_SP_Label</name>
+    <text>V LOW</text>
+    <x>41</x>
+    <y>626</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VB_VLOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VB_VLOW_SP</name>
+    <pv_name>$(P)$(R):6VB:VLOW_SP</pv_name>
+    <x>170</x>
+    <y>624</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_VLOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VB_VLOW_RBV</name>
+    <pv_name>$(P)$(R):6VB:VLOW_RBV</pv_name>
+    <x>295</x>
+    <y>624</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_VLOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_VHIGH_SP_Label</name>
+    <text>V HIGH</text>
+    <x>41</x>
+    <y>660</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VB_VHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VB_VHIGH_SP</name>
+    <pv_name>$(P)$(R):6VB:VHIGH_SP</pv_name>
+    <x>170</x>
+    <y>658</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_VHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VB_VHIGH_RBV</name>
+    <pv_name>$(P)$(R):6VB:VHIGH_RBV</pv_name>
+    <x>295</x>
+    <y>658</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_VHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_ILOW_SP_Label</name>
+    <text>I LOW</text>
+    <x>41</x>
+    <y>694</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VB_ILOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VB_ILOW_SP</name>
+    <pv_name>$(P)$(R):6VB:ILOW_SP</pv_name>
+    <x>170</x>
+    <y>692</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_ILOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VB_ILOW_RBV</name>
+    <pv_name>$(P)$(R):6VB:ILOW_RBV</pv_name>
+    <x>295</x>
+    <y>692</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_ILOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>6VB_IHIGH_SP_Label</name>
+    <text>I HIGH</text>
+    <x>41</x>
+    <y>728</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="6VB_IHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>6VB_IHIGH_SP</name>
+    <pv_name>$(P)$(R):6VB:IHIGH_SP</pv_name>
+    <x>170</x>
+    <y>726</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_IHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>6VB_IHIGH_RBV</name>
+    <pv_name>$(P)$(R):6VB:IHIGH_RBV</pv_name>
+    <x>295</x>
+    <y>726</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="6VB_IHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>P5V_Panel</name>
+    <x>430</x>
+    <y>115</y>
+    <width>380</width>
+    <height>320</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="76" green="96" blue="115">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="31" green="43" blue="56">
+      </color>
+    </background_color>
+    <corner_width>14</corner_width>
+    <corner_height>14</corner_height>
+    <rules>
+      <rule name="Alarm background" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Major Alarm" red="104" green="28" blue="36">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P5V:ANY_ALARM</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_Title</name>
+    <text>+5 V</text>
+    <x>445</x>
+    <y>125</y>
+    <width>220</width>
+    <height>32</height>
+    <font>
+      <font name="P5V_Title_font" family="Liberation Sans" style="BOLD" size="21.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="250" green="252" blue="253">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_OVL_Badge</name>
+    <text>OVL</text>
+    <x>625</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_OVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_UVL_Badge</name>
+    <text>UVL</text>
+    <x>660</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_UVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_OCL_Badge</name>
+    <text>OCL</text>
+    <x>695</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_OCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==8">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_UCL_Badge</name>
+    <text>UCL</text>
+    <x>730</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_UCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_I2C_Badge</name>
+    <text>I2C</text>
+    <x>765</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_I2C_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="I2C active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==16">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_Voltage_Label</name>
+    <text>VOLTAGE</text>
+    <x>446</x>
+    <y>170</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="P5V_Voltage_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="151" green="205" blue="235">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P5V_Voltage</name>
+    <pv_name>$(P)$(R):P5V:VOLT</pv_name>
+    <x>446</x>
+    <y>193</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="P5V_Voltage_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="84" green="201" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_Current_Label</name>
+    <text>CURRENT</text>
+    <x>634</x>
+    <y>170</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="P5V_Current_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="215" green="220" blue="226">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P5V_Current</name>
+    <pv_name>$(P)$(R):P5V:CURR</pv_name>
+    <x>634</x>
+    <y>193</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="P5V_Current_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_Limit_Header</name>
+    <text>ALARM LIMIT</text>
+    <x>445</x>
+    <y>255</y>
+    <width>115</width>
+    <height>24</height>
+    <font>
+      <font name="P5V_Limit_Header_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_SP_Header</name>
+    <text>SETPOINT</text>
+    <x>595</x>
+    <y>255</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="P5V_SP_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_RBV_Header</name>
+    <text>READBACK</text>
+    <x>700</x>
+    <y>255</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="P5V_RBV_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_VLOW_SP_Label</name>
+    <text>V LOW</text>
+    <x>446</x>
+    <y>286</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P5V_VLOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P5V_VLOW_SP</name>
+    <pv_name>$(P)$(R):P5V:VLOW_SP</pv_name>
+    <x>575</x>
+    <y>284</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_VLOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P5V_VLOW_RBV</name>
+    <pv_name>$(P)$(R):P5V:VLOW_RBV</pv_name>
+    <x>700</x>
+    <y>284</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_VLOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_VHIGH_SP_Label</name>
+    <text>V HIGH</text>
+    <x>446</x>
+    <y>320</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P5V_VHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P5V_VHIGH_SP</name>
+    <pv_name>$(P)$(R):P5V:VHIGH_SP</pv_name>
+    <x>575</x>
+    <y>318</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_VHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P5V_VHIGH_RBV</name>
+    <pv_name>$(P)$(R):P5V:VHIGH_RBV</pv_name>
+    <x>700</x>
+    <y>318</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_VHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_ILOW_SP_Label</name>
+    <text>I LOW</text>
+    <x>446</x>
+    <y>354</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P5V_ILOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P5V_ILOW_SP</name>
+    <pv_name>$(P)$(R):P5V:ILOW_SP</pv_name>
+    <x>575</x>
+    <y>352</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_ILOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P5V_ILOW_RBV</name>
+    <pv_name>$(P)$(R):P5V:ILOW_RBV</pv_name>
+    <x>700</x>
+    <y>352</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_ILOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P5V_IHIGH_SP_Label</name>
+    <text>I HIGH</text>
+    <x>446</x>
+    <y>388</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P5V_IHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P5V_IHIGH_SP</name>
+    <pv_name>$(P)$(R):P5V:IHIGH_SP</pv_name>
+    <x>575</x>
+    <y>386</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_IHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P5V_IHIGH_RBV</name>
+    <pv_name>$(P)$(R):P5V:IHIGH_RBV</pv_name>
+    <x>700</x>
+    <y>386</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P5V_IHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>M5V_Panel</name>
+    <x>430</x>
+    <y>455</y>
+    <width>380</width>
+    <height>320</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="76" green="96" blue="115">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="31" green="43" blue="56">
+      </color>
+    </background_color>
+    <corner_width>14</corner_width>
+    <corner_height>14</corner_height>
+    <rules>
+      <rule name="Alarm background" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Major Alarm" red="104" green="28" blue="36">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M5V:ANY_ALARM</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_Title</name>
+    <text>-5 V</text>
+    <x>445</x>
+    <y>465</y>
+    <width>220</width>
+    <height>32</height>
+    <font>
+      <font name="M5V_Title_font" family="Liberation Sans" style="BOLD" size="21.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="250" green="252" blue="253">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_OVL_Badge</name>
+    <text>OVL</text>
+    <x>625</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_OVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_UVL_Badge</name>
+    <text>UVL</text>
+    <x>660</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_UVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_OCL_Badge</name>
+    <text>OCL</text>
+    <x>695</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_OCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==8">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_UCL_Badge</name>
+    <text>UCL</text>
+    <x>730</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_UCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_I2C_Badge</name>
+    <text>I2C</text>
+    <x>765</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_I2C_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="I2C active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==16">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M5V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_Voltage_Label</name>
+    <text>VOLTAGE</text>
+    <x>446</x>
+    <y>510</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="M5V_Voltage_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="151" green="205" blue="235">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M5V_Voltage</name>
+    <pv_name>$(P)$(R):M5V:VOLT</pv_name>
+    <x>446</x>
+    <y>533</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="M5V_Voltage_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="84" green="201" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_Current_Label</name>
+    <text>CURRENT</text>
+    <x>634</x>
+    <y>510</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="M5V_Current_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="215" green="220" blue="226">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M5V_Current</name>
+    <pv_name>$(P)$(R):M5V:CURR</pv_name>
+    <x>634</x>
+    <y>533</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="M5V_Current_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_Limit_Header</name>
+    <text>ALARM LIMIT</text>
+    <x>445</x>
+    <y>595</y>
+    <width>115</width>
+    <height>24</height>
+    <font>
+      <font name="M5V_Limit_Header_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_SP_Header</name>
+    <text>SETPOINT</text>
+    <x>595</x>
+    <y>595</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="M5V_SP_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_RBV_Header</name>
+    <text>READBACK</text>
+    <x>700</x>
+    <y>595</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="M5V_RBV_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_VLOW_SP_Label</name>
+    <text>V LOW</text>
+    <x>446</x>
+    <y>626</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M5V_VLOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M5V_VLOW_SP</name>
+    <pv_name>$(P)$(R):M5V:VLOW_SP</pv_name>
+    <x>575</x>
+    <y>624</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_VLOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M5V_VLOW_RBV</name>
+    <pv_name>$(P)$(R):M5V:VLOW_RBV</pv_name>
+    <x>700</x>
+    <y>624</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_VLOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_VHIGH_SP_Label</name>
+    <text>V HIGH</text>
+    <x>446</x>
+    <y>660</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M5V_VHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M5V_VHIGH_SP</name>
+    <pv_name>$(P)$(R):M5V:VHIGH_SP</pv_name>
+    <x>575</x>
+    <y>658</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_VHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M5V_VHIGH_RBV</name>
+    <pv_name>$(P)$(R):M5V:VHIGH_RBV</pv_name>
+    <x>700</x>
+    <y>658</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_VHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_ILOW_SP_Label</name>
+    <text>I LOW</text>
+    <x>446</x>
+    <y>694</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M5V_ILOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M5V_ILOW_SP</name>
+    <pv_name>$(P)$(R):M5V:ILOW_SP</pv_name>
+    <x>575</x>
+    <y>692</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_ILOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M5V_ILOW_RBV</name>
+    <pv_name>$(P)$(R):M5V:ILOW_RBV</pv_name>
+    <x>700</x>
+    <y>692</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_ILOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M5V_IHIGH_SP_Label</name>
+    <text>I HIGH</text>
+    <x>446</x>
+    <y>728</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M5V_IHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M5V_IHIGH_SP</name>
+    <pv_name>$(P)$(R):M5V:IHIGH_SP</pv_name>
+    <x>575</x>
+    <y>726</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_IHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M5V_IHIGH_RBV</name>
+    <pv_name>$(P)$(R):M5V:IHIGH_RBV</pv_name>
+    <x>700</x>
+    <y>726</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M5V_IHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>P15V_Panel</name>
+    <x>835</x>
+    <y>115</y>
+    <width>380</width>
+    <height>320</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="76" green="96" blue="115">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="31" green="43" blue="56">
+      </color>
+    </background_color>
+    <corner_width>14</corner_width>
+    <corner_height>14</corner_height>
+    <rules>
+      <rule name="Alarm background" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Major Alarm" red="104" green="28" blue="36">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P15V:ANY_ALARM</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_Title</name>
+    <text>+15 V</text>
+    <x>850</x>
+    <y>125</y>
+    <width>220</width>
+    <height>32</height>
+    <font>
+      <font name="P15V_Title_font" family="Liberation Sans" style="BOLD" size="21.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="250" green="252" blue="253">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_OVL_Badge</name>
+    <text>OVL</text>
+    <x>1030</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_OVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_UVL_Badge</name>
+    <text>UVL</text>
+    <x>1065</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_UVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_OCL_Badge</name>
+    <text>OCL</text>
+    <x>1100</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_OCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==8">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_UCL_Badge</name>
+    <text>UCL</text>
+    <x>1135</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_UCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_I2C_Badge</name>
+    <text>I2C</text>
+    <x>1170</x>
+    <y>125</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_I2C_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="I2C active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==16">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):P15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_Voltage_Label</name>
+    <text>VOLTAGE</text>
+    <x>851</x>
+    <y>170</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="P15V_Voltage_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="151" green="205" blue="235">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P15V_Voltage</name>
+    <pv_name>$(P)$(R):P15V:VOLT</pv_name>
+    <x>851</x>
+    <y>193</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="P15V_Voltage_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="84" green="201" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_Current_Label</name>
+    <text>CURRENT</text>
+    <x>1039</x>
+    <y>170</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="P15V_Current_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="215" green="220" blue="226">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P15V_Current</name>
+    <pv_name>$(P)$(R):P15V:CURR</pv_name>
+    <x>1039</x>
+    <y>193</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="P15V_Current_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_Limit_Header</name>
+    <text>ALARM LIMIT</text>
+    <x>850</x>
+    <y>255</y>
+    <width>115</width>
+    <height>24</height>
+    <font>
+      <font name="P15V_Limit_Header_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_SP_Header</name>
+    <text>SETPOINT</text>
+    <x>1000</x>
+    <y>255</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="P15V_SP_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_RBV_Header</name>
+    <text>READBACK</text>
+    <x>1105</x>
+    <y>255</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="P15V_RBV_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_VLOW_SP_Label</name>
+    <text>V LOW</text>
+    <x>851</x>
+    <y>286</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P15V_VLOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P15V_VLOW_SP</name>
+    <pv_name>$(P)$(R):P15V:VLOW_SP</pv_name>
+    <x>980</x>
+    <y>284</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_VLOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P15V_VLOW_RBV</name>
+    <pv_name>$(P)$(R):P15V:VLOW_RBV</pv_name>
+    <x>1105</x>
+    <y>284</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_VLOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_VHIGH_SP_Label</name>
+    <text>V HIGH</text>
+    <x>851</x>
+    <y>320</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P15V_VHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P15V_VHIGH_SP</name>
+    <pv_name>$(P)$(R):P15V:VHIGH_SP</pv_name>
+    <x>980</x>
+    <y>318</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_VHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P15V_VHIGH_RBV</name>
+    <pv_name>$(P)$(R):P15V:VHIGH_RBV</pv_name>
+    <x>1105</x>
+    <y>318</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_VHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_ILOW_SP_Label</name>
+    <text>I LOW</text>
+    <x>851</x>
+    <y>354</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P15V_ILOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P15V_ILOW_SP</name>
+    <pv_name>$(P)$(R):P15V:ILOW_SP</pv_name>
+    <x>980</x>
+    <y>352</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_ILOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P15V_ILOW_RBV</name>
+    <pv_name>$(P)$(R):P15V:ILOW_RBV</pv_name>
+    <x>1105</x>
+    <y>352</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_ILOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>P15V_IHIGH_SP_Label</name>
+    <text>I HIGH</text>
+    <x>851</x>
+    <y>388</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="P15V_IHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>P15V_IHIGH_SP</name>
+    <pv_name>$(P)$(R):P15V:IHIGH_SP</pv_name>
+    <x>980</x>
+    <y>386</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_IHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>P15V_IHIGH_RBV</name>
+    <pv_name>$(P)$(R):P15V:IHIGH_RBV</pv_name>
+    <x>1105</x>
+    <y>386</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="P15V_IHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>M15V_Panel</name>
+    <x>835</x>
+    <y>455</y>
+    <width>380</width>
+    <height>320</height>
+    <line_width>2</line_width>
+    <line_color>
+      <color red="76" green="96" blue="115">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="31" green="43" blue="56">
+      </color>
+    </background_color>
+    <corner_width>14</corner_width>
+    <corner_height>14</corner_height>
+    <rules>
+      <rule name="Alarm background" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0&gt;0.5">
+          <value>
+            <color name="Major Alarm" red="104" green="28" blue="36">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M15V:ANY_ALARM</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_Title</name>
+    <text>-15 V</text>
+    <x>850</x>
+    <y>465</y>
+    <width>220</width>
+    <height>32</height>
+    <font>
+      <font name="M15V_Title_font" family="Liberation Sans" style="BOLD" size="21.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="250" green="252" blue="253">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_OVL_Badge</name>
+    <text>OVL</text>
+    <x>1030</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_OVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_UVL_Badge</name>
+    <text>UVL</text>
+    <x>1065</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_UVL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UVL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_OCL_Badge</name>
+    <text>OCL</text>
+    <x>1100</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_OCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="OCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==8">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==9">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==10">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==11">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_UCL_Badge</name>
+    <text>UCL</text>
+    <x>1135</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_UCL_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="UCL active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==5">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==6">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==7">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==12">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==13">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==14">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==15">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_I2C_Badge</name>
+    <text>I2C</text>
+    <x>1170</x>
+    <y>465</y>
+    <width>32</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_I2C_font" family="Liberation Sans" style="BOLD" size="9.5">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="63" green="73" blue="82">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="I2C active" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==16">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==17">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==18">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==19">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==20">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==21">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==22">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==23">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==24">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==25">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==26">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==27">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==28">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==29">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==30">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <exp bool_exp="pv0==31">
+          <value>
+            <color name="Major Alarm" red="185" green="36" blue="45">
+            </color>
+          </value>
+        </exp>
+        <pv_name>$(P)$(R):M15V:ALARM_MASK</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_Voltage_Label</name>
+    <text>VOLTAGE</text>
+    <x>851</x>
+    <y>510</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="M15V_Voltage_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="151" green="205" blue="235">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M15V_Voltage</name>
+    <pv_name>$(P)$(R):M15V:VOLT</pv_name>
+    <x>851</x>
+    <y>533</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="M15V_Voltage_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="84" green="201" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_Current_Label</name>
+    <text>CURRENT</text>
+    <x>1039</x>
+    <y>510</y>
+    <width>95</width>
+    <height>24</height>
+    <font>
+      <font name="M15V_Current_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="215" green="220" blue="226">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M15V_Current</name>
+    <pv_name>$(P)$(R):M15V:CURR</pv_name>
+    <x>1039</x>
+    <y>533</y>
+    <width>160</width>
+    <height>48</height>
+    <font>
+      <font name="M15V_Current_font" family="Liberation Sans" style="BOLD" size="23.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="245" green="248" blue="250">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="13" green="22" blue="30">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_Limit_Header</name>
+    <text>ALARM LIMIT</text>
+    <x>850</x>
+    <y>595</y>
+    <width>115</width>
+    <height>24</height>
+    <font>
+      <font name="M15V_Limit_Header_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_SP_Header</name>
+    <text>SETPOINT</text>
+    <x>1000</x>
+    <y>595</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="M15V_SP_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_RBV_Header</name>
+    <text>READBACK</text>
+    <x>1105</x>
+    <y>595</y>
+    <width>92</width>
+    <height>24</height>
+    <font>
+      <font name="M15V_RBV_Header_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="188" green="200" blue="211">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_VLOW_SP_Label</name>
+    <text>V LOW</text>
+    <x>851</x>
+    <y>626</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M15V_VLOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M15V_VLOW_SP</name>
+    <pv_name>$(P)$(R):M15V:VLOW_SP</pv_name>
+    <x>980</x>
+    <y>624</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_VLOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M15V_VLOW_RBV</name>
+    <pv_name>$(P)$(R):M15V:VLOW_RBV</pv_name>
+    <x>1105</x>
+    <y>624</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_VLOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_VHIGH_SP_Label</name>
+    <text>V HIGH</text>
+    <x>851</x>
+    <y>660</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M15V_VHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M15V_VHIGH_SP</name>
+    <pv_name>$(P)$(R):M15V:VHIGH_SP</pv_name>
+    <x>980</x>
+    <y>658</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_VHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M15V_VHIGH_RBV</name>
+    <pv_name>$(P)$(R):M15V:VHIGH_RBV</pv_name>
+    <x>1105</x>
+    <y>658</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_VHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_ILOW_SP_Label</name>
+    <text>I LOW</text>
+    <x>851</x>
+    <y>694</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M15V_ILOW_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M15V_ILOW_SP</name>
+    <pv_name>$(P)$(R):M15V:ILOW_SP</pv_name>
+    <x>980</x>
+    <y>692</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_ILOW_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M15V_ILOW_RBV</name>
+    <pv_name>$(P)$(R):M15V:ILOW_RBV</pv_name>
+    <x>1105</x>
+    <y>692</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_ILOW_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>M15V_IHIGH_SP_Label</name>
+    <text>I HIGH</text>
+    <x>851</x>
+    <y>728</y>
+    <width>105</width>
+    <height>26</height>
+    <font>
+      <font name="M15V_IHIGH_SP_Label_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>M15V_IHIGH_SP</name>
+    <pv_name>$(P)$(R):M15V:IHIGH_SP</pv_name>
+    <x>980</x>
+    <y>726</y>
+    <width>112</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_IHIGH_SP_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="15" green="24" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="209" green="235" blue="247">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>M15V_IHIGH_RBV</name>
+    <pv_name>$(P)$(R):M15V:IHIGH_RBV</pv_name>
+    <x>1105</x>
+    <y>726</y>
+    <width>94</width>
+    <height>28</height>
+    <font>
+      <font name="M15V_IHIGH_RBV_font" family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="18" green="28" blue="37">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Footer_Background</name>
+    <y>790</y>
+    <width>1240</width>
+    <height>30</height>
+    <line_width>0</line_width>
+    <line_color>
+      <color red="20" green="31" blue="42">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="20" green="31" blue="42">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Prefix_Label</name>
+    <text>PV prefix:</text>
+    <x>18</x>
+    <y>794</y>
+    <width>70</width>
+    <height>22</height>
+    <font>
+      <font name="Prefix_Label_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="166" green="183" blue="198">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Prefix_Value</name>
+    <text>$(P)$(R):</text>
+    <x>90</x>
+    <y>794</y>
+    <width>155</width>
+    <height>22</height>
+    <font>
+      <font name="Prefix_Value_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="223" green="231" blue="237">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Connection_Count_Label</name>
+    <text>Connections:</text>
+    <x>285</x>
+    <y>794</y>
+    <width>90</width>
+    <height>22</height>
+    <font>
+      <font name="Connection_Count_Label_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="166" green="183" blue="198">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Connection_Count</name>
+    <pv_name>$(P)$(R):CONNECTION_COUNT</pv_name>
+    <x>375</x>
+    <y>792</y>
+    <width>70</width>
+    <height>25</height>
+    <font>
+      <font name="Connection_Count_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="223" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="20" green="31" blue="42">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Unknown_Count_Label</name>
+    <text>Unknown messages:</text>
+    <x>485</x>
+    <y>794</y>
+    <width>125</width>
+    <height>22</height>
+    <font>
+      <font name="Unknown_Count_Label_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="166" green="183" blue="198">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Unknown_Count</name>
+    <pv_name>$(P)$(R):UNKNOWN_MESSAGE_COUNT</pv_name>
+    <x>610</x>
+    <y>792</y>
+    <width>70</width>
+    <height>25</height>
+    <font>
+      <font name="Unknown_Count_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="223" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="20" green="31" blue="42">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Driver_Message_Label</name>
+    <text>Driver:</text>
+    <x>715</x>
+    <y>794</y>
+    <width>52</width>
+    <height>22</height>
+    <font>
+      <font name="Driver_Message_Label_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="166" green="183" blue="198">
+      </color>
+    </foreground_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Driver_Message</name>
+    <pv_name>$(P)$(R):DRIVER_MESSAGE</pv_name>
+    <x>770</x>
+    <y>792</y>
+    <width>450</width>
+    <height>25</height>
+    <font>
+      <font name="Driver_Message_font" family="Liberation Sans" style="BOLD" size="11.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="223" green="231" blue="237">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="20" green="31" blue="42">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+  </widget>
+</display>

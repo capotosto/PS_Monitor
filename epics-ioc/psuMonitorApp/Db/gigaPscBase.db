@@ -1,0 +1,39 @@
+record(bi, "$(P)$(R):CONNECTED") {
+    field(DESC, "GIGA PSC TCP connection")
+    field(DTYP, "PSC Ctrl Connected")
+    field(INP,  "@$(DEVICE)")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "Disconnected")
+    field(ONAM, "Connected")
+    field(ZSV,  "MAJOR")
+}
+
+record(stringin, "$(P)$(R):DRIVER_MESSAGE") {
+    field(DESC, "Last PSCDriver message")
+    field(DTYP, "PSC Ctrl Message")
+    field(INP,  "@$(DEVICE)")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)$(R):CONNECTION_COUNT") {
+    field(DESC, "PSC connection count")
+    field(DTYP, "PSC Conn Count")
+    field(INP,  "@$(DEVICE)")
+    field(SCAN, "1 second")
+}
+
+record(longin, "$(P)$(R):UNKNOWN_MESSAGE_COUNT") {
+    field(DESC, "Unknown PSC message count")
+    field(DTYP, "PSC Unknown Msg Count")
+    field(INP,  "@$(DEVICE)")
+    field(SCAN, "1 second")
+}
+
+# PSC Single F32 records queue one message. This flushes queued messages to TCP.
+record(bo, "$(P)$(R):SEND_ALL") {
+    field(DESC, "Flush PSC transmit queue")
+    field(DTYP, "PSC Ctrl Send All")
+    field(OUT,  "@$(DEVICE)")
+    field(ZNAM, "Send")
+    field(ONAM, "Send")
+}

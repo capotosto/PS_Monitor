@@ -1,0 +1,177 @@
+# Direct PSC receive records. These are intentionally RAW/internal PVs.
+record(ai, "$(P)$(R):$(CHAN):VOLT_RAW") {
+    field(DESC, "$(DESC) voltage from PSC")
+    field(DTYP, "PSC Reg F32")
+    field(INP,  "@$(DEVICE) 1 $(VOFF)")
+    field(SCAN, "I/O Intr")
+    field(TSE,  "-2")
+    field(PREC, "4")
+    field(EGU,  "V")
+}
+
+record(ai, "$(P)$(R):$(CHAN):CURR_RAW") {
+    field(DESC, "$(DESC) current from PSC")
+    field(DTYP, "PSC Reg F32")
+    field(INP,  "@$(DEVICE) 1 $(IOFF)")
+    field(SCAN, "I/O Intr")
+    field(TSE,  "-2")
+    field(PREC, "4")
+    field(EGU,  "A")
+}
+
+# Public calc records copy the direct values. The CONNECTED CP/MS link makes
+# them process immediately and inherit MAJOR alarm when the TCP link drops.
+record(calc, "$(P)$(R):$(CHAN):VOLT") {
+    field(DESC, "$(DESC) voltage")
+    field(INPA, "$(P)$(R):$(CHAN):VOLT_RAW CP NMS")
+    field(INPB, "$(P)$(R):CONNECTED CP MS")
+    field(CALC, "A")
+    field(PREC, "4")
+    field(EGU,  "V")
+    field(LOW,  "$(VLO)")
+    field(LSV,  "MAJOR")
+    field(HIGH, "$(VHI)")
+    field(HSV,  "MAJOR")
+}
+
+record(calc, "$(P)$(R):$(CHAN):CURR") {
+    field(DESC, "$(DESC) current")
+    field(INPA, "$(P)$(R):$(CHAN):CURR_RAW CP NMS")
+    field(INPB, "$(P)$(R):CONNECTED CP MS")
+    field(CALC, "A")
+    field(PREC, "4")
+    field(EGU,  "A")
+    field(LOW,  "$(ILO)")
+    field(LSV,  "MAJOR")
+    field(HIGH, "$(IHI)")
+    field(HSV,  "MAJOR")
+}
+
+# Device-confirmed alarm-limit readbacks from PSC message 2.
+record(ai, "$(P)$(R):$(CHAN):VLOW_RBV") {
+    field(DTYP, "PSC Reg F32")
+    field(INP,  "@$(DEVICE) 2 $(VLOWOFF)")
+    field(SCAN, "I/O Intr")
+    field(PREC, "4")
+    field(EGU,  "V")
+    field(FLNK, "$(P)$(R):$(CHAN):SYNC_VLOW")
+}
+
+record(ai, "$(P)$(R):$(CHAN):VHIGH_RBV") {
+    field(DTYP, "PSC Reg F32")
+    field(INP,  "@$(DEVICE) 2 $(VHIGHOFF)")
+    field(SCAN, "I/O Intr")
+    field(PREC, "4")
+    field(EGU,  "V")
+    field(FLNK, "$(P)$(R):$(CHAN):SYNC_VHIGH")
+}
+
+record(ai, "$(P)$(R):$(CHAN):ILOW_RBV") {
+    field(DTYP, "PSC Reg F32")
+    field(INP,  "@$(DEVICE) 2 $(ILOWOFF)")
+    field(SCAN, "I/O Intr")
+    field(PREC, "4")
+    field(EGU,  "A")
+    field(FLNK, "$(P)$(R):$(CHAN):SYNC_ILOW")
+}
+
+record(ai, "$(P)$(R):$(CHAN):IHIGH_RBV") {
+    field(DTYP, "PSC Reg F32")
+    field(INP,  "@$(DEVICE) 2 $(IHIGHOFF)")
+    field(SCAN, "I/O Intr")
+    field(PREC, "4")
+    field(EGU,  "A")
+    field(FLNK, "$(P)$(R):$(CHAN):SYNC_IHIGH")
+}
+
+# Keep the public measurement alarm fields synchronized with device limits.
+record(calcout, "$(P)$(R):$(CHAN):SYNC_VLOW") {
+    field(INPA, "$(P)$(R):$(CHAN):VLOW_RBV NPP NMS")
+    field(CALC, "A")
+    field(OOPT, "Every Time")
+    field(DOPT, "Use CALC")
+    field(OUT,  "$(P)$(R):$(CHAN):VOLT.LOW NPP")
+}
+
+record(calcout, "$(P)$(R):$(CHAN):SYNC_VHIGH") {
+    field(INPA, "$(P)$(R):$(CHAN):VHIGH_RBV NPP NMS")
+    field(CALC, "A")
+    field(OOPT, "Every Time")
+    field(DOPT, "Use CALC")
+    field(OUT,  "$(P)$(R):$(CHAN):VOLT.HIGH NPP")
+}
+
+record(calcout, "$(P)$(R):$(CHAN):SYNC_ILOW") {
+    field(INPA, "$(P)$(R):$(CHAN):ILOW_RBV NPP NMS")
+    field(CALC, "A")
+    field(OOPT, "Every Time")
+    field(DOPT, "Use CALC")
+    field(OUT,  "$(P)$(R):$(CHAN):CURR.LOW NPP")
+}
+
+record(calcout, "$(P)$(R):$(CHAN):SYNC_IHIGH") {
+    field(INPA, "$(P)$(R):$(CHAN):IHIGH_RBV NPP NMS")
+    field(CALC, "A")
+    field(OOPT, "Every Time")
+    field(DOPT, "Use CALC")
+    field(OUT,  "$(P)$(R):$(CHAN):CURR.HIGH NPP")
+}
+
+# Device-side alarm mask: bit 0 VLOW, bit 1 VHIGH, bit 2 ILOW, bit 3 IHIGH.
+record(longin, "$(P)$(R):$(CHAN):ALARM_MASK") {
+    field(DESC, "$(DESC) device alarm mask")
+    field(DTYP, "PSC Reg")
+    field(INP,  "@$(DEVICE) 3 $(SOFF)")
+    field(SCAN, "I/O Intr")
+}
+
+record(calc, "$(P)$(R):$(CHAN):ANY_ALARM") {
+    field(DESC, "$(DESC) any device alarm")
+    field(INPA, "$(P)$(R):$(CHAN):ALARM_MASK CP NMS")
+    field(INPB, "$(P)$(R):CONNECTED CP MS")
+    field(CALC, "A!=0")
+    field(HIGH, "0.5")
+    field(HSV,  "MAJOR")
+}
+
+# Immediate persistent writes through PSC Single F32 message ID 10.
+# info(SYNC, "SAME") lets Arduino echo the actual accepted value back.
+record(ao, "$(P)$(R):$(CHAN):VLOW_SP") {
+    field(DESC, "$(DESC) voltage low setpoint")
+    field(DTYP, "PSC Single F32")
+    field(OUT,  "@$(DEVICE) 10 $(VLOWADDR)")
+    field(PREC, "4")
+    field(EGU,  "V")
+    field(FLNK, "$(P)$(R):SEND_ALL")
+    info(SYNC, "SAME")
+}
+
+record(ao, "$(P)$(R):$(CHAN):VHIGH_SP") {
+    field(DESC, "$(DESC) voltage high setpoint")
+    field(DTYP, "PSC Single F32")
+    field(OUT,  "@$(DEVICE) 10 $(VHIGHADDR)")
+    field(PREC, "4")
+    field(EGU,  "V")
+    field(FLNK, "$(P)$(R):SEND_ALL")
+    info(SYNC, "SAME")
+}
+
+record(ao, "$(P)$(R):$(CHAN):ILOW_SP") {
+    field(DESC, "$(DESC) current low setpoint")
+    field(DTYP, "PSC Single F32")
+    field(OUT,  "@$(DEVICE) 10 $(ILOWADDR)")
+    field(PREC, "4")
+    field(EGU,  "A")
+    field(FLNK, "$(P)$(R):SEND_ALL")
+    info(SYNC, "SAME")
+}
+
+record(ao, "$(P)$(R):$(CHAN):IHIGH_SP") {
+    field(DESC, "$(DESC) current high setpoint")
+    field(DTYP, "PSC Single F32")
+    field(OUT,  "@$(DEVICE) 10 $(IHIGHADDR)")
+    field(PREC, "4")
+    field(EGU,  "A")
+    field(FLNK, "$(P)$(R):SEND_ALL")
+    info(SYNC, "SAME")
+}
