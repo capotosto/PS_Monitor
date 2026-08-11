@@ -1,0 +1,56 @@
+% !TeX root = ../main.tex
+
+\chapter{Networking}
+\label{chap:Networking}
+\section{Overview}
+The default configuration for these devices is to use static IP addresses on the 10.69.26.0/23 subnet. Deviating from this will require updates be made to the IOCs for the PSC and ATE, as well as changes to some parts of the calibration scripts, and, if applicable, the FOFB Test module of the functional test script set.\\\\
+The network topology is generally as follows: 
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}[
+		node/.style={draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, align=center},
+		switch/.style={draw, rectangle, minimum width=4cm, minimum height=1.5cm, fill=gray!10, align=center},
+		line/.style={-latex, thick}
+		]
+		
+		% ======================
+		% Network Switch
+		% ======================
+		\node[switch] (sw) at (0,0) {Network Switch};
+		
+		% ======================
+		% LEFT SIDE
+		% ======================
+		\node[node] (workstation) at (-6,1.5) {Workstation\\IP Address: xxx};
+		
+		\node[node] (ate) at (-6,-0.5) {ATE\\IP Address: xxx};
+		
+		\node[node] (fofb1) at (-6,4.8) {PSC FOFB \#1\\IP Address: xxx};
+		
+		% ======================
+		% RIGHT SIDE
+		% ======================
+		\node[node] (pscnet) at (6,1.5) {PSC Network\\IP Address: xxx};
+		
+		\node[node] (fofb2) at (6,0) {PSC FOFB \#2\\IP Address: xxx};
+		
+		% ======================
+		% CONNECTIONS
+		% ======================
+		\draw[line] (workstation) -- (sw);
+		\draw[line] (ate) -- (sw);
+		\draw[line] (pscnet) -- (sw);
+		\draw[line] (fofb2) -- (sw);
+		
+		% ======================
+		% DIRECT CONNECTION
+		% ======================
+		\draw[line, dashed, red, thick] (fofb1) -- (workstation);
+		
+		\node[red, font=\small, align=center]
+		at ($(fofb1)!0.5!(workstation) + (2.6,0.4)$)
+		{Direct connection\\FOFB \#1 $\leftrightarrow$ Workstation};
+		
+	\end{tikzpicture}
+	\caption{Network Topology with Clean FOFB Direct Link}
+\end{figure}

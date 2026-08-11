@@ -1,0 +1,281 @@
+% !TeX root = ../main.tex
+
+\newpage
+\phantomsection
+\label{sec:Functional-Test-Params}
+\noindent{\normalsize\bfseries Functional Test Parameters}
+\par\medskip
+The test parameters are configured in a few sections as follows:\\
+\noindent\normalsize\textbf{Test Enabling/Disabling:} By default, all functional tests will be run. Individual tests can be enabled or disabled by adding a call for \texttt{FuncSuite()} as follows:
+\begin{minted}{python}
+	func_tests=FuncSuite(
+	regulation=True,
+	smooth=True,
+	jump=True
+	)
+\end{minted}
+\medskip
+You may also disable specific channels: 
+\begin{minted}{python}
+	func_tests=FuncSuite(
+	jump=ChannelValues(
+		ch1=False,
+		ch2=False,
+		ch3=True,
+		ch4=True
+		)
+	)
+\end{minted}
+
+\newpage
+\phantomsection
+\label{sec:regulator-test-parameters}
+\noindent\normalsize\textbf{Regulator Test Parameters:} The regulator test parameters are as follows:
+\begin{minted}{python}
+	reg=RegulatorTestParams(
+		setpoints=(reg_pts := ChannelValues(ch1=5,
+                                                    ch2=5,
+                                                    ch3=5,
+                                                    ch4=5
+	                                            )
+	                    ),
+		settling_time=10
+	),
+\end{minted}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		
+		\texttt{setpoints} &
+		Current setpoint, per channel, to run the stability test. No default - Must be defined!\\
+		
+		\texttt{settling\_time} &
+		Settling time in seconds, after setting the current before beginning data collection. Defaults to 10 seconds.\\
+
+		\texttt{tolerance} &
+		The pass/fail threshold for automated go/no-go test, defaults to 50mA.\\
+		
+		\texttt{ramp\_rate} &
+		Ramp rate used during setup to the regulator test. Defaults to 10A/s\\
+		
+		\texttt{num\_samples} &
+		Number of datapoints to collect for sample, defaults to 180.\\
+		
+		\texttt{sample\_interval} &
+		Sampling interval, defaults to 300ms\\
+
+		\bottomrule
+	\end{tabular}
+	\caption{Regulator Test Parameters}
+	\label{tab:regulator-test-parameters}
+\end{table}
+
+\newpage
+\phantomsection
+\label{sec:smooth-ramp-test}
+\noindent\normalsize\textbf{Smooth Ramp Test Parameters:} The smooth ramp test parameters are as follows:
+\begin{minted}{python}
+	smooth=SmoothRampTestParams(
+		start_setpoints=ChannelValues(ch1=-5,
+					      ch2=-5,
+					      ch3=-5,
+					      ch4=-5),
+		end_setpoints=ChannelValues(ch1=5,
+					    ch2=5,
+					    ch3=5,
+					    ch4=5),
+		ramp_rate=ChannelValues(ch1=10,
+					ch2=10,
+					ch3=10,
+					ch4=10),
+		settling_time=10,
+		tolerance=0.05
+	),
+\end{minted}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		
+		\texttt{start\_setpoints} &
+		Current at which the ramp will start. Must be positive for unipolar mode! Positive or negative acceptable for bipolar. No default - Must be defined!\\
+		
+		\texttt{end\_setpoints} &
+		Current at which the ramp will end. Must be positive for unipolar mode! Positive or negative acceptable for bipolar. No default - Must be defined!\\
+		
+		\texttt{ramp\_rate} &
+		The ramp rate in Amps/second that the channel will ramp at. No default - Must be defined!\\
+		
+		\texttt{settling\_time} &
+		Settling time delay, seconds, that the test will wait after setting the start setpoint but before initiating the ramp. Defaults to 10 seconds.\\
+		
+		\texttt{tolerance} &
+		The pass/fail threshold for automated go/no-go test, defaults to 50mA.\\
+		
+		\texttt{waveforms} &
+		This is the WaveformFlags class, which can be used to enable or disable plotting of specific waveforms in the report. This was used for specialty units, and initializes the defaults to enable plotting all values\\
+		
+		\bottomrule
+	\end{tabular}
+	\caption{Smooth Ramp Test Parameters}
+	\label{tab:smooth-ramp-parameters}
+\end{table}
+
+\newpage
+To use the Waveform Flags, add the desired flag that you want to disable (or you can add all and explicitly enable/disable). This was added to support units in which one PID loop drives two channels, the driven channel's outputs are of interest, but the inputs are unused, e.g., in ALSu's \texttt{BTA-DA\_B4\_B7-8}:
+\begin{minted}{python}
+	smooth=SmoothRampTestParams(
+		start_setpoints=ChannelValues(ch1=None,
+					      ch2=-5,
+					      ch3=-5,
+					      ch4=-5,
+		end_setpoints=ChannelValues(ch1=None,
+					    ch2=5,
+					    ch3=5,
+					    ch4=5,
+		ramp_rate=ChannelValues(ch1=None,
+					ch2=10,
+					ch3=10,
+					ch4=10,
+		settling_time=10,
+		tolerance=0.05,
+		waveforms=ChannelValues(
+			ch1=None,            
+			ch2=WaveformFlags(), # using defaults
+			ch3=WaveformFlags(), # using defaults
+			ch4=WaveformFlags(DAC=False,
+					  DCCT1=False,
+					  DCCT2=False,
+					  ERROR=False,
+					  REG=True,
+					  VOLT=True,
+					  IGND=False,
+					  SPARE=True
+			)
+		)
+	),
+\end{minted}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		
+		\texttt{DAC} &
+		DAC Waveform\\
+		
+		\texttt{DCCT1} &
+		DCCT1 Waveform\\
+		
+		\texttt{DCCT2} &
+		DCCT2 Waveform\\
+		
+		\texttt{ERROR} &
+		ERROR Waveform\\
+		
+		\texttt{REG} &
+		REG Waveform\\
+		
+		\texttt{VOLT} &
+		PS Voltage Waveform\\
+		
+		\texttt{IGND} &
+		Ground Waveform\\
+		
+		\texttt{SPARE} &
+		SPARE Waveform\\
+		
+		\bottomrule
+	\end{tabular}
+	\caption{WaveformFlags class instance attributes}
+	\label{tab:WaveformFlags}
+\end{table}
+
+\newpage
+\phantomsection
+\label{sec:jump-test-parameters}
+\noindent\normalsize\textbf{Jump Test Parameters:} The jump/transient test parameters are described below. Detail is not shown, but the WaveformFlags can be defined for this test as well. 
+\begin{minted}{python}
+	jump=JumpTestParams(
+		start_setpoints=reg_pts,
+		step_size=ChannelValues(ch1=0.05,
+					ch2=0.05,
+					ch3=0.05,
+					ch4=0.05),
+		sample_window=500,
+		tolerance=0.05
+	)
+\end{minted}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		
+		\texttt{start\_setpoints} &
+		Current setpoint, per channel, to run the stability test. No default - Must be defined!\\
+		
+		\texttt{step\_size} &
+		Magnitude of the step/jump, in Amps\\
+		
+		\texttt{sample\_window} &
+		Number of points to show before and after the jump in the 'zoom' view\\
+		
+		\texttt{tolerance} &
+		Ground current pass/fail threshold in Amps\\
+		
+		\texttt{waveforms} &
+		This is the WaveformFlags class, which can be used to enable or disable plotting of specific waveforms in the report. This was used for specialty units, and initializes the defaults to enable plotting all values\\
+
+		\bottomrule
+	\end{tabular}
+	\caption{Jump Test Parameters}
+	\label{tab:jump-test-parameters}
+\end{table}
+
+\newpage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

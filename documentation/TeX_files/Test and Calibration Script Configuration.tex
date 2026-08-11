@@ -1,0 +1,70 @@
+% !TeX root = ../main.tex
+
+\chapter{Configuring the Test and Calibration Scripts}
+\label{chap:Configuring the Test and Calibration Scripts}
+\section{Overview}
+There are many places where changes may need to be made when bringing a new workstation up for the first time.\\\\
+After initial configuration, no further changes should be required, with the exception of the \texttt{psc\_models.py} class, which will be modified any time a new PSC is added, or a particular PSC's configuration requirements are changed.
+\section{The \texttt{common} Files Directory}
+This directory contains a number of modules which may need reconfiguration as outlined below.\\\\
+Files in this directory may be used by both the Calibration side and the Test side of the script package. 
+
+\newpage
+
+\subsection{The \texttt{psc\_models.py} Class}
+\input{./TeX_files/psc_models_subsection}
+
+\newpage
+
+\subsection{EPICS Adapters/Drivers}
+There are two modules, \texttt{ate\_epics.py} and \texttt{psc\_epics.py} which provide a library of function calls to read and write various EPICS PVs. As firmware and IOC changes are made, some changes may be required in these drivers to add new features, or fix features that are removed or break.\\\\
+These two modules are little more than a pyepics wrapper, providing easier formatting, less repetition in the code manually creating PV strings, and providing typehinting/typechecking and auto-complete suggestions. 
+
+\subsection{The \texttt{initialize\_dut.py} Utility}
+This is a small utility that collects information from the PSC EEPROM, generate the filenames, timestamps, and directory structures to be used during calibration and test. It shouldn't require any changes in the forseeable future. The directory structures are created dynamically based on the directory it lives in, and should resolve without issue both on Linux and Windows. The utility will create the \texttt{cal\_reports}, \texttt{test\_reports}, and \texttt{test\_data} directories. 
+
+
+
+\section{Calibration}
+\subsection{The \texttt{initialize\_qspi.py} Module}
+This module contains a few simple functions that will do the following:\\
+\begin{enumerate}
+	\item Write scale factors
+	\item Write fault thresholds
+	\item Write fault count limits
+	\item Initialize gains to 1 and offsets to 0
+	\item Write these values to QSPI
+\end{enumerate}
+Any existing values will be overwritten. 
+\subsection{The \texttt{psc\_calibration.py} Module}
+This module performs the calibration of the PSC, interfacing the ATE via raw UDP socket packets, and DMM via psyserial to send ASCII commands to the GPIB interface.\\\\
+There are a few items that must be changed in some test setups:\\
+\begin{enumerate}
+	\item \texttt{ATE\_IP\_ADDRESS}:\\
+	This must be set for the ATE IP Address as configured in your testbench.
+	\item DMM USB Port \texttt{ser1 = serial.Serial('/dev/ttyUSB0', 115200, timeout=30')}:\\
+	If using the HP 3458A, then the command structure need not change, however, the USB port used, e.g., \texttt{'/dev/ttyUSB0'} may need to be changed, depending on how it populates on your system, or if using an ethernet-based GPIB adapter.
+\end{enumerate}
+No other parameters should need to be modified.
+\section{Functional Test}
+The functional test is largely dictated by the configuration in the \texttt{psc\_models.py} class. If all tests are enabled however, it follows this order:\\
+\begin{enumerate}
+	\item EVR Test:\\
+	Check EVR timestamp, and ensure the 1Hz event can be seen and decoded; ensure each trigger is 1 second apart. 
+
+	\item ATE Fault Tests:\\
+	Test that each fault bit is able to be toggled (set and clear)
+	
+	\item PS Regulation Stability Test:\\
+	Set current setpoint to some value and collect so many data points at a set interval, e.g, 180 datapoints at a 300ms interval.
+	
+	\item PS Jump/Transient Test:\\
+	Take the power supply to some setpoint, e.g., 10A. Then apply a jump/transient in Jump mode, e.g., 50mA jump for 10A$\rightarrow$10.05A setting, and observe the transient response of the output.
+	
+	\item Smooth Ramp Test:\\
+	Ramp the output from one setpoint to another at a specified ramp rate and plot the waveforms. 
+	
+	\item Fast Orbit Feedback (FOFB) Test:\\
+	If the unit is a 'Fast' bandwidth, the FOFB test will be performed. A packet will be written to set the currents via the FOFB loop, and these setpoint changes will be verified. The packets will be dumped into the report via TCPDump as well. 
+
+\end{enumerate}

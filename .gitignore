@@ -43,3 +43,57 @@ O.*/
 
 # Ignore local configuration edits
 envPaths
+
+
+# ==========================================
+# Latex
+# ==========================================
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+
+# LaTeX build/output directories
+_build/
+build/
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# Glossaries / indexes
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.idx
+*.ilg
+*.ind
+
+# Minted
+*.pyg
+_minted-*/
+
+# Temporary files
+*.bak
+*.swp
+*.swo
+*~

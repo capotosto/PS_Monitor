@@ -1,0 +1,4 @@
+NAME=psuMonitorIOC
+PORT=4050
+USER=softioc
+HOST=$HOSTNAME

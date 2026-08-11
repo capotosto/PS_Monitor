@@ -1,0 +1,30 @@
+% !TeX root = ../main.tex
+
+\chapter{Python Installation and Configuration}
+\label{chap:Python Installation and Configuration}
+\section{Overview}
+Python3 is required for the calibration and test scripts to be run for the PSCs. Below sections will describe the process for installing Python3, and handling package management and virtual environment management, if desired. 
+
+\section{Installing and Configuring Python, and the Python Environment}
+\subsection{Installing Python}
+Many downstream Debian-based distributions come bundled with Python3. If yours does not, install Python3 via: \texttt{sudo apt update \&\& sudo apt install python3}
+
+\subsection{Python Package Management}
+\subsubsection*{Installing Pip}
+These scripts were written using Python3. It is assumed that Python3 is already installed on your workstation.\\\\
+A Pip requirements file is included in the repository for ease of package management, but pip may not come bundled with the OS; to install Pip:\\
+\texttt{sudo apt install python3-pip}
+
+\subsubsection*{Installing Packages}
+Packages can be simply installed via pip now.\\\\
+If within a virtual environment, use: \texttt{pip install -r requirements.txt}\\
+If not using environments: \texttt{python3 -m pip install -r requirements.txt}\\
+If you run into permissions issues: \texttt{python3 -m pip install --user -r requirements.txt}
+
+
+\subsection*{Python Virtual Environments}
+It may be desireable to use a virtual environment, e.g., venv or Conda, especially if other scripts are used on this machine that may have overlapping or conflicting packages installed. My personal preference is for venv, however Conda is used by NSLS-II at the organizational level. venv is a simpler and light weight tool, if it is needed only for running Python projects. \\\\
+venv can be installed with:\\
+\texttt{sudo apt install python3-venv}\\\\
+The environment can then be activated with \texttt{python3 -m venv my\_venv\_name}. You can then activate the environment with \texttt{source my\_venv/bin/activate}. 
+

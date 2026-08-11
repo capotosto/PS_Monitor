@@ -353,149 +353,6 @@ bool updateLimitsFromRequest(
   return true;
 }
 
-void sendStatusJson(EthernetClient &client) {
-  sendHttpHeader(client, "200 OK", "application/json; charset=utf-8");
-
-  client.print(F("{\"channels\":["));
-
-  for (uint8_t i = 0; i < CHANNEL_COUNT; ++i) {
-    const MonitorChannel &channel = channels[i];
-
-    if (i > 0) {
-      client.print(',');
-    }
-
-    client.print(F("{\"channel\":"));
-    client.print(i + 1);
-    client.print(F(",\"name\":\""));
-    client.print(channel.name);
-    client.print(F("\",\"voltage\":"));
-    if (channel.readingValid) {
-      client.print(channel.voltage, 4);
-    } else {
-      client.print(F("null"));
-    }
-
-    client.print(F(",\"current\":"));
-    if (channel.readingValid) {
-      client.print(channel.current, 4);
-    } else {
-      client.print(F("null"));
-    }
-
-    client.print(F(",\"sensor\":{\"online\":"));
-    client.print(channel.sensorOnline ? F("true") : F("false"));
-    client.print(F(",\"i2c_error\":"));
-    client.print(channel.sensorError);
-    client.print(F(",\"last_valid_ms\":"));
-    client.print(channel.lastValidReadingMs);
-    client.print(F("},\"limits\":{\"vlow\":"));
-    client.print(channel.limits.voltageLow, 4);
-    client.print(F(",\"vhigh\":"));
-    client.print(channel.limits.voltageHigh, 4);
-    client.print(F(",\"ilow\":"));
-    client.print(channel.limits.currentLow, 4);
-    client.print(F(",\"ihigh\":"));
-    client.print(channel.limits.currentHigh, 4);
-    client.print(F("},\"alarms\":{\"undervoltage\":"));
-    client.print(channel.voltageLowAlarm ? F("true") : F("false"));
-    client.print(F(",\"overvoltage\":"));
-    client.print(channel.voltageHighAlarm ? F("true") : F("false"));
-    client.print(F(",\"undercurrent\":"));
-    client.print(channel.currentLowAlarm ? F("true") : F("false"));
-    client.print(F(",\"overcurrent\":"));
-    client.print(channel.currentHighAlarm ? F("true") : F("false"));
-    client.print(F(",\"sensor_comm\":"));
-    client.print(!channel.sensorOnline ? F("true") : F("false"));
-    client.print(F(",\"any\":"));
-    client.print(channelIsInAlarm(channel) ? F("true") : F("false"));
-    client.print(F("}}"));
-  }
-
-  IPAddress ip = Ethernet.localIP();
-
-  client.print(F("],\"device_ip\":\""));
-  client.print(ip);
-  char configuredIp[20];
-  char configuredDns[20];
-  char configuredGateway[20];
-  char configuredSubnet[20];
-
-  formatIpv4Address(
-    networkSettings.ip,
-    configuredIp,
-    sizeof(configuredIp)
-  );
-  formatIpv4Address(
-    networkSettings.dns,
-    configuredDns,
-    sizeof(configuredDns)
-  );
-  formatIpv4Address(
-    networkSettings.gateway,
-    configuredGateway,
-    sizeof(configuredGateway)
-  );
-  formatIpv4Address(
-    networkSettings.subnet,
-    configuredSubnet,
-    sizeof(configuredSubnet)
-  );
-
-  client.print(F("\",\"network_config\":{\"ip\":\""));
-  client.print(configuredIp);
-  client.print(F("\",\"dns\":\""));
-  client.print(configuredDns);
-  client.print(F("\",\"gateway\":\""));
-  client.print(configuredGateway);
-  client.print(F("\",\"subnet\":\""));
-  client.print(configuredSubnet);
-  client.print(F("\",\"restart_required\":"));
-  client.print(networkRestartRequired ? F("true") : F("false"));
-  client.print(F("},\"psc_connected\":"));
-  client.print(pscIsConnected() ? F("true") : F("false"));
-  client.print(F(",\"psc_port\":"));
-  client.print(PSC_PORT);
-  client.print(F(",\"settings_persistent\":"));
-  client.print(settingsStorageReady ? F("true") : F("false"));
-  client.print(F(",\"uptime_ms\":"));
-  client.print(millis());
-  client.println(F("}"));
-}
-
-void sendEpicsCsv(EthernetClient &client) {
-  sendHttpHeader(client, "200 OK", "text/plain; charset=utf-8");
-
-  // channel,voltage,current,vlow,vhigh,ilow,ihigh,alarm
-  for (uint8_t i = 0; i < CHANNEL_COUNT; ++i) {
-    const MonitorChannel &channel = channels[i];
-
-    client.print(i + 1);
-    client.print(',');
-    if (channel.readingValid) {
-      client.print(channel.voltage, 4);
-    } else {
-      client.print(F("nan"));
-    }
-    client.print(',');
-    if (channel.readingValid) {
-      client.print(channel.current, 4);
-    } else {
-      client.print(F("nan"));
-    }
-    client.print(',');
-    client.print(channel.limits.voltageLow, 4);
-    client.print(',');
-    client.print(channel.limits.voltageHigh, 4);
-    client.print(',');
-    client.print(channel.limits.currentLow, 4);
-    client.print(',');
-    client.print(channel.limits.currentHigh, 4);
-    client.print(',');
-    client.println(channelIsInAlarm(channel) ? 1 : 0);
-  }
-}
-
 void printHtmlFloatInput(
   EthernetClient &client,
   const char *formId,
@@ -587,7 +444,6 @@ void sendDashboard(EthernetClient &client) {
       : F("not persistent because storage is unavailable.")
   );
   client.println(F("</p>"));
-  client.println(F("<p><a href='/api/status'>JSON status</a> | <a href='/epics'>EPICS CSV</a> | <a href='/'>Refresh</a></p>"));
   client.print(F("<p class='small'>PSCDriver endpoint: <code>"));
   client.print(Ethernet.localIP());
   client.print(F(":"));
@@ -595,46 +451,6 @@ void sendDashboard(EthernetClient &client) {
   client.print(F("</code> &mdash; "));
   client.print(pscIsConnected() ? F("IOC connected") : F("waiting for IOC"));
   client.println(F("</p>"));
-
-  client.println(F(
-    "<div class='network'><h2>Network settings</h2>"
-    "<p class='small'>Changes are stored immediately and applied after reset.</p>"
-    "<form method='get' action='/api/network'>"
-  ));
-
-  client.print(F("<label>IP address<br>"));
-  printHtmlIpInput(client, "ip", networkSettings.ip);
-  client.println(F("</label>"));
-
-  client.print(F("<label>Gateway<br>"));
-  printHtmlIpInput(client, "gateway", networkSettings.gateway);
-  client.println(F("</label>"));
-
-  client.print(F("<label>Subnet mask<br>"));
-  printHtmlIpInput(client, "subnet", networkSettings.subnet);
-  client.println(F("</label>"));
-
-  client.print(F("<label>DNS server<br>"));
-  printHtmlIpInput(client, "dns", networkSettings.dns);
-  client.println(F("</label>"));
-
-  client.println(F(
-    "<br><button type='submit'>Save network settings</button>"
-    "</form>"
-  ));
-
-  if (networkRestartRequired) {
-    client.println(F(
-      "<p><strong>Reset required:</strong> saved network settings differ "
-      "from the address currently in use.</p>"
-    ));
-  }
-
-  client.println(F(
-    "<p class='small'>A wrong but valid address can make this page unreachable. "
-    "Recovery: set <code>FORCE_COMPILED_NETWORK_ON_BOOT</code> to "
-    "<code>true</code> and upload over USB.</p></div>"
-  ));
 
   for (uint8_t i = 0; i < CHANNEL_COUNT; ++i) {
     client.print(F("<form id='limitForm"));
@@ -716,11 +532,47 @@ void sendDashboard(EthernetClient &client) {
   }
 
   client.println(F("</tbody></table>"));
+  
   client.println(F(
-    "<p class='small'>Direct update example:<br>"
-    "<code>/api/limits?ch=1&amp;vlow=3.00&amp;vhigh=3.60&amp;ilow=0.00&amp;ihigh=1.00</code>"
-    "</p>"
+    "<div class='network'><h2>Network settings</h2>"
+    "<p class='small'>Changes are stored immediately and applied after reset.</p>"
+    "<form method='get' action='/api/network'>"
   ));
+
+  client.print(F("<label>IP address<br>"));
+  printHtmlIpInput(client, "ip", networkSettings.ip);
+  client.println(F("</label>"));
+
+  client.print(F("<label>Gateway<br>"));
+  printHtmlIpInput(client, "gateway", networkSettings.gateway);
+  client.println(F("</label>"));
+
+  client.print(F("<label>Subnet mask<br>"));
+  printHtmlIpInput(client, "subnet", networkSettings.subnet);
+  client.println(F("</label>"));
+
+  client.print(F("<label>DNS server<br>"));
+  printHtmlIpInput(client, "dns", networkSettings.dns);
+  client.println(F("</label>"));
+
+  client.println(F(
+    "<br><button type='submit'>Save network settings</button>"
+    "</form>"
+  ));
+
+  if (networkRestartRequired) {
+    client.println(F(
+      "<p><strong>Reset required:</strong> saved network settings differ "
+      "from the address currently in use.</p>"
+    ));
+  }
+
+  client.println(F(
+    "<p class='small'>A wrong but valid address can make this page unreachable. "
+    "Recovery: set <code>FORCE_COMPILED_NETWORK_ON_BOOT</code> to "
+    "<code>true</code> and upload over USB.</p></div>"
+  ));
+
   client.println(F("</body></html>"));
 }
 
@@ -744,16 +596,6 @@ void handleHttpRequest(EthernetClient &client, const String &requestLine) {
 
   if (target == "/" || target.startsWith("/?")) {
     sendDashboard(client);
-    return;
-  }
-
-  if (target == "/api/status") {
-    sendStatusJson(client);
-    return;
-  }
-
-  if (target == "/epics") {
-    sendEpicsCsv(client);
     return;
   }
 

@@ -1,2 +1,2 @@
-PSCDRV = /home/mike/epics/support/pscdrv
-EPICS_BASE = /home/mike/epics/base
+PSCDRV = /epics/support/pscdrv
+EPICS_BASE = /epics/base

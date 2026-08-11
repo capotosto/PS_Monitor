@@ -1,0 +1,48 @@
+% !TeX root = ../main.tex
+
+\chapter{Cable Assemblies and Harnesses}
+\label{chap:Cable Assemblies and Harnesses}
+\section{Overview}
+This chapter provides a brief overview of the makeup of various cable assemblies used in the sections to follow. Some cables are off-the-shelf cables with gender changers installed on one end. Others are made up of commercial cable assemblies with fly leads that must connect to breakout boards.\\\\
+Some off the shelf fiber and network patch cables will be required. 
+\subsection{2-Channel DCCT Cable}
+This cable consists of a Molex Micro-D15 cable, 72" long, fly lead, connecting to a Winford HD26 breakout board. 
+\begin{itemize}
+	\item 1x Molex 834229018 72" Micro-D15 Fly Lead Cable
+	\item 1x Winford BRKEGD26HDF-T HD26F Breakout Board
+\end{itemize}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{Diagrams/2Ch_DCCT_Cable}
+	\caption{Pinout of 2-Channel microD15 to HD26 Cable}
+\end{figure}
+
+\subsection{4-Channel DCCT Cable}
+This cable assembly consists of two parts: 
+\begin{itemize}
+	\item 1x Amphenol CS-DSDHD26MF0-005 1.52m HD26 M/F Cable
+	\item 1x NorComp Inc. GCHDLP26F26F HD26 F/F Gender Changer
+\end{itemize}
+
+\subsection{Power Supply Channels 1 through 4 ATE Interface Cables}
+This cable assembly consists of two parts:
+\begin{itemize}
+	\item 4x Molex 83424-9062 Micro-D25 to DB25 
+	\item 4x L-com DGB25F DB25F/F Gender Changer
+\end{itemize}
+
+\subsection{SFP Transceivers}
+Quantities depend on unit type and test workstation configuration. One SFP port is used for timing/event code tests on all units.\\\\
+If testing FOFB, two more SFPs are required - the NSLS-II test stand uses one active copper and one fiber; though the simplest test setup would use two active copper SFPs. 
+\begin{itemize}
+	\item Fiber SFP: ATGBICS AFBR-57D7APZ-C or equivalent (8.5G+ SFP+, 850nm MM)
+	\item Active Copper SFP: Finisar FCLF8522P2BTL or equivalent
+\end{itemize}
+
+\subsection{Other Miscellaneous Cables}
+Other miscelaneous cables needed include:
+\begin{itemize}
+	\item CAT6 Network cables
+	\item OM3 LC/LC Duplex Fiber Patch Cables (e.g. FS.com SKU 40233)
+	\item IEC C13 to NEMA 5-15P Power Cords
+	\item Assorted discrete wires for DC power, signal, 16-18AWG
+\end{itemize}

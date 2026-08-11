@@ -1,0 +1,46 @@
+% !TeX root = ../main.tex
+
+\chapter{Calibration and Test Script Installation}
+\label{chap:Calibration and Test Script Installation}
+\section{Overview}
+
+The repository for the calibration and test scripts can be found at: \url{https://github.com/capotostobnl/NSLS2_zPSC_Calibration_and_Test}
+
+Details regarding the use of the script will come in the following chapters on Calibration and on Functional Tests, though all scripts are launched from this one repository's 'launcher.py' script. 
+
+\section{Cloning the Script Repository}
+	\begin{enumerate}
+		\item Choose a location for the repo, and go there: \texttt{cd ~/}
+		\item Clone the repository: \texttt{git clone \url{https://github.com/capotostobnl/NSLS2_zPSC_Calibration_and_Test}}
+	\end{enumerate}
+	
+\section{Creating the Virtual Environment}
+If you choose to use a virtual environment, create it and then install the dependencies. If you choose to not use venv, you can skip to installing dependencies in the next section. 
+	\begin{enumerate}
+		\item Navigate to the repository and then: \texttt{python3 -m venv .venv}
+		\item Activate the environment: \texttt{source .venv/bin/activate}
+	\end{enumerate}
+
+\section{Installing Dependencies}
+Required Python modules can be installed via the requirements.txt from the repository via: \texttt{python3 -m pip install -r requirements.txt}
+
+\section{Compiling the FOFB Packet Generator}
+The Fast Orbit Feedback (FOFB) Test script relies on a packet generator program written in C, and executed by a shell script. The script will run these as subprocesses during the FOFB test, so if they are not available FOFB testing will fail.\\\\The program must be compiled on your system, and the shell script marked executable before the FOFB script can run properly.\\
+	\begin{enumerate}
+		\item Navigate to the functional tests subdirectory: From the repository root-level directory, \texttt{cd testing/functional\_tests}
+		\item If needed, change the target IP address set in \texttt{main()}. The default is 10.69.26.55. You may also choose to change the setpoints here as well. The default is to use a setpoint of 11.50000, 11.50001, 11.50002, and 11.50003 for channels 1 through 4 (0 through 3).
+		\item \texttt{gcc caen\_fast\_genpacket.c -o caen\_fast\_genpacket}
+		\item \texttt{chmod +x caen\_fast\_genpacket\_loop\_inf.sh}
+		\item Attempt to run \texttt{caen\_fast\_genpacket\_loop\_inf.sh}. It should repeatedly print the message \texttt{UDP packet sent successfully.}: \texttt{./caen\_fast\_genpacket\_loop\_inf.sh}
+	\end{enumerate}
+	
+\section{Configuring Network Interfaces in the \texttt{fofb\_test.py} Module}
+There are a few items that must be configured in the \texttt{fofb\_test.py} module which will vary from workstation to workstation, network to network. 
+\begin{itemize}
+	\item UDP Packet Capture Interface:\\
+	You must set the interface that captures UDP packets, and the port it uses, if not using the existing values. This is passed as an argument for the function call in Line 278, \texttt{status, out, err, returncode, cmd = capture\_udp\_packets(iface="enp115s0", port=12345, timeout\_s=10)}
+	\item ARP table entries:\\
+	ARP table entries must be updated, so the packets can be routed to the capture interface. This is done at Line 169, \texttt{cmd = "sudo arp -s 10.69.26.55 00:11:22:33:44:55"}. If using the default IP addresses, this does not need to be changed. 
+	\item FOFB IP Address PV Value:\\
+	The FOFB IP Address PV is written with a type-converted hex value. The hex value is a 32-bit int with one byte per octet, so 10.69.26.55 becomes 0x0A451A37. 10.0.142.100 would become 0x0A008E64. The hex value needs to be set in the function call, Line 222, \texttt{safe\_caput(fofb\_ip\_pv, int(0x0A451A37))}
+\end{itemize} 

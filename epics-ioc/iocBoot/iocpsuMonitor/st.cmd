@@ -14,6 +14,7 @@ epicsEnvSet("HOST",   "192.168.1.177")
 epicsEnvSet("PORT",   "8765")
 
 # Final argument enables PSCDriver's receive-inactivity timeout.
+var PSCDebug 5
 createPSC("$(DEVICE)", "$(HOST)", $(PORT), 1)
 
 dbLoadRecords("db/gigaPscBase.db", "P=$(P),R=$(R),DEVICE=$(DEVICE)")

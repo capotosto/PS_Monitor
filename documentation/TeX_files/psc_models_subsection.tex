@@ -1,0 +1,101 @@
+% !TeX root = ../main.tex
+
+This module is the module that will need to be updated regularly. In this module, you will define the parameters for every 'flavor' of PSC that will be calibrated or tested.\\
+\subsubsection{Overview}
+This module instantiates a number of dataclasses that define calibration and test parameters for each unit.\\
+Each PSC model definition contains the following:\\
+\begin{itemize}
+	\item Hardware calibration constants
+	\item Fault threshold limits
+	\item Scaling factors
+	\item Functional test configuration parameters
+	\item Test setpoints and some pass/fail test criteria
+\end{itemize}
+Both the calibration and functional test modules use the data from this single file to be configured, allowing one location to provide all data required for a given flavor of PSC.\\
+\subsubsection{PSC Model Structure}
+Every PSC is defined as a \texttt{PSCModel} object, registered in the global \texttt{MODELS} dictionary:
+\begin{minted}{python}
+	MODELS = {
+		"MY_NEW_MODEL": PSCModel(
+		...
+		),
+	}
+\end{minted}
+Ensure the dictionary key that is used is unique! Duplicate keys will cause the script to fail. 
+
+\subsubsection{Adding a New PSC Model}
+The easiest way to create new PSC definitions is to copy one of the existing models and update the values for the new model.\\
+Example:
+\begin{minted}{python}
+	"MY_NEW_MODEL": PSCModel(
+		model_id="MY_NEW_MODEL",
+		display_name="My New PSC",
+		description="PSC-4CH-MYMODEL",
+		designation="PSC-4CH-MYMODEL",
+		
+		channels=(1,2,3,4),
+		drive_channels=(1,2,3,4),
+		readback_channels=(1,2,3,4),
+		
+		calibration_parameters=...,
+		
+		reg=...,
+		smooth=...,
+		jump=...
+	)
+\end{minted}
+\medskip
+\noindent{\normalsize\bfseries Common Parameters}
+\par\medskip
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lp{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		\texttt{model\_id}          & Internal identifier used by software \\
+		\texttt{display\_name}      & Name shown in selection menus \\
+		\texttt{description}        & Full PSC description \\
+		\texttt{designation}        & String used during calibration reporting \\
+		\texttt{channels}           & Physical channels present on the PSC \\
+		\texttt{drive\_channels}    & Channels used for control output \\
+		\texttt{readback\_channels} & Channels used for measurement feedback \\
+		\bottomrule
+	\end{tabular}
+	\label{tab:psc-parameters}
+\end{table}
+\medskip
+Most channels use a 1:1 mapping for channels, drive\_channels, and readback\_channels:\\
+\begin{minted}{python}
+	channels=(1,2,3,4)
+	
+	drive_channels=(1,2,3,4)
+	readback_channels=(1,2,3,4)
+\end{minted}
+But some specialty units with hardware modifications, may require a different parameter set. One example was a 'Dual-Mode' PSC, which had a wire jumper added so the PID loop for Channel 3 drove the controls for both Channel 3 and Channel 4. Channels 1 and 2 were unused. This particular unit is why this functionality was added, as that unit became:\\
+\begin{minted}{python}
+	channels=(3,4)
+	
+	drive_channels=(3,3)
+	readback_channels=(3,4)
+\end{minted}
+
+%Calibration Section
+\newpage
+\input{./TeX_files/psc_models_cal_section}
+
+%Test Section
+\newpage
+\input{./TeX_files/psc_models_test_section}
+
+
+
+
+
+
+
+
+
+
+
+

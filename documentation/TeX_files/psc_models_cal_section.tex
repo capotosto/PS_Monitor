@@ -1,0 +1,154 @@
+% !TeX root = ../main.tex
+
+\newpage
+
+\phantomsection
+\label{sec:cal-parameters}
+\noindent{\normalsize\bfseries Calibration Parameters}
+\par\medskip
+The calibration parameters are configured using the CalibrationParameters class. Many values are initialized to default values via the subclasses, which initialize the values to standard values, which may be modified in the calibration\_parameters instantiation if so desired:
+\begin{minted}{python}
+	calibration_parameters=CalibrationParameters(
+		ndcct=1000.0,
+		burden_resistors=ChannelValues(ch1=83.333333, ch2=83.333333,
+					       ch3=83.333333, ch4=83.333333),
+
+		fault_limits=PSCFaultThresholdsLimits(
+			ovc1_threshold=ChannelValues(ch1=10, ch2=10, ch3=10, ch4=10),
+			ovc2_threshold=ChannelValues(ch1=10, ch2=10, ch3=10, ch4=10),
+			ovv_threshold=ChannelValues(ch1=15, ch2=15, ch3=15, ch4=15),
+		),
+
+		scale_factors=PSCScaleFactors(
+			sf_vout=ChannelValues(ch1=1.9, ch2=1.9, ch3=1.9, ch4=1.9),
+			sf_spare=ChannelValues(ch1=-5.0, ch2=-5.0, ch3=-5.0, ch4=-5.0),
+		),
+	),
+\end{minted}
+These parameters are as follows:\\
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		\texttt{ndcct} &
+		Nominal DC current transformer turns ratio used during current scaling and calibration calculations. \\
+
+		\texttt{burden\_resistors} &
+		Burden resistor values associated with DCCT channel. These values are used to convert sensed current into a measurable voltage. \\
+
+		\texttt{fault\_limits} &
+		Registry of fault thresholds and timer values\\
+
+		\texttt{scale\_factors} &
+		Registry of scale factors\\
+
+		\bottomrule
+	\end{tabular}
+	\caption{PSC calibration parameters}
+	\label{tab:psc-calibration-parameters}
+\end{table}
+
+\newpage
+The \texttt{PSCFaultThresholdsLimits} are as follows:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		\texttt{ovc1\_threshold} &
+		DCCT 1 over current threshold\\
+
+		\texttt{ovc2\_threshold} &
+        DCCT 2 over current threshold\\
+
+		\texttt{ovv\_threshold} &
+        Over Voltage Threshold\\
+
+		\texttt{err1\_threshold} &
+		Error Threshold\\
+
+		\texttt{err2\_threshold} &
+		Error Glitch threshold\\
+
+		\texttt{ignd\_threshold} &
+		Ground Current threshold\\
+
+		\texttt{ovc1\_flt\_cnt} &
+		DCCT1 Over Current timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{ovc2\_flt\_cnt} &
+		DCCT2 Over Current timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{ovv\_flt\_cnt} &
+		Over Voltage timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{err1\_flt\_cnt} &
+		Error Fault (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{err2\_flt\_cnt} &
+		Error Glitch timer (must be high for this threshold number of counts to trigger a snapshot)\\
+
+		\texttt{ignd\_flt\_cnt} &
+		Ground Current timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{dcct\_flt\_cnt} &
+		DCCT fault counter (if DCCT or DCCT cable are bad then the fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{flt1\_flt\_cnt} &
+        Fault 1 timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{flt2\_flt\_cnt} &
+		Fault 2 timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{flt3\_flt\_cnt} &
+		Fault3 timer (fault must be high for this threshold number of counts to trigger the fault)\\
+
+		\texttt{flt\_on\_cnt} &
+		If the power supply has not turned on in this amount of time this fault will be asserted\\
+
+		\texttt{flt\_heartbeat\_cnt} &
+		If the Bipolar converter heartbeat is inactive for this amount of time the on fault will be asserted\\
+
+		\bottomrule
+	\end{tabular}
+	\caption{\texttt{PSCFaultThresholdsLimits} parameters}
+	\label{tab:fault-limits}
+\end{table}
+
+\bigskip
+
+The \texttt{PSCScaleFactors} are as follows:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{p{4cm}p{10cm}}
+		\toprule
+		\textbf{Parameter} & \textbf{Description} \\
+		\midrule
+		\texttt{sf\_ramp\_rate} &
+		scale factor for ramp rate\\
+
+		\texttt{sf\_dcct\_scale} &
+		scale factor for DCCT current\\
+
+		\texttt{sf\_vout} &
+		scale factor for power supply output voltage\\
+
+		\texttt{sf\_ignd} &
+		scale factor for ground current\\
+
+		\texttt{sf\_spare} &
+		scale factor for spare input channel\\
+
+		\texttt{sf\_regulator} &
+		scale factor for regulator output\\
+		\texttt{sf\_error} &
+		scale factor for error\\
+
+		\bottomrule
+	\end{tabular}
+	\caption{\texttt{PSCScaleFactors} parameters}
+	\label{tab:scale-factors}
+\end{table}

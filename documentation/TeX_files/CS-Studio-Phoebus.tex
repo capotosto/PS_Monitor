@@ -1,0 +1,32 @@
+% !TeX root = ../main.tex
+\chapter{CS-Studio - Phoebus}
+\label{chap:cs-studio}
+
+\section{Introduction}
+CS-Studio Phoebus is installed using precompiled binaries. This application requires a Java runtime environment be installed.\\
+
+\noindent The 'BOB' files - the user interface panels, are located in the IOC's directories, \path{/epics/iocs/PSCtest/gui} and \texttt{/epics/iocs/zpsc\_ioc/gui}\\
+
+\noindent Behavior of some features of Phoebus must be modified by the shell script used to launch Phoebus, an example is included with the below installation instructions to modify the behavior of the 'Home' button, used to bring up the custom 'PSC Launcher' panel using the Home button, instead of having to manually navigate to the file when needed.\\
+
+\section{Installing Phoebus}
+\begin{enumerate}
+	\item If not installed, install Java, e.g.:\newline
+		\hspace*{2em}\texttt{sudo apt update \&\& sudo apt install openjdk-17-jdk}
+	\item Create the directory: \texttt{sudo mkdir /opt/phoebus}\newline
+		\hspace*{2em}\texttt{sudo chown \$USER:epics /opt/phoebus}\newline
+		\hspace*{2em}\texttt{chmod 2775 /opt/phoebus}
+	\item Download Phoebus and extract to the \texttt{/opt/phoebus} directory\newline
+	\href{https://github.com/ControlSystemStudio/phoebus/releases/download/v4.7.4/phoebus-4.7.4-linux.tar.gz}{https://github.com/ControlSystemStudio/phoebus/releases/download/v4.7.4/phoebus-4.7.4-linux.tar.gz}\newline
+\begin{itemize}
+	\item[] \texttt{cd /opt/phoebus}
+	\item[]\texttt{wget }\path|https://github.com/ControlSystemStudio/phoebus/releases/download/v4.7.4/phoebus-4.7.4-linux.tar.gz|
+	\item[] \texttt{tar -xvzf phoebus-4.7.4-linux.tar.gz -C . --strip-components=1}
+\end{itemize}
+	\item{Make the shell script executable: \texttt{chmod +x phoebus.sh}}
+	\item Alias Phoebus to run via command \texttt{run-phoebus}:\\
+		\hspace*{2em}\texttt{echo 'alias run-phoebus="/opt/phoebus/phoebus.sh"' >> \textasciitilde/.bashrc}\\
+		\hspace*{2em}\texttt{source \textasciitilde/.bashrc}
+	\item{Now test! Try run-phoebus from a terminal.}
+
+	\end{enumerate}

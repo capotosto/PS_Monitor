@@ -1,0 +1,38 @@
+% !TeX root = ../main.tex
+
+\chapter{Installing and Configuring Minicom}
+\label{chap:Installing and Configuring Minicom}
+\section{Overview}
+Minicom is the serial terminal emulator of choice for NSLS-II, but many other options exist such as Teraterm for Windows, or PuTTY for cross platform. 
+
+\section{Installation in a Linux environment}
+\subsection*{User Permissions}
+Access to the serial port by default requires privilege escalation. This issue can be sidestepped by adding the user accounts which need to access the serial ports to the dialout (or uucp for RHEL) user group.\\\\
+This is also required later for use of the calibration script, if a USB-based GPIB adapter is used, otherwise those scripts must run as root, which can cause permissions issues with reports.\\\\
+To add a user to the dialout group: \texttt{sudo usermod -aG dialout \$USER}\\
+Then to test: \texttt{newgrp dialout}, then \texttt{groups}. You should see dialout in your groups.\\\\
+You may need to log out and log back in to ensure this persists in new terminal windows. 
+
+\subsection{Installing Minicom}
+Installation of Minicom is simple, in a Debian-based distribution, use apt:\\
+\texttt{sudo apt-get update \&\& sudo apt-get install -y minicom}\\
+
+\section{Configuring Minicom}
+Create a default configuration if one does not exist for Minicom:\\\\
+Open the a text file as root: \texttt{sudo nano /etc/minicom/minirc.dfl} and enter the following (One line per command, whitespace/tabs inside the line isn't critical)
+\begin{verbatim}
+	pu baudrate         115200
+	pu bits             8
+	pu parity           N
+	pu stopbits         1
+	pu rtscts           No
+	pu xonxoff          No
+\end{verbatim}
+This disables hardware and software flow control, and sets baud rate, parity, and stop bits.
+
+\section{Running Minicom}
+You are now ready to run Minicom. Find the PSC's serial port. With no PSC connected, you run: 
+\texttt{ls /dev/}\\\\
+Then plug in the PSC, and re-run the command; it should appear as a USB device, e.g. ttyUSB2. Search the list for which one new device will suddenly appear in the list.\\\\
+Then: \texttt{minicom -D /dev/ttyUSB2}, replacing ttyUSB2 with whatever your PSC's port is.\\
+A serial terminal should open; press return, and the PSC's menu should now print on the screen.
