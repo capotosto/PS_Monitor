@@ -1,0 +1,213 @@
+(kicad_wks
+	(version 20231118)
+	(generator "pl_editor")
+	(generator_version "9.0")
+	(setup
+		(textsize 1.5 1.5)
+		(linewidth 0.15)
+		(textlinewidth 0.15)
+		(left_margin 10)
+		(right_margin 10)
+		(top_margin 10)
+		(bottom_margin 10)
+	)
+	(rect
+		(name "")
+		(start 0 0 ltcorner)
+		(end 0 0)
+		(repeat 2)
+		(incrx 2)
+		(incry 2)
+	)
+	(line
+		(name "")
+		(start 50 2 ltcorner)
+		(end 50 0 ltcorner)
+		(repeat 30)
+		(incrx 50)
+	)
+	(tbtext "1"
+		(name "")
+		(pos 25 1 ltcorner)
+		(font
+			(size 1.3 1.3)
+		)
+		(repeat 100)
+		(incrx 50)
+	)
+	(line
+		(name "")
+		(start 50 2 lbcorner)
+		(end 50 0 lbcorner)
+		(repeat 30)
+		(incrx 50)
+	)
+	(tbtext "1"
+		(name "")
+		(pos 25 1 lbcorner)
+		(font
+			(size 1.3 1.3)
+		)
+		(repeat 100)
+		(incrx 50)
+	)
+	(line
+		(name "")
+		(start 0 50 ltcorner)
+		(end 2 50 ltcorner)
+		(repeat 30)
+		(incry 50)
+	)
+	(tbtext "A"
+		(name "")
+		(pos 1 25 ltcorner)
+		(font
+			(size 1.3 1.3)
+		)
+		(justify center)
+		(repeat 100)
+		(incry 50)
+	)
+	(line
+		(name "")
+		(start 0 50 rtcorner)
+		(end 2 50 rtcorner)
+		(repeat 30)
+		(incry 50)
+	)
+	(tbtext "A"
+		(name "")
+		(pos 1 25 rtcorner)
+		(font
+			(size 1.3 1.3)
+		)
+		(justify center)
+		(repeat 100)
+		(incry 50)
+	)
+	(line
+		(name "")
+		(start 69.989 6.0022)
+		(end 2 6.0002)
+	)
+	(line
+		(name "")
+		(start 9.989 15.0022)
+		(end 9.989 6.0022)
+	)
+	(line
+		(name "")
+		(start 22.489 6.0022)
+		(end 22.489 2.0022)
+	)
+	(line
+		(name "")
+		(start -4.511 42.5022)
+		(end -0.011 42.5022)
+	)
+	(line
+		(name "")
+		(start -4.511 77.0022)
+		(end -0.011 77.0022)
+	)
+	(tbtext "${DRAWING_NUMBER-PREFIX}-${DRAWING-ASSY_SUFFIX}"
+		(name "")
+		(pos -1.2 59.4)
+		(rotate 90)
+		(font
+			(face "Arial")
+			(size 2 2)
+		)
+		(justify center top)
+	)
+	(tbtext "SHEET SIZE"
+		(name "")
+		(pos 82.489 6.9)
+		(font
+			(face "Arial")
+			(size 0.762 0.762)
+		)
+		(justify center)
+	)
+	(tbtext "REVISION"
+		(name "")
+		(pos 6.3 6.9)
+		(font
+			(face "Arial")
+			(size 1 1)
+		)
+		(justify center)
+	)
+	(tbtext "DRAWING/PART NUMBER:"
+		(name "")
+		(pos 52.3 6.9002)
+		(font
+			(face "Arial")
+			(size 1 1)
+		)
+	)
+	(tbtext "SHEET 2 OF 2"
+		(name "")
+		(pos 22.05 4.15)
+		(font
+			(face "Arial")
+			(size 1.27 1.27)
+		)
+	)
+	(tbtext "${REVISION_NUM}"
+		(name "")
+		(pos 6.3 10.75)
+		(font
+			(face "Arial")
+			(size 3.556 3.556)
+		)
+		(justify center)
+	)
+	(tbtext "${KICAD_VERSION}"
+		(name "")
+		(pos -0.2 -1.6)
+		(option page1only)
+		(font
+			(face "Arial")
+			(size 1.25 1.25)
+		)
+		(justify right)
+	)
+	(rect
+		(name "")
+		(start 1.989 15.0022)
+		(end 85.989 6.0022)
+	)
+	(line
+		(name "")
+		(start 85.989 6.0022)
+		(end 85.989 2.0022)
+	)
+	(tbtext "${DRAWING_NUMBER-PREFIX}-${DRAWING-ASSY_SUFFIX}"
+		(name "")
+		(pos 44.155 11)
+		(font
+			(face "Arial")
+			(size 2 2)
+		)
+		(justify center)
+	)
+	(tbtext "${PAPER}"
+		(name "")
+		(pos 82.489 11)
+		(font
+			(face "Arial")
+			(size 4.572 4.572) bold)
+		(justify center)
+	)
+	(line
+		(name "")
+		(start -4.511 77.002)
+		(end -4.511 42.502)
+	)
+	(line
+		(name "")
+		(start 78.989 6.002)
+		(end 78.989 15.002)
+	)
+)
