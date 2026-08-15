@@ -1,0 +1,7 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Footprints")(type "KiCad")(uri "${KIPRJMOD}/Libraries/Footprints.pretty")(options "")(descr ""))
+  (lib (name "footprints")(type "KiCad")(uri "${KIPRJMOD}/Libraries/arduino-kicad-library-master/footprints/arduino-library.pretty")(options "")(descr ""))
+  (lib (name "GigaDisplay")(type "KiCad")(uri "${KIPRJMOD}/Libraries/Footprints.pretty/GigaDisplay.pretty")(options "")(descr ""))
+  (lib (name "Wuerth")(type "KiCad")(uri "${KIPRJMOD}/Libraries/Footprints.pretty/Wuerth.pretty")(options "")(descr ""))
+)

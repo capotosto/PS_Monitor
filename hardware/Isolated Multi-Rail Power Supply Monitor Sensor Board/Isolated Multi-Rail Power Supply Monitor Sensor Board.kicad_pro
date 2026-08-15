@@ -58,24 +58,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        [
-          "nonmirrored_text_on_back_layer|203065200|143653178|1fa4c489-fa86-4235-9441-a2d09fbdfd95|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "nonmirrored_text_on_back_layer|203065200|143653178|388811d5-ed2a-47cd-9f72-579a6dcf79f1|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "nonmirrored_text_on_back_layer|203065200|143653178|a90f7f68-30ed-4c1d-a33a-afa5acc3f452|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "nonmirrored_text_on_back_layer|203135200|157653178|5af6481a-2b6e-45a0-a6fd-5a83c4450a45|00000000-0000-0000-0000-000000000000",
-          ""
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -573,7 +556,7 @@
       "svg": "",
       "vrml": ""
     },
-    "page_layout_descr_file": "kicad-embed://KiCAD_PLDF_FAB_DRAWING.kicad_wks"
+    "page_layout_descr_file": ""
   },
   "schematic": {
     "annotate_start_num": 0,

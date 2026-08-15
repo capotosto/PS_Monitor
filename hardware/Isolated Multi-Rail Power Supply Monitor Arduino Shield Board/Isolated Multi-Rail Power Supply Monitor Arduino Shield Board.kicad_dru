@@ -1,0 +1,240 @@
+(version 1)
+
+# ==============================================================================
+# PCBWay 6-Layer 1oz/1oz NO HDI
+# Board:
+# Design targets:
+#   6/6 track/space
+#   Standard via:            0.60 mm diameter / 0.30 mm drill
+#   Via annular ring:        0.15 mm minimum
+#   PTH annular ring:        0.254 mm / 10 mil minimum
+#   Copper to routed edge:   0.30 mm minimum
+# ==============================================================================
+
+
+# ==============================================================================
+# GENERAL COPPER CLEARANCE
+# ==============================================================================
+
+# PCBWay recommends >= 6 mil trace/spacing for economical production.
+
+(rule "Minimum Copper Clearance"
+    (constraint clearance (min 0.1524mm))
+)
+
+
+# ==============================================================================
+# TRACE WIDTH
+# ==============================================================================
+
+(rule "Minimum Trace Width - Outer Layers"
+    (constraint track_width (min 0.1524mm))
+    (layer outer)
+    (condition "A.Type == 'Track'")
+)
+
+(rule "Minimum Trace Width - Inner Layers"
+    (constraint track_width (min 0.1524mm))
+    (layer inner)
+    (condition "A.Type == 'Track'")
+)
+
+
+# ==============================================================================
+# VIA TYPE
+# ==============================================================================
+(rule "Disallow HDI Vias"
+    (constraint disallow micro_via buried_via)
+)
+
+
+# ==============================================================================
+# STANDARD THROUGH VIA
+# ==============================================================================
+
+# 0.30 mm drill
+# 0.60 mm finished copper diameter
+#
+# Annular ring:
+#
+#   (0.60 - 0.30) / 2 = 0.15 mm
+#
+
+#(rule "Standard Through Via"
+#    (constraint hole_size (min 0.30mm))
+#    (constraint via_diameter (min 0.60mm))
+#    (constraint annular_width (min 0.15mm))
+#    (condition "A.Type == 'Via'")
+#)
+(rule "Small Through Via"
+    (constraint hole_size (min 0.20mm))
+    (constraint via_diameter (min 0.50mm))
+    (constraint annular_width (min 0.15mm))
+    (condition "A.Type == 'Via'")
+)
+
+# ==============================================================================
+# ROUND PLATED THROUGH-HOLE DRILLS
+# ==============================================================================
+(rule "PTH Round Hole Size"
+    (constraint hole_size (min 0.20mm) (max 6.00mm))
+    (condition "A.Pad_Type == 'Through-hole' && A.Hole_Size_X == A.Hole_Size_Y")
+)
+
+
+# ==============================================================================
+# ROUND NON-PLATED HOLES
+# ==============================================================================
+
+(rule "NPTH Round Hole Size"
+    (constraint hole_size (min 0.30mm) (max 6.00mm))
+    (condition "A.Pad_Type == 'NPTH, mechanical' && A.Hole_Size_X == A.Hole_Size_Y")
+)
+
+
+# ==============================================================================
+# PTH ANNULAR RING
+# ==============================================================================
+# 10 mil = 0.254 mm
+
+(rule "PTH Minimum Annular Ring"
+    (constraint annular_width (min 0.152mm))
+    (condition "A.Pad_Type == 'Through-hole'")
+)
+
+
+# ==============================================================================
+# CASTELLATED HOLES
+# ==============================================================================
+
+(rule "Minimum Castellated Hole Size"
+    (constraint hole_size (min 0.50mm))
+    (condition "A.Type == 'Pad' && A.Fabrication_Property == 'Castellated pad'")
+)
+
+
+# ==============================================================================
+# PLATED SLOTS
+# ==============================================================================
+
+(rule "Minimum Plated Slot Width"
+    (constraint hole_size (min 0.50mm))
+    (condition "A.isPlated() && A.Hole_Size_X != A.Hole_Size_Y")
+)
+
+
+# ==============================================================================
+# NON-PLATED SLOTS
+# ==============================================================================
+
+(rule "Minimum Non-Plated Slot Width"
+    (constraint hole_size (min 0.80mm))
+    (condition "!A.isPlated() && A.Hole_Size_X != A.Hole_Size_Y")
+)
+
+# ==============================================================================
+# THERMAL / VIA-IN-PAD ANNULAR RING
+# ==============================================================================
+
+(rule "Thermal Via Annular Ring"
+    (constraint annular_width (min 0.15mm))
+    (condition "A.Pad_Type == 'Through-hole' && A.Fabrication_Property == 'Heatsink pad'")
+)
+
+# ==============================================================================
+# GENERAL HOLE-TO-HOLE SPACING
+# ==============================================================================
+(rule "Minimum Drill Hole to Hole Clearance"
+    (constraint hole_to_hole (min 0.30mm))
+)
+
+
+# ==============================================================================
+# HOLE TO COPPER CLEARANCE
+# ==============================================================================
+# 10 mil = 0.254 mm
+
+(rule "Minimum Hole to Copper Clearance"
+    (constraint hole_clearance (min 0.254mm))
+)
+
+
+# ==============================================================================
+# NPTH TO COPPER CLEARANCE
+# ==============================================================================
+(rule "NPTH to Copper Clearance"
+    (constraint physical_hole_clearance (min 0.254mm))
+    (condition "A.Pad_Type == 'NPTH, mechanical' && (B.Type == 'Track' || B.Type == 'Pad' || B.Type == 'Via' || B.Type == 'Zone')")
+)
+
+
+# ==============================================================================
+# BOARD EDGE CLEARANCE
+# ==============================================================================
+(rule "Copper to Board Edge"
+    (constraint edge_clearance (min 0.30mm))
+    (condition "A.Type == 'Track' || A.Type == 'Pad' || A.Type == 'Via' || A.Type == 'Zone'")
+)
+
+
+# ==============================================================================
+# SILKSCREEN TEXT
+# ==============================================================================
+(rule "Minimum Silkscreen Text"
+    (constraint text_thickness (min 0.15mm))
+    (constraint text_height (min 0.80mm))
+    (condition "A.Type == '*Text' && A.Layer == '*Silkscreen'")
+)
+
+
+# ==============================================================================
+# PAD TO SILKSCREEN
+# ==============================================================================
+(rule "Pad to Silkscreen Clearance"
+    (constraint silk_clearance (min 0.20mm))
+    (condition "A.Type == 'Pad' && (B.Type == '*Text' || B.Type == 'Graphic')")
+)
+
+
+# ==============================================================================
+# SPECIFIC HOLE-TO-HOLE RULES
+# ==============================================================================
+# ------------------------------------------------------------------------------
+# VIA TO VIA
+# ------------------------------------------------------------------------------
+# 0.30 mm = 11.81 mil
+
+(rule "Via to Via Hole Clearance"
+    (constraint hole_to_hole (min 0.30mm))
+    (condition "A.Type == 'Via' && B.Type == 'Via'")
+)
+
+
+# ------------------------------------------------------------------------------
+# PTH TO PTH
+# ------------------------------------------------------------------------------
+# 16 mil = 0.4064 mm
+
+(rule "PTH to PTH Hole Clearance"
+    (constraint hole_to_hole (min 0.4064mm))
+    (condition "A.Pad_Type == 'Through-hole' && B.Pad_Type == 'Through-hole'")
+)
+
+
+# ------------------------------------------------------------------------------
+# NPTH TO NPTH
+# ------------------------------------------------------------------------------
+
+(rule "NPTH to NPTH Hole Clearance"
+    (constraint hole_to_hole (min 0.30mm))
+    (condition "A.Pad_Type == 'NPTH, mechanical' && B.Pad_Type == 'NPTH, mechanical'")
+)
+
+# ==============================================================================
+# FINE-PITCH SMD PAD CLEARANCE
+# ==============================================================================
+
+(rule "Fine Pitch SMD Pad Clearance"
+    (constraint clearance (min 0.15mm))
+    (condition "A.Pad_Type == 'SMD' && B.Pad_Type == 'SMD'")
+)
