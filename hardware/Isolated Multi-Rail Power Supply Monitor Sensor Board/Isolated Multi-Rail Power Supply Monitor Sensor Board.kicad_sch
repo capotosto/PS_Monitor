@@ -11489,7 +11489,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4k87"
+		(property "Value" "4k7"
 			(at 335.28 39.3699 0)
 			(effects
 				(font
@@ -11525,7 +11525,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "P4.7KCPCT-ND"
 			(at 332.74 38.1 0)
 			(effects
 				(font
@@ -11543,16 +11543,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field10" ""
-			(at 332.74 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "ERA-2ARB472X"
 			(at 332.74 38.1 0)
 			(effects
 				(font
@@ -11570,7 +11561,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
+		(property "NOTE" ""
 			(at 332.74 38.1 0)
 			(effects
 				(font
@@ -11694,16 +11685,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 152.4 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 152.4 41.91 0)
 			(effects
 				(font
@@ -11883,6 +11865,15 @@
 				(hide yes)
 			)
 		)
+		(property "NOTE" ""
+			(at 302.26 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "aa106184-56b6-46f1-8a61-e6ca6fc3e1aa")
 		)
@@ -11989,6 +11980,15 @@
 				(hide yes)
 			)
 		)
+		(property "NOTE" ""
+			(at 322.58 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "cc6f0bd0-d7df-4b33-8d71-1cec778bf124")
 		)
@@ -12068,7 +12068,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 318.77 181.61 0)
 			(effects
 				(font
@@ -12077,7 +12077,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 318.77 181.61 0)
 			(effects
 				(font
@@ -12095,16 +12095,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 318.77 181.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 318.77 181.61 0)
 			(effects
 				(font
@@ -12147,7 +12138,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5015"
 			(at 364.49 71.6279 0)
 			(effects
 				(font
@@ -12176,6 +12167,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 361.95 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 361.95 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND "
+			(at 361.95 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 361.95 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 361.95 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 361.95 73.66 0)
 			(effects
 				(font
@@ -12279,6 +12315,15 @@
 			)
 		)
 		(property "Manufacturer" "Cal-Chip Electronics, Inc."
+			(at 363.22 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 363.22 27.94 0)
 			(effects
 				(font
@@ -12402,16 +12447,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 34.29 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 34.29 73.66 0)
 			(effects
 				(font
@@ -12498,7 +12534,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 309.88 181.61 0)
 			(effects
 				(font
@@ -12507,7 +12543,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 309.88 181.61 0)
 			(effects
 				(font
@@ -12525,16 +12561,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 309.88 181.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 309.88 181.61 0)
 			(effects
 				(font
@@ -12790,16 +12817,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 60.96 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 60.96 73.66 0)
 			(effects
 				(font
@@ -13207,16 +13225,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 314.96 214.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 314.96 214.63 0)
 			(effects
 				(font
@@ -13256,7 +13265,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5015"
 			(at 367.03 74.1679 0)
 			(effects
 				(font
@@ -13285,6 +13294,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 364.49 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 364.49 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND "
+			(at 364.49 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 364.49 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 364.49 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 364.49 76.2 0)
 			(effects
 				(font
@@ -13462,16 +13516,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 327.66 177.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 327.66 177.8 0)
 			(effects
 				(font
@@ -13514,7 +13559,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5015"
 			(at 364.49 93.2179 0)
 			(effects
 				(font
@@ -13543,6 +13588,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 361.95 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 361.95 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND "
+			(at 361.95 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 361.95 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 361.95 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 361.95 95.25 0)
 			(effects
 				(font
@@ -14377,6 +14467,15 @@
 				(hide yes)
 			)
 		)
+		(property "NOTE" ""
+			(at 327.66 22.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "cb90d506-b8d1-4141-b46a-5c8d54428914")
 		)
@@ -14681,16 +14780,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 40.64 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 40.64 26.67 0)
 			(effects
 				(font
@@ -14832,16 +14922,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 43.18 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 43.18 73.66 0)
 			(effects
 				(font
@@ -14954,16 +15035,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 139.7 129.54 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 139.7 129.54 90)
 			(effects
 				(font
@@ -15159,16 +15231,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 161.29 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 161.29 41.91 0)
 			(effects
 				(font
@@ -15274,6 +15337,15 @@
 			)
 		)
 		(property "Manufacturer" "TDK"
+			(at 237.49 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 237.49 27.94 0)
 			(effects
 				(font
@@ -15451,16 +15523,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 243.84 129.54 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 243.84 129.54 90)
 			(effects
 				(font
@@ -15621,7 +15684,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 347.98 125.73 0)
 			(effects
 				(font
@@ -15630,7 +15693,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 347.98 125.73 0)
 			(effects
 				(font
@@ -15639,7 +15702,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale "
 			(at 347.98 125.73 0)
 			(effects
 				(font
@@ -15648,16 +15711,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 347.98 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 347.98 125.73 0)
 			(effects
 				(font
@@ -15818,7 +15872,25 @@
 				(hide yes)
 			)
 		)
-		(property "DISTRIBUTOR" "Digikey"
+		(property "NOTE" ""
+			(at 349.25 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 349.25 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
 			(at 349.25 179.07 0)
 			(effects
 				(font
@@ -15960,16 +16032,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 161.29 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 161.29 27.94 0)
 			(effects
 				(font
@@ -16083,16 +16146,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 54.61 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 54.61 104.14 0)
 			(effects
 				(font
@@ -16376,16 +16430,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 325.12 214.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 325.12 214.63 0)
 			(effects
 				(font
@@ -16491,7 +16536,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5001"
 			(at 350.52 52.5779 0)
 			(effects
 				(font
@@ -16520,6 +16565,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 347.98 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 347.98 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5001-ND "
+			(at 347.98 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 347.98 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5001"
+			(at 347.98 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 347.98 54.61 0)
 			(effects
 				(font
@@ -16836,16 +16926,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 143.51 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 143.51 27.94 0)
 			(effects
 				(font
@@ -17024,16 +17105,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 143.51 219.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 143.51 219.71 90)
 			(effects
 				(font
@@ -17249,16 +17321,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 304.8 214.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 304.8 214.63 0)
 			(effects
 				(font
@@ -17510,16 +17573,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 143.51 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 143.51 41.91 0)
 			(effects
 				(font
@@ -17766,6 +17820,15 @@
 				(hide yes)
 			)
 		)
+		(property "NOTE" ""
+			(at 312.42 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "49beb175-e912-4cfc-81ae-30f30a5bd560")
 		)
@@ -17947,16 +18010,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 52.07 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 52.07 73.66 0)
 			(effects
 				(font
@@ -18063,6 +18117,15 @@
 			)
 		)
 		(property "Manufacturer" "Cal-Chip Electronics, Inc."
+			(at 353.06 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 353.06 27.94 0)
 			(effects
 				(font
@@ -18289,7 +18352,7 @@
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp yes)
 		(fields_autoplaced yes)
@@ -18312,7 +18375,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 248.92 38.1 0)
 			(effects
 				(font
@@ -18331,6 +18394,15 @@
 			)
 		)
 		(property "Description" "Resistor, small US symbol"
+			(at 248.92 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 248.92 38.1 0)
 			(effects
 				(font
@@ -18483,7 +18555,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 355.6 77.47 0)
 			(effects
 				(font
@@ -18492,7 +18564,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 355.6 77.47 0)
 			(effects
 				(font
@@ -18501,7 +18573,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale "
 			(at 355.6 77.47 0)
 			(effects
 				(font
@@ -18510,16 +18582,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 355.6 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 355.6 77.47 0)
 			(effects
 				(font
@@ -18765,16 +18828,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 314.96 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 314.96 76.2 0)
 			(effects
 				(font
@@ -18890,16 +18944,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 60.96 204.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 60.96 204.47 0)
 			(effects
 				(font
@@ -19038,16 +19083,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 314.96 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 314.96 125.73 0)
 			(effects
 				(font
@@ -19160,16 +19196,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 243.84 68.58 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 243.84 68.58 90)
 			(effects
 				(font
@@ -19290,16 +19317,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 304.8 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 304.8 125.73 0)
 			(effects
 				(font
@@ -19445,7 +19463,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-0.0JDKR-ND "
 			(at 248.92 27.94 0)
 			(effects
 				(font
@@ -19463,7 +19481,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field10" ""
+		(property "MPN" "CRCW04020000Z0ED "
 			(at 248.92 27.94 0)
 			(effects
 				(font
@@ -19472,7 +19490,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "Manufacturer" "Vishay Dale "
 			(at 248.92 27.94 0)
 			(effects
 				(font
@@ -19481,16 +19499,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
-			(at 248.92 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" ""
+		(property "NOTE" ""
 			(at 248.92 27.94 0)
 			(effects
 				(font
@@ -19933,6 +19942,15 @@
 				(hide yes)
 			)
 		)
+		(property "NOTE" ""
+			(at 292.1 22.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "54af98ba-d766-42bd-978b-107a79eda829")
 		)
@@ -20106,16 +20124,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 96.52 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 96.52 27.94 0)
 			(effects
 				(font
@@ -20230,7 +20239,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5015"
 			(at 364.49 141.4779 0)
 			(effects
 				(font
@@ -20259,6 +20268,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 361.95 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 361.95 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND "
+			(at 361.95 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 361.95 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 361.95 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 361.95 143.51 0)
 			(effects
 				(font
@@ -20343,7 +20397,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 365.76 182.88 0)
 			(effects
 				(font
@@ -20352,7 +20406,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 365.76 182.88 0)
 			(effects
 				(font
@@ -20361,7 +20415,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale "
 			(at 365.76 182.88 0)
 			(effects
 				(font
@@ -20370,16 +20424,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 365.76 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 365.76 182.88 0)
 			(effects
 				(font
@@ -20494,16 +20539,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 66.04 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 66.04 166.37 0)
 			(effects
 				(font
@@ -20641,16 +20677,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 33.02 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 33.02 129.54 0)
 			(effects
 				(font
@@ -20764,7 +20791,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5000"
 			(at 222.25 20.8279 0)
 			(effects
 				(font
@@ -20793,6 +20820,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 219.71 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 219.71 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5000-ND "
+			(at 219.71 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 219.71 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5000"
+			(at 219.71 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 219.71 22.86 0)
 			(effects
 				(font
@@ -21000,16 +21072,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 335.28 214.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 335.28 214.63 0)
 			(effects
 				(font
@@ -21049,7 +21112,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5000"
 			(at 356.87 20.8279 0)
 			(effects
 				(font
@@ -21078,6 +21141,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 354.33 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 354.33 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5000-ND "
+			(at 354.33 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 354.33 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5000"
+			(at 354.33 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 354.33 22.86 0)
 			(effects
 				(font
@@ -21227,7 +21335,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 356.87 182.88 0)
 			(effects
 				(font
@@ -21236,7 +21344,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 356.87 182.88 0)
 			(effects
 				(font
@@ -21245,7 +21353,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale "
 			(at 356.87 182.88 0)
 			(effects
 				(font
@@ -21254,16 +21362,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 356.87 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 356.87 182.88 0)
 			(effects
 				(font
@@ -21717,16 +21816,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 152.4 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 152.4 27.94 0)
 			(effects
 				(font
@@ -21880,7 +21970,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 347.98 77.47 0)
 			(effects
 				(font
@@ -21889,7 +21979,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 347.98 77.47 0)
 			(effects
 				(font
@@ -21898,7 +21988,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale "
 			(at 347.98 77.47 0)
 			(effects
 				(font
@@ -21907,16 +21997,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 347.98 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 347.98 77.47 0)
 			(effects
 				(font
@@ -22022,6 +22103,15 @@
 			)
 		)
 		(property "Manufacturer" "Murata Electronics"
+			(at 215.9 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 215.9 27.94 0)
 			(effects
 				(font
@@ -22201,16 +22291,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 31.75 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 31.75 104.14 0)
 			(effects
 				(font
@@ -22330,16 +22411,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 54.61 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 54.61 129.54 0)
 			(effects
 				(font
@@ -22454,7 +22526,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5015"
 			(at 367.03 122.4279 0)
 			(effects
 				(font
@@ -22483,6 +22555,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 364.49 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 364.49 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND "
+			(at 364.49 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 364.49 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 364.49 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 364.49 124.46 0)
 			(effects
 				(font
@@ -22567,7 +22684,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 355.6 125.73 0)
 			(effects
 				(font
@@ -22576,7 +22693,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 355.6 125.73 0)
 			(effects
 				(font
@@ -22585,7 +22702,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale "
 			(at 355.6 125.73 0)
 			(effects
 				(font
@@ -22594,16 +22711,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 355.6 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 355.6 125.73 0)
 			(effects
 				(font
@@ -22709,6 +22817,15 @@
 			)
 		)
 		(property "Manufacturer" "TDK"
+			(at 227.33 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 227.33 27.94 0)
 			(effects
 				(font
@@ -22823,16 +22940,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 306.07 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 306.07 76.2 0)
 			(effects
 				(font
@@ -23136,16 +23244,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 336.55 134.62 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 336.55 134.62 0)
 			(effects
 				(font
@@ -23326,6 +23425,15 @@
 			)
 		)
 		(property "MPN" "C1005X5R1E474K050BB"
+			(at 257.81 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 257.81 43.18 0)
 			(effects
 				(font
@@ -23570,16 +23678,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 139.7 68.58 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 139.7 68.58 90)
 			(effects
 				(font
@@ -23794,6 +23893,51 @@
 				(hide yes)
 			)
 		)
+		(property "NOTE" ""
+			(at 276.86 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "595-TPS62912RPUR "
+			(at 276.86 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Mouser"
+			(at 276.86 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "TPS62912RPUR"
+			(at 276.86 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 276.86 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "6"
 			(uuid "4ba60a74-1376-4d1f-b39f-bcdc632d06a0")
 		)
@@ -23852,7 +23996,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "15k2"
+		(property "Value" "14k7"
 			(at 335.28 29.2099 0)
 			(effects
 				(font
@@ -23888,7 +24032,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "P17731CT-ND"
 			(at 332.74 27.94 0)
 			(effects
 				(font
@@ -23906,16 +24050,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field10" ""
-			(at 332.74 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "ERA-2APB1472X"
 			(at 332.74 27.94 0)
 			(effects
 				(font
@@ -23933,7 +24068,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
+		(property "NOTE" ""
 			(at 332.74 27.94 0)
 			(effects
 				(font
@@ -24357,7 +24492,7 @@
 		(at 342.9 27.94 180)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp yes)
 		(uuid "fbd64a9d-4a88-4448-b463-f028646e2752")
@@ -24398,6 +24533,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, small symbol"
+			(at 342.9 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
 			(at 342.9 27.94 0)
 			(effects
 				(font
@@ -24510,16 +24654,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 247.65 219.71 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 247.65 219.71 90)
 			(effects
 				(font
@@ -24568,7 +24703,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Alt"
+		(property "Value" "5015"
 			(at 364.49 119.8879 0)
 			(effects
 				(font
@@ -24597,6 +24732,51 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 361.95 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "NOTE" ""
+			(at 361.95 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND "
+			(at 361.95 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 361.95 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 361.95 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
 			(at 361.95 121.92 0)
 			(effects
 				(font
@@ -24699,16 +24879,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 336.55 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 336.55 86.36 0)
 			(effects
 				(font

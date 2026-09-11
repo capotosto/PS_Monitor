@@ -4196,16 +4196,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 38.1 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 38.1 25.4 0)
 			(effects
 				(font
@@ -4370,16 +4361,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 146.05 41.91 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 146.05 41.91 90)
 			(effects
 				(font
@@ -4599,16 +4581,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 151.13 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 151.13 60.96 0)
 			(effects
 				(font
@@ -4746,16 +4719,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 161.29 83.82 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 161.29 83.82 0)
 			(effects
 				(font
@@ -4890,16 +4854,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 120.65 81.28 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 120.65 81.28 90)
 			(effects
 				(font
@@ -5034,16 +4989,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 120.65 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 120.65 24.13 0)
 			(effects
 				(font
@@ -5178,16 +5124,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 35.56 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 35.56 33.02 0)
 			(effects
 				(font
@@ -5324,16 +5261,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 133.35 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 133.35 38.1 0)
 			(effects
 				(font
@@ -5657,16 +5585,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 44.45 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 44.45 33.02 0)
 			(effects
 				(font
@@ -6060,16 +5979,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 133.35 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 133.35 77.47 0)
 			(effects
 				(font
@@ -6220,16 +6130,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 146.05 30.48 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 146.05 30.48 90)
 			(effects
 				(font
@@ -6365,16 +6266,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
-			(at 82.55 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "NOTE" ""
 			(at 82.55 30.48 0)
 			(effects
 				(font

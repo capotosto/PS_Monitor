@@ -8480,7 +8480,7 @@
 	(text_box "MICROCONTROLLER"
 		(exclude_from_sim no)
 		(at 12.7 62.23 0)
-		(size 175.26 160.02)
+		(size 175.26 168.91)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
 			(width 0)
@@ -13068,7 +13068,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 312.42 29.21 0)
 			(effects
 				(font
@@ -13077,7 +13077,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 312.42 29.21 0)
 			(effects
 				(font
@@ -13086,7 +13086,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale"
 			(at 312.42 29.21 0)
 			(effects
 				(font
@@ -13192,7 +13192,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 200.66 74.93 0)
 			(effects
 				(font
@@ -13201,7 +13201,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 200.66 74.93 0)
 			(effects
 				(font
@@ -13210,7 +13210,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale"
 			(at 200.66 74.93 0)
 			(effects
 				(font
@@ -13315,7 +13315,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 303.53 29.21 0)
 			(effects
 				(font
@@ -13324,7 +13324,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 303.53 29.21 0)
 			(effects
 				(font
@@ -13333,7 +13333,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale"
 			(at 303.53 29.21 0)
 			(effects
 				(font
@@ -14301,7 +14301,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "BLM18SG121TN1D"
+		(property "MPN" "BBUP00160805121Y00 "
 			(at 292.1 104.14 90)
 			(effects
 				(font
@@ -14310,7 +14310,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "490-3996-6-ND"
+		(property "DPN" "553-BBUP00160805121Y00CT-ND "
 			(at 292.1 104.14 90)
 			(effects
 				(font
@@ -14328,7 +14328,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata Electronics"
+		(property "Manufacturer" "Pulse Electronics "
 			(at 292.1 104.14 90)
 			(effects
 				(font
@@ -14365,6 +14365,105 @@
 			(project "LVPS Monitor MCU Board"
 				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1"
 					(reference "FB201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:Housing")
+		(at 20.32 223.52 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board no)
+		(dnp no)
+		(uuid "1dab2da1-b3ac-48a0-b24c-2ddf3dbae2db")
+		(property "Reference" "N101"
+			(at 24.13 222.5674 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Giga_Display"
+			(at 24.13 225.1074 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 21.59 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 21.59 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Housing"
+			(at 20.32 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "1050-ASX00039-ND"
+			(at 20.32 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 20.32 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "ASX00039"
+			(at 20.32 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Arduino"
+			(at 20.32 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "Isolated Multi-Rail Power Supply Monitor Arduino Shield Board"
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1"
+					(reference "N101")
 					(unit 1)
 				)
 			)
@@ -15182,6 +15281,42 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 110.49 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5001"
+			(at 110.49 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5001-ND"
+			(at 110.49 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 110.49 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
 			(at 110.49 22.86 0)
 			(effects
 				(font
@@ -16720,6 +16855,42 @@
 				(hide yes)
 			)
 		)
+		(property "DPN" "36-5015CT-ND"
+			(at 146.05 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 146.05 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 146.05 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 146.05 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bebb8423-de3f-4d57-bc6b-80461f85a3a8")
 		)
@@ -17828,6 +17999,24 @@
 				(hide yes)
 			)
 		)
+		(property "Distributor" "Digikey"
+			(at 342.9 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 342.9 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "6"
 			(uuid "6748ce5c-3825-43c0-abcb-a481f0c7d505")
 		)
@@ -17866,21 +18055,21 @@
 		(at 76.2 142.24 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom no)
+		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "556442d2-54f1-4483-9cd7-1805dba54041")
 		(property "Reference" "A201"
-			(at 76.2 204.47 0)
+			(at 76.2 203.2 0)
 			(effects
 				(font
 					(size 1.524 1.524)
 				)
 			)
 		)
-		(property "Value" "Arduino_Giga_R1_WiFi_Shield"
-			(at 76.2 207.01 0)
+		(property "Value" "Arduino_Giga_R1_WiFi"
+			(at 76.2 205.74 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -17914,7 +18103,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Pins" ""
+		(property "MPN" "ABX00063"
 			(at 76.2 142.24 0)
 			(effects
 				(font
@@ -17923,7 +18112,25 @@
 				(hide yes)
 			)
 		)
-		(property "Field10" ""
+		(property "Manufacturer" "Arduino"
+			(at 76.2 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 76.2 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "1050-ABX00063-ND"
 			(at 76.2 142.24 0)
 			(effects
 				(font
@@ -18461,6 +18668,42 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 149.86 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND"
+			(at 149.86 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 149.86 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 149.86 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
 			(at 149.86 93.98 0)
 			(effects
 				(font
@@ -19255,7 +19498,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 132.08 97.79 0)
 			(effects
 				(font
@@ -19264,7 +19507,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 132.08 97.79 0)
 			(effects
 				(font
@@ -19273,7 +19516,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale"
 			(at 132.08 97.79 0)
 			(effects
 				(font
@@ -20834,6 +21077,42 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "5001"
+			(at 252.73 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5001-ND"
+			(at 252.73 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 252.73 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 252.73 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "9f4f7347-4b9d-40ce-83f1-bcf50b3f6c6e")
 		)
@@ -21564,6 +21843,42 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "5000"
+			(at 101.6 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5000-ND"
+			(at 101.6 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 101.6 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 101.6 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "172949e2-306f-4b0a-8254-f40139552e99")
 		)
@@ -21821,7 +22136,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" ""
 			(at 237.49 27.94 0)
 			(effects
 				(font
@@ -21848,7 +22163,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" ""
 			(at 237.49 27.94 0)
 			(effects
 				(font
@@ -21946,7 +22261,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" ""
 			(at 153.67 27.94 0)
 			(effects
 				(font
@@ -21973,7 +22288,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" ""
 			(at 153.67 27.94 0)
 			(effects
 				(font
@@ -22172,7 +22487,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "BLM18SG121TN1D"
+		(property "MPN" "BBUP00160805121Y00 "
 			(at 302.26 104.14 90)
 			(effects
 				(font
@@ -22181,7 +22496,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "490-3996-6-ND"
+		(property "DPN" "553-BBUP00160805121Y00CT-ND "
 			(at 302.26 104.14 90)
 			(effects
 				(font
@@ -22199,7 +22514,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata Electronics"
+		(property "Manufacturer" "Pulse Electronics "
 			(at 302.26 104.14 90)
 			(effects
 				(font
@@ -22479,6 +22794,42 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 143.51 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5015CT-ND"
+			(at 143.51 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5015"
+			(at 143.51 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 143.51 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
 			(at 143.51 88.9 0)
 			(effects
 				(font
@@ -22870,6 +23221,42 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 259.08 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5000"
+			(at 259.08 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5000-ND"
+			(at 259.08 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 259.08 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
 			(at 259.08 22.86 0)
 			(effects
 				(font
@@ -23326,6 +23713,42 @@
 			)
 		)
 		(property "Description" "test point (alternative shape)"
+			(at 124.46 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "5000"
+			(at 124.46 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DPN" "36-5000-ND"
+			(at 124.46 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Keystone"
+			(at 124.46 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
 			(at 124.46 22.86 0)
 			(effects
 				(font
@@ -24262,7 +24685,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "BLM18SG121TN1D"
+		(property "MPN" "BBUP00160805121Y00 "
 			(at 300.99 74.93 90)
 			(effects
 				(font
@@ -24271,7 +24694,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "490-3996-6-ND"
+		(property "DPN" "553-BBUP00160805121Y00CT-ND "
 			(at 300.99 74.93 90)
 			(effects
 				(font
@@ -24289,7 +24712,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata Electronics"
+		(property "Manufacturer" "Pulse Electronics "
 			(at 300.99 74.93 90)
 			(effects
 				(font
@@ -24913,7 +25336,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" "541-4.70KLCT-ND"
 			(at 124.46 97.79 0)
 			(effects
 				(font
@@ -24922,7 +25345,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" "CRCW04024K70FKED"
 			(at 124.46 97.79 0)
 			(effects
 				(font
@@ -24931,7 +25354,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Panasonic Industry"
+		(property "Manufacturer" "Vishay Dale"
 			(at 124.46 97.79 0)
 			(effects
 				(font
@@ -26395,6 +26818,42 @@
 				(hide yes)
 			)
 		)
+		(property "DPN" "296-TPS62912RPURCT-ND"
+			(at 181.61 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Distributor" "Digikey"
+			(at 181.61 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "TPS62912RPUR"
+			(at 181.61 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 181.61 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "6"
 			(uuid "4ba60a74-1376-4d1f-b39f-bcdc632d06a0")
 		)
@@ -26659,7 +27118,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" "P4.70KLDKR-ND"
+		(property "DPN" ""
 			(at 237.49 38.1 0)
 			(effects
 				(font
@@ -26686,7 +27145,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "ERJ-2RKF4701X"
+		(property "MPN" ""
 			(at 237.49 38.1 0)
 			(effects
 				(font

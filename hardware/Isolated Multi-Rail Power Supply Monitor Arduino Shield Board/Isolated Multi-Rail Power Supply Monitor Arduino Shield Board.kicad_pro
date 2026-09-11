@@ -600,7 +600,7 @@
           "group_by": false,
           "label": "Qty",
           "name": "${QUANTITY}",
-          "show": false
+          "show": true
         },
         {
           "group_by": true,
@@ -612,7 +612,7 @@
           "group_by": true,
           "label": "DNP",
           "name": "${DNP}",
-          "show": false
+          "show": true
         },
         {
           "group_by": true,
@@ -657,7 +657,7 @@
           "show": false
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "MPN",
           "name": "MPN",
           "show": true
@@ -697,6 +697,12 @@
           "label": "Field10",
           "name": "Field10",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "DISTRIBUTOR",
+          "name": "DISTRIBUTOR",
+          "show": false
         }
       ],
       "filter_string": "",
@@ -704,7 +710,7 @@
       "include_excluded_from_bom": true,
       "name": "",
       "sort_asc": true,
-      "sort_field": "Manufacturer"
+      "sort_field": "${EXCLUDE_FROM_BOM}"
     },
     "connection_grid_size": 50.0,
     "drawing": {

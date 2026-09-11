@@ -1,4 +1,167 @@
 % !TeX root = ../main.tex
 
 \chapter{Introduction}
-\label{chap:Introduction}
+\label{chap:introduction}
+
+\section{Project Overview}
+
+The Multi-Rail Isolated Power Supply Monitoring System is a hardware and
+software system developed to provide centralized monitoring of multiple
+electrically isolated power-supply rails. The system measures both output
+voltage and load current, provides configurable alarm
+limits, displays operating status and measurement data via a local display or ethernet for integration with an EPICS-based control system.
+
+The completed system monitors six independent power-supply rails:
+
+\begin{itemize}
+    \item +5VA
+    \item +5VB
+    \item +5V
+    \item -5V
+    \item +15V
+    \item -15V
+\end{itemize}
+
+Because the monitored supplies may be electrically isolated from one another,
+the monitoring system must preserve that isolation while still allowing all six
+channels to communicate with a common controller. Each supply rail therefore
+uses an independent voltage/current monitoring channel and an isolated digital
+communication path.
+
+The primary controller is an Arduino GIGA R1 WiFi. The controller acquires
+measurement data from the individual monitor channels, converts the data to
+engineering units, applies the appropriate rail polarity, evaluates configured
+alarm limits, and presents the resulting information on a GIGA Display Shield.
+An Ethernet interface provides network communication between the embedded
+controller and an EPICS Input/Output Controller (IOC). The EPICS IOC then makes
+the measurements, alarms, and system status available to a CS-Studio Phoebus
+operator interface.
+
+
+\section{Project Motivation}
+
+Power-supply systems containing multiple isolated voltage rails present a
+monitoring challenge because each circuit associated with one supply
+can't share a direct electrical reference with another supply.
+Connecting conventional measurement or communication circuits across these
+references can break isolation between the rails.
+
+A centralized monitor is desirable because it allows the user to observe all supply voltages and currents from a single interface,
+identify abnormal operating conditions, detect communication or sensor faults,
+and integrate the power-supply status into a larger control system.
+
+The design developed for this project addresses these requirements by
+performing voltage and high-side current measurement locally on each monitored
+rail and transferring the resulting information across electrically isolated
+digital interfaces. The controller receives measurement data from all
+six rails without requiring their power references to be directly connected
+together.
+
+
+\section{System Architecture}
+
+The monitoring system is divided into three primary functional areas:
+the power-supply monitoring hardware, the microcontroller, and the
+supervisory control interface.
+
+The power supply monitoring hardware contains the current-sense resistors,
+LTC2945 PMICs, and digital isolation circuitry. Each LTC2945 measures the supply
+voltage and the differential voltage developed across a high-side current-sense
+resistor. The resulting digital measurement information is sent over the I\textsuperscript{2}C bus while maintaining the required electrical isolation.
+
+The Arduino GIGA R1 WiFi provides the mcu processing functions. Its
+firmware initializes the monitoring channels, acquires voltage and current
+measurements, detects communication errors, converts raw measurements to
+engineering units, applies channel-specific polarity and scaling, evaluates
+alarm limits, and updates the local display. Configuration information,
+including network parameters and alarm limits, is retained in persistent
+storage so that required settings can survive a controller reset or power
+cycle.
+
+Network communication is provided through an Ethernet interface using the PSC
+protocol. The EPICS IOC communicates with the embedded controller using
+PSCDriver and converts the transmitted values into EPICS process variables.
+CS-Studio Phoebus provides the remote operator interface for viewing
+measurements, alarm conditions, connection status, and system state.
+
+
+\section{Design Objectives}
+
+The major design objectives for the Multi-Rail Isolated Power Supply Monitoring
+System are to:
+
+\begin{enumerate}
+    \item Measure the voltage of six independent power-supply rails.
+
+    \item Measure the load current of each rail using high-side current sensing.
+
+    \item Preserve electrical isolation between independently referenced
+    power-supply rails and the common controller.
+
+    \item Convert acquired data into meaningful engineering units and correctly
+    represent both positive and negative voltage rails.
+
+    \item Detect I\textsuperscript{2}C communication failures and prevent invalid
+    sensor data from being presented as valid measurements.
+
+    \item Compare voltage and current measurements against configurable upper and
+    lower alarm limits.
+
+    \item Provide a local graphical display of voltage, current, alarm status,
+    communication status, and network state.
+
+    \item Retain configuration and alarm settings through controller resets and
+    power cycles.
+
+    \item Provide Ethernet communication for remote monitoring and configuration.
+
+    \item Integrate the monitoring system with an EPICS IOC and CS-Studio Phoebus
+    operator interface.
+
+    \item Maintain the hardware, firmware, and control-system software under
+    revision control so that changes made during design, implementation, and
+    testing remain traceable.
+\end{enumerate}
+
+
+\section{Project Scope}
+
+The scope of the project includes the design and implementation of the sensor
+interface hardware, Arduino GIGA controller hardware, embedded firmware,
+Ethernet communication interface, EPICS IOC, and operator-interface software.
+The hardware portion includes the six voltage/current monitoring channels,
+current-sense resistors, digital isolation circuitry, controller interface,
+Ethernet circuitry, and supporting power-supply circuitry.
+
+The software portion includes the embedded acquisition and alarm-processing
+firmware, persistent configuration storage, local display interface, PSC
+network communication, EPICS IOC configuration and database records, and the
+CS-Studio Phoebus operator interface.
+
+Design files and software associated with the project are maintained in the
+project Git repository:
+
+\begin{center}
+    \url{https://github.com/capotosto/PS_Monitor}
+\end{center}
+
+The repository provides revision control for the hardware design, firmware,
+EPICS IOC files, documentation, and other project artifacts generated during
+development.
+
+
+\section{Report Organization}
+
+This report documents the development of the monitoring system from preliminary
+design through implementation and testing. The preliminary-design chapter
+defines the major functional blocks, presents the system architecture,
+documents supporting engineering calculations, includes the hardware
+schematics and bills of materials, and describes the primary firmware and
+control-system software flows.
+
+Subsequent chapters document prototyping and development activities, the EPICS
+IOC implementation, and the CS-Studio Phoebus operator interface. Supporting
+project-management and design documents developed during the earlier phases of
+the capstone project are retained as part of the overall project documentation
+and provide traceability between the original requirements, design decisions,
+implementation, and final system.

@@ -1,0 +1,144 @@
+% ============================================================
+% PAGE LAYOUT AND FONTS
+% ============================================================
+
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\raggedbottom
+
+\setlength{\headheight}{15pt}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+\pdfminorversion=7
+
+
+% ============================================================
+% MATHEMATICS AND ENGINEERING UNITS
+% ============================================================
+
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+
+\sisetup{detect-all}
+
+
+% ============================================================
+% GRAPHICS AND PDF INCLUSION
+% ============================================================
+
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{adjustbox}
+
+
+% ============================================================
+% TIKZ
+% ============================================================
+
+\usepackage{tikz}
+
+\usetikzlibrary{
+    arrows.meta,
+    positioning,
+    calc,
+    fit,
+    backgrounds,
+    shapes.misc,
+    shapes.geometric
+}
+
+
+% ============================================================
+% TABLES
+% ============================================================
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{pgfplotstable}
+
+
+% ============================================================
+% LISTS
+% ============================================================
+
+\usepackage{enumitem}
+
+
+% ============================================================
+% SOURCE CODE
+% ============================================================
+
+\usepackage{listings}
+
+
+% ============================================================
+% COLORS AND HYPERLINKS
+% ============================================================
+
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+
+% ============================================================
+% HEADERS AND FOOTERS
+% ============================================================
+
+\usepackage{fancyhdr}
+
+\newcommand{\manualdate}{September 15, 2026}
+\newcommand{\manualrev}{Rev. ET450-W1}
+
+\newcommand{\appref}[1]{%
+    \hyperref[#1]{Appendix~\ref*{#1}}%
+}
+
+\fancyhf{}
+
+\fancyhead[LE,RO]{\thepage}
+
+\fancyfoot[L]{\manualdate}
+\fancyfoot[C]{\manualrev}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+
+    \fancyhead[LE,RO]{\thepage}
+
+    \fancyfoot[L]{\manualdate}
+    \fancyfoot[C]{\manualrev}
+
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+
+% ============================================================
+% DOCUMENT INFORMATION
+% ============================================================
+
+\author{Michael Capotosto}
+
+\title{
+    Multi-Rail Isolated Power Supply Monitoring System\\[0.5em]
+    \large Capstone Design Documentation
+}
+
+\date{
+    \manualdate\\[1em]
+    \small \manualrev
+}

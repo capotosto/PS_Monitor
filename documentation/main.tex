@@ -1,34 +1,50 @@
 % !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 \documentclass[letterpaper,12pt]{book}
-\setlength{\parindent}{0pt}
 \usepackage[margin=1in]{geometry}
 \usepackage[utf8]{inputenc}
-\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
 \usepackage{graphicx}
+\usepackage{pdfpages}
 \usepackage{tikz}
-\usetikzlibrary{positioning,calc}
+\usetikzlibrary{
+    arrows.meta,
+    positioning,
+    calc,
+    fit,
+    backgrounds,
+    shapes.misc
+}
+\usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric}
 \usepackage{enumitem}
 \usepackage{float}
-\raggedbottom
-\usepackage{url}
-\usepackage{hyperref}
-\newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
-%\usepackage{showframe}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{pgfplotstable}
 \usepackage{listings}
-\usepackage{pdfpages}
-\pdfminorversion=7
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{rotating}
+\usepackage{adjustbox}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\raggedbottom
+\setlength{\headheight}{15pt}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
-\usepackage{minted}
-\setminted{
-    fontsize=\small,
-    linenos,
-    breaklines,
-    breakanywhere,
-    autogobble
-}
+\pdfminorversion=7
+\sisetup{detect-all}
 
-\usepackage{booktabs}
+\newcommand{\manualdate}{September 15, 2026}
+\newcommand{\manualrev}{Rev. ET450-W1}
+\newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
 
 \fancyhf{}
 \fancyhead[LE,RO]{\thepage}
@@ -39,33 +55,29 @@
 \fancypagestyle{plain}{
     \fancyhf{}
     \fancyhead[LE,RO]{\thepage}
-
     \fancyfoot[L]{\manualdate}
     \fancyfoot[C]{\manualrev}
-
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0.4pt}
 }
 
-
-\newcommand{\manualdate}{\today}
-\newcommand{\manualrev}{Rev. 1}
-
 \author{Michael Capotosto}
-\title{Multi-Rail Isolated Power Supply Monitoring System}
-\date{\manualdate\\[1em]
-    \small \manualrev\\
-}
+\title{Multi-Rail Isolated Power Supply Monitoring System\\[0.5em]
+    \large Capstone Design Documentation}
+\date{\manualdate\\[1em]\small \manualrev}
 
 \begin{document}
-
     \frontmatter
     \maketitle
     \tableofcontents
+%    \listoffigures
+%    \listoftables
 
     \mainmatter
     \pagestyle{fancy}
+
     \include{./TeX_files/Introduction}
+    \include{./TeX_files/Preliminary-Design}
     \include{./TeX_files/IOCs}
     \include{./TeX_files/CS-Studio-Phoebus}
     \include{./TeX_files/Prototyping and Development}
