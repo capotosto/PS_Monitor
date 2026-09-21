@@ -1,0 +1,294 @@
+% !TeX root = ../main.tex
+\chapter{Design Calculations and Circuit Analysis}
+\label{app:design-calculations}
+This appendix contains the electrical calculations used to select and verify the
+preliminary hardware. In addition to nominal values, voltage, current, power,
+logic-level compatibility, and component capability are considered so that the
+design does not intentionally operate a component beyond its specified limits.
+
+\section{Current-Sense Shunt Resistor Sizing}
+\label{sec:shunt-sizing}
+The LTC2945 measures the differential voltage between SENSE+ and SENSE-- with a
+full-scale range of \SI{102.4}{\milli\volt}. The ideal shunt resistance for a
+specified maximum measurable current is therefore
+\begin{equation}
+    R_{SHUNT,ideal}=\frac{V_{SENSE,FS}}{I_{MAX}}
+    =\frac{\SI{102.4}{\milli\volt}}{I_{MAX}}.
+\end{equation}
+To prevent saturation, a scaling factor, $K_H$, is applied to leave some headroom:
+\begin{equation}
+    R_{SHUNT}=K_H\frac{\SI{102.4}{\milli\volt}}{I_{MAX}},
+    \qquad 0<K_H<1.
+\end{equation}
+For example, $K_H=0.80$ reserves 20\% headroom for overload, tolerance, and
+transient conditions.
+
+The shunt power at maximum continuous current is
+\begin{equation}
+    P_{SHUNT}=I_{MAX}^{2}R_{SHUNT}.
+\end{equation}
+The installed resistor power rating should exceed this value.
+
+\subsection{Current Measurement Resolution}
+The LTC2945 current-sense ADC has a nominal sense-voltage resolution of
+\SI{25}{\micro\volt} per LSB. The current represented by one ADC count is
+\begin{equation}
+    I_{LSB}=\frac{\SI{25}{\micro\volt}}{R_{SHUNT}}.
+\end{equation}
+This relationship provides an important design tradeoff: a smaller shunt lowers
+power dissipation but also increases the minimum current increment represented by
+one ADC count.
+
+\subsection{Production Shunt Design Table}
+\begin{table}[H]
+    \centering
+    \caption{Production current-sense resistor calculations.}
+    \label{tab:production-shunts}
+    \begin{tabular}{lrrrrrr}
+        \toprule
+        Rail & $I_{MAX}$ & $R_{ideal}$ & Selected $R$ &
+        $V_{SHUNT}$ & $I_{LSB}$ & $P_{MAX}$ \\
+        & (A) & ($\Omega$) & ($\Omega$) &
+        (mV) & (mA/LSB) & (W) \\
+        \midrule
+        +5VA  & 2.00 & 0.0512 & 0.039 & 78.0 & 0.641 & 0.156 \\
+        +5VB  & 2.00 & 0.0512 & 0.039 & 78.0 & 0.641 & 0.156 \\
+        +5V   & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
+        -5V   & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
+        +15V  & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
+        -15V  & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Evaluation-Board Shunt Calculation}
+The prototype LTC2945 evaluation board was tested from a \SI{5}{\volt} source
+with a load range of approximately \SI{1}{\kilo\ohm} to \SI{10}{\kilo\ohm}.
+This is a low-current bench-test condition and is separate from the production
+shunt design.
+
+At the minimum load resistance, the shunt required to place the current-sense
+input at full scale is
+\begin{equation}
+    R_{S,FS}=\frac{V_{SHUNT}R_L}{V_S-V_{SHUNT}}
+    =\frac{(\SI{0.1024}{\volt})(\SI{1}{\kilo\ohm})}
+    {\SI{5}{\volt}-\SI{0.1024}{\volt}}
+    =\SI{20.91}{\ohm}.
+\end{equation}
+Applying approximately 15\% headroom gives
+\begin{equation}
+    R_S=(0.85)(\SI{20.91}{\ohm})\approx\SI{17.8}{\ohm}.
+\end{equation}
+At a \SI{10}{\kilo\ohm} load,
+\begin{equation}
+    I_{MIN}=\frac{\SI{5}{\volt}}
+    {\SI{10}{\kilo\ohm}+\SI{17.8}{\ohm}}
+    \approx\SI{499.1}{\micro\ampere},
+\end{equation}
+and therefore
+\begin{equation}
+    V_{SHUNT,MIN}=I_{MIN}R_S
+    \approx(\SI{499.1}{\micro\ampere})(\SI{17.8}{\ohm})
+    \approx\SI{8.88}{\milli\volt}.
+\end{equation}
+The prototype sense voltage therefore remains inside the LTC2945
+\SI{102.4}{\milli\volt} full-scale range over the intended test loads.
+
+\section{PCB Trace and Copper-Pour Current Capacity}
+\label{sec:trace-width}
+Power-path copper must carry the maximum rail current without excessive
+temperature rise or voltage drop. KiCad's track-width calculator uses a
+closed-form fit to IPC-2152 data. For an external trace it can be expressed as
+\begin{equation}
+    \Delta T = K I^a W^b T_h^c,
+\end{equation}
+where $I$ is current in amperes, $W$ is trace width in mils, $T_h$ is copper
+thickness in mils, and for external tracks the KiCad coefficients are
+\begin{equation}
+    K=215.3,\qquad a=2,\qquad b=-1.15,\qquad c=-1.0.
+\end{equation}
+Solving for minimum width,
+\begin{equation}
+    W_{MIN}=\left(\frac{\Delta T}
+    {K I^a T_h^c}\right)^{1/b}.
+\end{equation}
+For \SI{1}{oz} copper ($T_h\approx\SI{1.378}{mil}$) and a preliminary
+\SI{10}{\celsius} allowed rise, the calculated external-trace widths are
+approximately \SI{3.27}{mil} at \SI{0.5}{A}, \SI{10.9}{mil} at \SI{1}{A}, and
+\SI{36.4}{mil} at \SI{2}{A}. These are thermal minimums only; the actual layout
+should use wider traces or copper pours where space permits.
+
+\section{I\texorpdfstring{\textsuperscript{2}}{2}C Pull-Up Resistor Sizing}
+\label{sec:i2c-pullups}
+The I2C bus buffer and I2C line driver both have internal active current sources that eliminate the need for external pullups. Footprints were placed for 4.7k pullups but are set as Do Not Populate.
+
+\section{LTC2945 Voltage Measurement Resolution}
+The LTC2945 rail-voltage channel has a nominal full-scale range of
+\SI{102.4}{\volt} and a nominal resolution of \SI{25}{\milli\volt} per LSB.
+The quantization-only percentage of a measured rail voltage is therefore
+\begin{equation}
+    \epsilon_Q=\frac{\SI{25}{\milli\volt}}{V_{RAIL}}\times100\%.
+\end{equation}
+For example, one count corresponds to approximately 0.50\% of a \SI{5}{\volt}
+rail and 0.17\% of a \SI{15}{\volt} rail.
+This is only ADC resolution and not total measurement
+accuracy.
+
+\section{Negative-Rail Sign Convention}
+The -5 V and -15 V supplies are electrically isolated from the controller. The
+monitor can therefore be placed in the high side of each isolated rail and read a
+positive local differential quantity even when the system-level rail is labeled
+negative. Firmware applies the configured sign after acquisition:
+\begin{equation}
+    V_{DISPLAY}=S_VV_{MEASURED},\qquad S_V\in\{+1,-1\}.
+\end{equation}
+The same channel metadata is used by the local display and network interface so
+that a negative rail is represented consistently throughout the system.
+
+\section{Alarm-Limit Scaling}
+User alarm thresholds are stored and compared in engineering units. For a lower
+voltage limit $V_L$ and upper voltage limit $V_H$, the normal voltage state is
+\begin{equation}
+    V_L\le V_{MEAS}\le V_H.
+\end{equation}
+Similarly, for lower and upper current limits,
+\begin{equation}
+    I_L\le I_{MEAS}\le I_H.
+\end{equation}
+If raw ADC thresholds are ever written directly to the LTC2945, the corresponding
+register value must be calculated from the ADC LSB size. For the current-sense
+channel,
+\begin{equation}
+    N_I=\frac{I_{LIMIT}R_{SHUNT}}{\SI{25}{\micro\volt/LSB}},
+\end{equation}
+and for the rail-voltage channel,
+\begin{equation}
+    N_V=\frac{V_{LIMIT}}{\SI{25}{\milli\volt/LSB}}.
+\end{equation}
+
+\section{Controller-Supply Power Budget}
+
+A preliminary controller power budget was developed using datasheet maximum
+values where available and conservative design-current allowances for assemblies
+where a complete board-level maximum current is not specified. A 25\% design
+margin is applied to the calculated load.
+
+\begin{table}[H]
+    \centering
+    \caption{Preliminary controller-side power budget.}
+    \label{tab:power-budget}
+    \begin{tabular}{lrrr}
+        \toprule
+        Load & Supply & Design Current & Power \\
+        & (V) & (A) & (W) \\
+        \midrule
+        Arduino GIGA R1 WiFi
+        & 5.0 & 0.500 & 2.500 \\
+
+        GIGA Display Shield
+        & 3.3 & 0.250 & 0.825 \\
+
+        W6100 Ethernet interface
+        & 3.3 & 0.265 & 0.875 \\
+
+        I\textsuperscript{2}C isolation/controller circuitry
+        & 3.3 & 0.065 & 0.215 \\
+        \midrule
+        Subtotal
+        & -- & -- & 4.415 \\
+
+        25\% design margin
+        & -- & -- & 1.104 \\
+        \midrule
+        \textbf{Total}
+        & -- & -- & \textbf{5.519} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+\section{Component Capability Checks}
+\label{sec:component-capability}
+The calculations above establish the required electrical values. The following
+checks compare those values with the capability of the selected components.
+
+\section{Current-Sense Resistor Power Margin}
+The selected LVK-series 39 m\(\Omega\) and 50 m\(\Omega\) four-terminal shunts
+are rated at 0.75 W. At the maximum design current of 2 A, the 39 m\(\Omega\)
+resistor dissipates
+\begin{equation}
+    P=(2\,\mathrm{A})^2(0.039\,\Omega)=0.156\,\mathrm{W}.
+\end{equation}
+This is approximately 20.8\% of the 0.75 W rating, corresponding to about a
+4.8:1 power-rating margin before considering PCB temperature and derating. At
+1 A, a 50 m\(\Omega\) shunt dissipates only 0.050 W, approximately 6.7\% of a
+0.75 W rating.
+
+\section{LTC2945 Input and ADC Range}
+The highest monitored nominal rail is 15 V, far below the LTC2945 0--80 V rail
+monitoring range. The selected production shunts produce 78 mV at 2 A on the
+39 m\(\Omega\) channels and 50 mV at 1 A on the 50 m\(\Omega\) channels. Both
+values are below the 102.4 mV current-sense full scale, leaving approximately
+24.4 mV and 52.4 mV of ADC headroom respectively. The LTC2945 can operate from
+an external 2.7--5.9 V supply, so a 3.3 V sensor-side logic supply is within its
+specified operating range.
+
+\section{Microcontroller I/O Compatibility}
+The Arduino GIGA R1 WiFi operates with 3.3 V logic and specifies 8 mA maximum DC
+current per I/O pin. The controller-side I\textsuperscript{2}C interface is a
+logic interface, not a load-power interface. The TCA9803 used in the design
+supports a 0.8--3.6 V A-side supply and a 1.65--3.6 V B-side supply and provides
+an internal B-side current source of up to 3 mA. A 3 mA bus-low current is below
+the 8 mA GIGA per-pin limit, providing more than a factor of two current margin.
+The GIGA pins therefore do not directly source the optocoupler LED or rail-load
+current; the external interface circuitry performs the required buffering and
+isolation.
+
+\section{Digital-Isolation Margin}
+The ACPL-064L digital optocoupler is specified for 3.3 V/5 V operation and is
+UL 1577 recognized for 3750 V\textsubscript{RMS} isolation for one minute. The
+largest normal potential difference between the nominal monitored rails is only
+30 V from -15 V to +15 V. The optocoupler rating therefore greatly exceeds the
+functional isolation voltage required by this low-voltage monitoring system.
+This comparison verifies component capability; it is not intended to redefine
+the safety rating of the complete assembled product, which also depends on PCB
+creepage, clearance, connectors, wiring, and enclosure construction.
+
+\section{3.3 V Regulator Loading}
+The TPS62912 is rated for up to 2 A output. Using the Week 1 design-current
+allowances for the display, Ethernet interface, and controller-side isolation
+circuitry gives an estimated 3.3 V load of
+\begin{equation}
+    I_{3.3}=0.250+0.265+0.065=0.580\,\mathrm{A}.
+\end{equation}
+This is approximately 29\% of the regulator's 2 A output rating and leaves
+substantial current margin for transient and implementation variation.
+
+\section{Tolerance and Measurement-Uncertainty Considerations}
+The production current-sense resistors have a 1\% resistance tolerance. Because
+current is calculated from \(I=V_{SHUNT}/R_{SHUNT}\), an uncorrected 1\% shunt
+error produces approximately a 1\% gain error in calculated current. On a 2 A
+range, this corresponds to approximately 20 mA, which is much larger than the
+0.641 mA quantization step of the 39 m\(\Omega\) channel. The LTC2945 also has
+its own conversion error; therefore component tolerance rather than ADC
+quantization is an important contributor to absolute current accuracy. If
+higher accuracy is required, the actual shunt resistance can be measured and a
+per-channel calibration factor stored in firmware.
+
+A conservative worst-case linear addition of a 1\% shunt tolerance and the
+LTC2945's less-than-\(\pm0.75\%\) total unadjusted conversion error gives an
+upper-bound estimate of approximately \(\pm1.75\%\) before wiring, thermal, and
+calibration effects. This estimate is used for design margin rather than as a
+claim of final calibrated system accuracy.
+
+\section{Reference Specifications Used for Capability Checks}
+\begin{itemize}
+    \item Analog Devices, LTC2945 data sheet and product information: \url{https://www.analog.com/en/products/ltc2945.html}
+    \item Arduino, GIGA R1 WiFi technical specifications: \url{https://store.arduino.cc/products/giga-r1-wifi}
+    \item Broadcom, ACPL-064L low-power digital optocoupler data sheet/product page: \url{https://www.broadcom.com/products/optocouplers/industrial-plastic/digital-optocouplers/10mbd/acpl-064l-000e}
+    \item Texas Instruments, TCA9803 I\textsuperscript{2}C buffer data sheet: \url{https://www.ti.com/product/TCA9803}
+    \item Texas Instruments, TPS62912 buck converter data sheet: \url{https://www.ti.com/product/TPS62912}
+    \item Ohmite LVK-series current-sense resistor specifications:
+    \url{https://www.ohmite.com/assets/files/Datasheets/lvk-series.pdf}
+\end{itemize}

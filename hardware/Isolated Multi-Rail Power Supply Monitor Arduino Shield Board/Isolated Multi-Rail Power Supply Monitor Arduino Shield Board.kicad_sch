@@ -17555,7 +17555,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" ""
+		(property "DPN" "P10.0KLCT-ND"
 			(at 259.08 137.16 90)
 			(effects
 				(font
@@ -17564,7 +17564,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" ""
+		(property "MPN" "ERJ-2RKF1002X"
 			(at 259.08 137.16 90)
 			(effects
 				(font
@@ -17573,7 +17573,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" ""
+		(property "Manufacturer" "Panasonic Industry"
 			(at 259.08 137.16 90)
 			(effects
 				(font
@@ -20495,7 +20495,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" ""
+		(property "DPN" "4713-GMC10X5R335K25NTCT-ND"
 			(at 297.18 110.49 0)
 			(effects
 				(font
@@ -20513,7 +20513,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" ""
+		(property "MPN" "GMC10X5R335K25NT"
 			(at 297.18 110.49 0)
 			(effects
 				(font
@@ -20522,7 +20522,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" ""
+		(property "Manufacturer" "Cal-Chip Electronics, Inc."
 			(at 297.18 110.49 0)
 			(effects
 				(font
@@ -22686,7 +22686,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" ""
+		(property "DPN" "P10.0KLCT-ND"
 			(at 270.51 127 90)
 			(effects
 				(font
@@ -22695,7 +22695,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" ""
+		(property "MPN" "ERJ-2RKF1002X"
 			(at 270.51 127 90)
 			(effects
 				(font
@@ -22704,7 +22704,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" ""
+		(property "Manufacturer" "Panasonic Industry"
 			(at 270.51 127 90)
 			(effects
 				(font
@@ -25993,7 +25993,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" ""
+		(property "DPN" "P10.0KLCT-ND"
 			(at 270.51 137.16 90)
 			(effects
 				(font
@@ -26002,7 +26002,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" ""
+		(property "MPN" "ERJ-2RKF1002X"
 			(at 270.51 137.16 90)
 			(effects
 				(font
@@ -26011,7 +26011,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" ""
+		(property "Manufacturer" "Panasonic Industry"
 			(at 270.51 137.16 90)
 			(effects
 				(font
@@ -26705,7 +26705,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" ""
+		(property "DPN" "P10.0KLCT-ND"
 			(at 241.3 137.16 90)
 			(effects
 				(font
@@ -26714,7 +26714,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" ""
+		(property "MPN" "ERJ-2RKF1002X"
 			(at 241.3 137.16 90)
 			(effects
 				(font
@@ -26723,7 +26723,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" ""
+		(property "Manufacturer" "Panasonic Industry"
 			(at 241.3 137.16 90)
 			(effects
 				(font
@@ -27317,7 +27317,7 @@
 				(hide yes)
 			)
 		)
-		(property "DPN" ""
+		(property "DPN" "P10.0KLCT-ND"
 			(at 250.19 137.16 90)
 			(effects
 				(font
@@ -27326,7 +27326,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" ""
+		(property "MPN" "ERJ-2RKF1002X"
 			(at 250.19 137.16 90)
 			(effects
 				(font
@@ -27335,7 +27335,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" ""
+		(property "Manufacturer" "Panasonic Industry"
 			(at 250.19 137.16 90)
 			(effects
 				(font

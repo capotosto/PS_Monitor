@@ -1,5 +1,5 @@
 % !TeX root = ../main.tex
-\chapter{Preliminary Design Review (Week 1 Assignment)}
+\chapter{Preliminary Design Review}
 \label{chap:preliminary-design}
 
 \section{Purpose and Scope}
@@ -17,7 +17,41 @@ hardware schematic baseline, and provide software flowcharts detailed enough to
 support implementation. Simulation and additional verification results can be
 added in the subsequent design phase.
 
-\section{Major Functional Blocks}
+\section{Problem Definition}
+The project addresses the need to monitor several low-voltage power-supply rails
+that do not necessarily share a common reference. A conventional
+monitoring circuit that directly connects the grounds together
+would defeat the electrical isolation of the supplies and could create unwanted
+return paths. However, the user needs a single location from which to observe rail voltage, rail current, alarm state, communication status, and the overall condition of the power system.
+
+The required monitoring system must therefore make accurate measurements on
+six separate rails while preserving isolation between the monitored domains. It
+must support both positive and negative rails, detect sensor or communication
+faults, provide configurable voltage and current limits, retain configuration
+information after reset, present useful local status, and make the same data
+available to the facility control system over Ethernet. The monitored rails in
+the present design are +5 V A, +5 V B, +/-5 V, and +/-15 V.
+
+\section{Proposed Solution}
+The proposed solution assigns one LTC2945 voltage/current monitor to each power
+rail. Load current is converted to a small differential voltage by a precision
+high-side shunt resistor and the LTC2945 digitizes both the shunt voltage and the
+rail voltage. Each sensor remains referenced to its own monitored supply domain.
+The I\textsuperscript{2}C communication path is then isolated so that digital
+measurement data can be transferred to a common Arduino GIGA R1 WiFi controller
+without directly bonding the isolated supply returns together.
+
+The Arduino GIGA performs channel acquisition, engineering-unit conversion,
+negative-rail sign handling, alarm evaluation, configuration storage, display
+updates, and network communication. A local GIGA Display Shield provides
+immediate status at the hardware. Ethernet transports measurement and status
+data using the PSC protocol to an EPICS IOC, where PSCDriver and EPICS records
+make the values available to a CS-Studio Phoebus operator interface. This
+architecture separates the rail-side analog measurement functions from the
+controller and supervisory-control functions while maintaining a single user
+interface for the complete system.
+
+\section{Chosen Conceptual Design and Functional Block Diagram}
 \label{sec:functional-blocks}
 The major system functions are summarized below.
 
@@ -45,20 +79,14 @@ The major system functions are summarized below.
 
 \subsection{Functional Block Diagram}
 
-% The complete diagram and its caption are rotated together, but the enclosing
-% figure uses [H], so LaTeX keeps the figure at this location in the source.
-% Requires \usepackage{graphicx}, \usepackage{tikz}, and \usepackage{float}.
 \begin{figure}[H]
     \centering
 
-    % Center the rotated diagram/caption assembly on the portrait page.
     \makebox[\textwidth][c]{%
         \rotatebox{90}{%
             \begin{minipage}{0.9\textheight}
                 \centering
 
-                % Scale the complete TikZ drawing as one object while preserving
-                % its aspect ratio.
                 \resizebox{0.78\textheight}{!}{%
                     \begin{tikzpicture}[
                         >=Stealth,
@@ -196,13 +224,13 @@ The major system functions are summarized below.
                             per monitored rail
                         };
 
-                        % One clean arrow from the six-rail collection bus.
+
                         \draw[busarrow]
                         (railBusMid)
                         --
                         (shunts.west);
 
-                        % Shunt -> LTC.  Vertical text avoids overlap with the boxes.
+
                         \draw[busarrow]
                         (shunts.east)
                         --
@@ -215,7 +243,7 @@ The major system functions are summarized below.
                         {Sense Voltage}
                         (ltc.west);
 
-                        % LTC -> isolation.  This short label remains horizontal.
+
                         \draw[busarrow]
                         (ltc.east)
                         --
@@ -284,7 +312,7 @@ The major system functions are summarized below.
                             Manage Configuration
                         };
 
-                        % Isolation -> Arduino.  Vertical text prevents overlap.
+
                         \draw[busarrow]
                         (iso.east)
                         --
@@ -327,8 +355,6 @@ The major system functions are summarized below.
                             Configuration Interface
                         };
 
-                        % Branch after the Arduino so the two output arrows do not
-                        % overlap each other.
                         \coordinate (controllerBranch)
                         at ($(giga.east)+(0.55,0)$);
 
@@ -387,7 +413,6 @@ The major system functions are summarized below.
                             Generate EPICS Alarms
                         };
 
-                        % Ethernet -> IOC.  Vertical text prevents overlap.
                         \draw[busarrow]
                         (ethernet.east)
                         --
@@ -417,7 +442,6 @@ The major system functions are summarized below.
                             Alarm and System Status
                         };
 
-                        % IOC -> Phoebus.  Vertical text prevents overlap.
                         \draw[busarrow]
                         (ioc.east)
                         --
@@ -456,8 +480,6 @@ The major system functions are summarized below.
 
                 \vspace{0.25cm}
 
-                % Because the caption is inside the rotated minipage, the figure
-                % number, caption text, and diagram rotate together.
                 \caption{
                     Preliminary functional block diagram of the multi-rail isolated
                     power supply monitoring system. Six independent power-supply rails
@@ -479,205 +501,67 @@ The major system functions are summarized below.
 \section{Preliminary Engineering Calculations}
 \label{sec:engineering-calculations}
 
-\subsection{Current-Sense Shunt Resistor Sizing}
-\label{sec:shunt-sizing}
-The LTC2945 measures the differential voltage between SENSE+ and SENSE-- with a
-full-scale range of \SI{102.4}{\milli\volt}. The ideal shunt resistance for a
-specified maximum measurable current is therefore
-\begin{equation}
-    R_{SHUNT,ideal}=\frac{V_{SENSE,FS}}{I_{MAX}}
-    =\frac{\SI{102.4}{\milli\volt}}{I_{MAX}}.
-\end{equation}
-To prevent saturation, a scaling factor, $K_H$, is applied to leave some headroom:
-\begin{equation}
-    R_{SHUNT}=K_H\frac{\SI{102.4}{\milli\volt}}{I_{MAX}},
-    \qquad 0<K_H<1.
-\end{equation}
-For example, $K_H=0.80$ reserves 20\% headroom for overload, tolerance, and
-transient conditions.
-
-The shunt power at maximum continuous current is
-\begin{equation}
-    P_{SHUNT}=I_{MAX}^{2}R_{SHUNT}.
-\end{equation}
-The installed resistor power rating should exceed this value.
-
-\subsubsection{Current Measurement Resolution}
-The LTC2945 current-sense ADC has a nominal sense-voltage resolution of
-\SI{25}{\micro\volt} per LSB. The current represented by one ADC count is
-\begin{equation}
-    I_{LSB}=\frac{\SI{25}{\micro\volt}}{R_{SHUNT}}.
-\end{equation}
-This relationship provides an important design tradeoff: a smaller shunt lowers
-power dissipation but also increases the minimum current increment represented by
-one ADC count.
-
-\subsubsection{Production Shunt Design Table}
-\begin{table}[H]
-    \centering
-    \caption{Production current-sense resistor calculations.}
-    \label{tab:production-shunts}
-    \begin{tabular}{lrrrrrr}
-        \toprule
-        Rail & $I_{MAX}$ & $R_{ideal}$ & Selected $R$ &
-        $V_{SHUNT}$ & $I_{LSB}$ & $P_{MAX}$ \\
-        & (A) & ($\Omega$) & ($\Omega$) &
-        (mV) & (mA/LSB) & (W) \\
-        \midrule
-        +5VA  & 2.00 & 0.0512 & 0.039 & 78.0 & 0.641 & 0.156 \\
-        +5VB  & 2.00 & 0.0512 & 0.039 & 78.0 & 0.641 & 0.156 \\
-        +5V   & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
-        -5V   & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
-        +15V  & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
-        -15V  & 1.00 & 0.1024 & 0.050 & 50.0 & 0.500 & 0.050 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\subsubsection{Evaluation-Board Shunt Calculation}
-The prototype LTC2945 evaluation board was tested from a \SI{5}{\volt} source
-with a load range of approximately \SI{1}{\kilo\ohm} to \SI{10}{\kilo\ohm}.
-This is a low-current bench-test condition and is separate from the production
-shunt design.
-
-At the minimum load resistance, the shunt required to place the current-sense
-input at full scale is
-\begin{equation}
-    R_{S,FS}=\frac{V_{SHUNT}R_L}{V_S-V_{SHUNT}}
-    =\frac{(\SI{0.1024}{\volt})(\SI{1}{\kilo\ohm})}
-    {\SI{5}{\volt}-\SI{0.1024}{\volt}}
-    =\SI{20.91}{\ohm}.
-\end{equation}
-Applying approximately 15\% headroom gives
-\begin{equation}
-    R_S=(0.85)(\SI{20.91}{\ohm})\approx\SI{17.8}{\ohm}.
-\end{equation}
-At a \SI{10}{\kilo\ohm} load,
-\begin{equation}
-    I_{MIN}=\frac{\SI{5}{\volt}}
-    {\SI{10}{\kilo\ohm}+\SI{17.8}{\ohm}}
-    \approx\SI{499.1}{\micro\ampere},
-\end{equation}
-and therefore
-\begin{equation}
-    V_{SHUNT,MIN}=I_{MIN}R_S
-    \approx(\SI{499.1}{\micro\ampere})(\SI{17.8}{\ohm})
-    \approx\SI{8.88}{\milli\volt}.
-\end{equation}
-The prototype sense voltage therefore remains inside the LTC2945
-\SI{102.4}{\milli\volt} full-scale range over the intended test loads.
-
-\subsection{PCB Trace and Copper-Pour Current Capacity}
-\label{sec:trace-width}
-Power-path copper must carry the maximum rail current without excessive
-temperature rise or voltage drop. KiCad's track-width calculator uses a
-closed-form fit to IPC-2152 data. For an external trace it can be expressed as
-\begin{equation}
-    \Delta T = K I^a W^b T_h^c,
-\end{equation}
-where $I$ is current in amperes, $W$ is trace width in mils, $T_h$ is copper
-thickness in mils, and for external tracks the KiCad coefficients are
-\begin{equation}
-    K=215.3,\qquad a=2,\qquad b=-1.15,\qquad c=-1.0.
-\end{equation}
-Solving for minimum width,
-\begin{equation}
-    W_{MIN}=\left(\frac{\Delta T}
-    {K I^a T_h^c}\right)^{1/b}.
-\end{equation}
-For \SI{1}{oz} copper ($T_h\approx\SI{1.378}{mil}$) and a preliminary
-\SI{10}{\celsius} allowed rise, the calculated external-trace widths are
-approximately \SI{3.27}{mil} at \SI{0.5}{A}, \SI{10.9}{mil} at \SI{1}{A}, and
-\SI{36.4}{mil} at \SI{2}{A}. These are thermal minimums only; the actual layout
-should use wider traces or copper pours where space permits.
-
-\subsection{I\texorpdfstring{\textsuperscript{2}}{2}C Pull-Up Resistor Sizing}
-\label{sec:i2c-pullups}
-The I2C bus buffer and I2C line driver both have internal active current sources that eliminate the need for external pullups. Footprints were placed for 4.7k pullups but are set as Do Not Populate.
-
-\subsection{LTC2945 Voltage Measurement Resolution}
-The LTC2945 rail-voltage channel has a nominal full-scale range of
-\SI{102.4}{\volt} and a nominal resolution of \SI{25}{\milli\volt} per LSB.
-The quantization-only percentage of a measured rail voltage is therefore
-\begin{equation}
-    \epsilon_Q=\frac{\SI{25}{\milli\volt}}{V_{RAIL}}\times100\%.
-\end{equation}
-For example, one count corresponds to approximately 0.42\% of a \SI{6}{\volt}
-rail, 0.50\% of a \SI{5}{\volt} rail, and 0.17\% of a \SI{15}{\volt} rail.
-This is only ADC resolution and not total measurement
-accuracy.
-
-\subsection{Negative-Rail Sign Convention}
-The -5 V and -15 V supplies are electrically isolated from the controller. The
-monitor can therefore be placed in the high side of each isolated rail and read a
-positive local differential quantity even when the system-level rail is labeled
-negative. Firmware applies the configured sign after acquisition:
-\begin{equation}
-    V_{DISPLAY}=S_VV_{MEASURED},\qquad S_V\in\{+1,-1\}.
-\end{equation}
-The same channel metadata is used by the local display and network interface so
-that a negative rail is represented consistently throughout the system.
-
-\subsection{Alarm-Limit Scaling}
-User alarm thresholds are stored and compared in engineering units. For a lower
-voltage limit $V_L$ and upper voltage limit $V_H$, the normal voltage state is
-\begin{equation}
-    V_L\le V_{MEAS}\le V_H.
-\end{equation}
-Similarly, for lower and upper current limits,
-\begin{equation}
-    I_L\le I_{MEAS}\le I_H.
-\end{equation}
-If raw ADC thresholds are ever written directly to the LTC2945, the corresponding
-register value must be calculated from the ADC LSB size. For the current-sense
-channel,
-\begin{equation}
-    N_I=\frac{I_{LIMIT}R_{SHUNT}}{\SI{25}{\micro\volt/LSB}},
-\end{equation}
-and for the rail-voltage channel,
-\begin{equation}
-    N_V=\frac{V_{LIMIT}}{\SI{25}{\milli\volt/LSB}}.
-\end{equation}
-
-\subsection{Controller-Supply Power Budget}
-
-A preliminary controller power budget was developed using datasheet maximum
-values where available and conservative design-current allowances for assemblies
-where a complete board-level maximum current is not specified. A 25\% design
-margin is applied to the calculated load.
+\section{Functional Specifications}
+\label{sec:functional-specifications}
+The functional specifications used for the preliminary design are summarized in
+Table~\ref{tab:functional-specifications}. These values define the intended
+operating envelope of the prototype and establish the quantities that must be
+checked during circuit analysis and later verification testing.
 
 \begin{table}[H]
     \centering
-    \caption{Preliminary controller-side power budget.}
-    \label{tab:power-budget}
-    \begin{tabular}{lrrr}
+    \caption{Preliminary functional specifications.}
+    \label{tab:functional-specifications}
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.27\textwidth}X}
         \toprule
-        Load & Supply & Design Current & Power \\
-        & (V) & (A) & (W) \\
+        \textbf{Function} & \textbf{Specification} \\
         \midrule
-        Arduino GIGA R1 WiFi
-        & 5.0 & 0.500 & 2.500 \\
-
-        GIGA Display Shield
-        & 3.3 & 0.250 & 0.825 \\
-
-        W6100 Ethernet interface
-        & 3.3 & 0.265 & 0.875 \\
-
-        I\textsuperscript{2}C isolation/controller circuitry
-        & 3.3 & 0.065 & 0.215 \\
-        \midrule
-        Subtotal
-        & -- & -- & 4.415 \\
-
-        25\% design margin
-        & -- & -- & 1.104 \\
-        \midrule
-        \textbf{Total}
-        & -- & -- & \textbf{5.519} \\
+        Monitored rails & +5 V A, +5 V B, +5 V, -5 V, +15 V, and -15 V \\
+        Number of channels & Six independent voltage/current measurement channels \\
+        +5 V A/B current range & 0 to 2 A design range per rail \\
+        +5 V, -5 V, +15 V, -15 V current range & 0 to 1 A design range per rail \\
+        Voltage measurement resolution & 25 mV/LSB nominal using the LTC2945 rail-voltage ADC \\
+        Current-sense resolution & 25 \(\mu\)V/LSB across the selected shunt resistor; approximately 0.641 mA/LSB with 39 m\(\Omega\) and 0.500 mA/LSB with 50 m\(\Omega\) \\
+        Isolation & Independent digital isolation for every floating monitor channel \\
+        Alarm processing & User-configurable upper/lower voltage and current limits with local and EPICS status indication \\
+        Fault handling & Detect failed I\textsuperscript{2}C transactions and prevent invalid data from being treated as a valid measurement \\
+        Local interface & GIGA Display Shield showing voltage, current, alarm state, communication state, and configured limits \\
+        Network interface & Ethernet PSC server for EPICS IOC communication plus browser-based configuration/monitoring services \\
+        Configuration retention & Network parameters and alarm limits stored in nonvolatile memory \\
+        Controller logic level & 3.3 V; external interfaces must not exceed the GIGA I/O limits \\
         \bottomrule
-    \end{tabular}
+    \end{tabularx}
 \end{table}
+
+\section{Design Methodology}
+The design was developed by dividing the system into measurement, isolation,
+controller, user-interface, and control-system functions and then verifying the
+interfaces between those blocks. The analog measurement design began with the
+maximum required rail current. The shunt value was selected so that the maximum
+nominal current produces a differential voltage comfortably below the LTC2945
+102.4 mV current-sense full-scale value. Power dissipation in each shunt was
+then calculated using \(P=I^2R\), and the selected resistor rating was checked
+against the calculated worst-case dissipation. The same approach was used for
+PCB copper: maximum continuous current, allowable temperature rise, and voltage
+drop were considered before final trace and copper-pour dimensions were chosen.
+Detailed calculations are included in Appendix~\ref{app:design-calculations}.
+
+Electrical isolation was treated as a system-interface requirement rather than
+only a component-selection problem. Each LTC2945 remains electrically local to
+its rail, and the digital signals cross the isolation boundary through isolated
+logic. Controller-side I\textsuperscript{2}C buffering and level compatibility
+were checked against 3.3 V logic requirements. The controller does not drive
+loads directly; its GPIO and I\textsuperscript{2}C pins only interface to
+logic-level circuitry. This substantially reduces the current demanded from an
+individual microcontroller pin and allows the high-current rail paths to remain
+on the dedicated sensor hardware.
+
+The embedded-software design follows the same functional partitioning. Sensor
+acquisition is separated from display formatting, network services, persistent
+storage, and PSC message handling. Alarm processing is performed on engineering-unit values after
+channel polarity and scaling are applied. The EPICS IOC is intentionally kept
+outside the embedded controller so that the Arduino is responsible for hardware
+acquisition while the IOC is responsible for exposing process variables to the remote user control system.
 
 \section{Preliminary Design Schematics}
 \label{sec:prelim-schematics}
@@ -709,449 +593,67 @@ pagecommand={}
     Isolated Multi-Rail Power Supply Monitor Arduino Shield Board.pdf
 }
 
-\section{Software Flowcharts}
-\label{sec:software-flowcharts}
 
-The software for the Multi-Rail Isolated Power Supply Monitoring System is
-maintained with the hardware design files in the project Git repository:
+\section{Software Architecture and Critical Software Test Results}
+\label{sec:software-architecture-tests}
+The embedded software is organized into functional modules rather than one
+loop. The current implementation contains shared application state,
+sensor-management and LTC2945 register-access code, display handling, Ethernet
+services, an web control page, PSC protocol handling, persistent storage, and the
+main application controller. This separation permits the measurement code to be
+tested independently of the EPICS IOC and permits the network/control-system
+interface to consume already processed engineering-unit values.
 
-\begin{center}
-    \url{https://github.com/capotosto/PS_Monitor}
-\end{center}
+At startup, the firmware initializes hardware interfaces, loads persistent
+settings, configures the monitoring channels, and then enters repetitive sensor
+acquisition and service processing. Each channel read is checked for successful
+I\textsuperscript{2}C communication before conversion. Valid raw ADC values are
+scaled using the configured shunt resistance and channel polarity; invalid
+transactions produce a communication error state. Voltage and current values
+are then compared with their configured lower and upper limits before the local
+display and PSC message data are updated. The detailed execution flow is shown
+in Appendix~\ref{app:software-flowchart}.
 
-The repository provides version control for the Arduino GIGA firmware,
-hardware-design files, and EPICS IOC software used by the monitoring system.
-The embedded firmware is maintained under the \texttt{firmware} portion of the
-repository, while the EPICS IOC and associated database/configuration files are
-maintained under \texttt{epics-ioc}. The flowcharts in this section describe
-the major software operations implemented by these portions of the project.
-
-The Arduino GIGA firmware performs system initialization, acquires voltage and
-current measurements from the six LTC2945 monitor channels, evaluates alarm
-conditions, updates the local display, and publishes data through the Ethernet interface. The primary firmware execution
-sequence is:
-
-\begin{enumerate}
-    \item Initialize the GIGA Display, persistent settings, Ethernet interface,
-    I\textsuperscript{2}C interface, and channel configuration.
-
-    \item Load stored network parameters and voltage/current alarm limits from
-    persistent storage.
-
-    \item Initialize communication with each of the six LTC2945 monitoring
-    channels.
-
-    \item Enter the continuous acquisition and communication loop.
-
-    \item Poll each LTC2945 channel for voltage and current measurements.
-
-    \item Verify I\textsuperscript{2}C communication status for each channel.
-
-    \item If communication fails, mark the associated channel with an
-    I\textsuperscript{2}C error and prevent invalid measurement data from being
-    used.
-
-    \item Convert valid raw measurement data to engineering units and apply the
-    appropriate channel polarity and calibration/scaling information.
-
-    \item Compare each voltage and current measurement with its configured
-    upper and lower alarm limits.
-
-    \item Update the GIGA Display when measurement values, alarm states, or
-    communication states change.
-
-    \item Publish the current measurements and status information through the
-    Ethernet PSC protocol interface.
-
-    \item Service incoming configuration requests and store modified settings
-    when required.
-
-    \item Repeat the acquisition and communication sequence continuously.
-\end{enumerate}
+The most critical functions were tested to the extent possible on the available
+single-channel evaluation board setup. Sensor acquisition returned stable voltage
+and current data, open\slash unconnected channels produced I\textsuperscript{2}C fault
+states instead of plausible but invalid values, negative-rail sign handling was
+visible on the -5 V test channel, and changing a voltage limit changed the local
+alarm state as expected. Ethernet/PSC communication was verified by the EPICS
+IOC reporting a connected driver and by Phoebus displaying the same test-channel
+voltage/current data. Remaining multi-channel verification, long-duration
+operation, restart/persistence checks, and final PCB testing will be repeated on
+the assembled production hardware. This is shown in more detail in \nameref{chap:prototyping-dev}
 
 
-% =====================================================================
-\subsection{Arduino GIGA Firmware Flowchart}
-\label{sec:giga-firmware-flowchart}
+\section{Summary of Preliminary-Design Changes and Project Impact}
+\label{sec:w2-design-changes}
+The preliminary-design work identified several items that were clarified or
+changed from the earliest project documentation. Table~\ref{tab:w2-changes}
+summarizes the principal changes and their effect on the design baseline.
 
-Figure~\ref{fig:firmware-flowchart} shows the top-level execution flow of the
-Arduino GIGA firmware. Following initialization, the controller continuously
-acquires data from each monitoring channel, verifies communication, converts
-valid measurements to engineering units, evaluates alarm limits, updates the
-local display, and services the Ethernet/PSC interface.
-
-\begin{figure}[H]
+\begin{table}[H]
     \centering
-
-    \begin{adjustbox}{
-            max totalsize={0.94\textwidth}{0.88\textheight},
-            center
-        }
-
-        \begin{tikzpicture}[
-            >=Stealth,
-            font=\small,
-            node distance=0.55cm and 1.6cm,
-            process/.style={
-                draw,
-                rectangle,
-                rounded corners=2pt,
-                align=center,
-                minimum width=5.0cm,
-                minimum height=0.80cm,
-                text width=4.7cm,
-                inner sep=4pt,
-                line width=0.8pt
-            },
-            decision/.style={
-                draw,
-                diamond,
-                aspect=2.4,
-                align=center,
-                text width=2.8cm,
-                inner sep=1pt,
-                line width=0.8pt
-            },
-            terminator/.style={
-                draw,
-                rectangle,
-                rounded corners=8pt,
-                align=center,
-                minimum width=3.2cm,
-                minimum height=0.75cm,
-                line width=0.8pt
-            },
-            arrow/.style={
-                ->,
-                line width=0.9pt
-            },
-            flowlabel/.style={
-                font=\scriptsize,
-                fill=white,
-                inner sep=1.5pt
-            }
-            ]
-
-            % ============================================================
-            % INITIALIZATION
-            % ============================================================
-
-            \node[terminator] (start)
-            {Power-Up / Reset};
-
-            \node[process, below=of start] (init)
-            {Initialize GIGA Hardware\\
-                Display, I\textsuperscript{2}C, Ethernet, and GPIO};
-
-            \node[process, below=of init] (settings)
-            {Load Persistent Configuration\\
-                Network Settings and Alarm Limits};
-
-            \node[process, below=of settings] (configure)
-            {Configure Six LTC2945 Monitor Channels\\
-                and Initialize PSC Communication};
-
-            % ============================================================
-            % ACQUISITION LOOP
-            % ============================================================
-
-            \node[process, below=0.9cm of configure] (select)
-            {Select Next Monitor Channel};
-
-            \node[process, below=of select] (read)
-            {Request Voltage and Current\\
-                Measurements from LTC2945};
-
-            \node[decision, below=0.70cm of read] (comm)
-            {I\textsuperscript{2}C Communication\\Successful?};
-
-            % Error branch
-            \node[process, right=2.1cm of comm] (error)
-            {Set Channel\\
-                I\textsuperscript{2}C Error Status};
-
-            % Valid measurement path
-            \node[process, below=0.75cm of comm] (convert)
-            {Convert Raw ADC Data to Engineering Units\\
-                and Apply Scaling / Rail Polarity};
-
-            \node[process, below=of convert] (alarms)
-            {Compare Voltage and Current\\
-                Against Configured Alarm Limits};
-
-            \node[decision, below=0.70cm of alarms] (last)
-            {Last Channel?};
-
-            % ============================================================
-            % SYSTEM UPDATE
-            % ============================================================
-
-            \node[process, below=0.75cm of last] (display)
-            {Update Changed Display Fields\\
-                Measurements, Alarms, and Status};
-
-            \node[process, below=of display] (psc)
-            {Publish Measurements and Status\\
-                through PSC / Ethernet};
-
-            \node[decision, below=0.70cm of psc] (configreq)
-            {Configuration\\Request Received?};
-
-            \node[process, right=2.1cm of configreq] (save)
-            {Process Request and Save\\
-                Persistent Settings};
-
-            % ============================================================
-            % PRIMARY FLOW
-            % ============================================================
-
-            \draw[arrow] (start) -- (init);
-            \draw[arrow] (init) -- (settings);
-            \draw[arrow] (settings) -- (configure);
-            \draw[arrow] (configure) -- (select);
-            \draw[arrow] (select) -- (read);
-            \draw[arrow] (read) -- (comm);
-
-            % Communication successful
-            \draw[arrow]
-            (comm.south)
-            --
-            node[flowlabel, right] {Yes}
-            (convert.north);
-
-            \draw[arrow] (convert) -- (alarms);
-            \draw[arrow] (alarms) -- (last);
-
-            % Communication failure
-            \draw[arrow]
-            (comm.east)
-            --
-            node[flowlabel, above] {No}
-            (error.west);
-
-            % Error skips conversion/alarm processing
-            \draw[arrow]
-            (error.south)
-            |- (last.east);
-
-            % More channels remain
-            \draw[arrow]
-            (last.west)
-            -- ++(-1.3,0)
-            |- node[flowlabel, near start, above] {No}
-            (select.west);
-
-            % All six channels complete
-            \draw[arrow]
-            (last.south)
-            --
-            node[flowlabel, right] {Yes}
-            (display.north);
-
-            \draw[arrow] (display) -- (psc);
-            \draw[arrow] (psc) -- (configreq);
-
-            % Configuration request
-            \draw[arrow]
-            (configreq.east)
-            --
-            node[flowlabel, above] {Yes}
-            (save.west);
-
-            % No configuration request:
-            % loop back without dropping below the figure
-            \coordinate (loopbottom)
-            at ($(configreq.south)+(0,-0.45)$);
-
-            \draw[arrow]
-            (configreq.south)
-            --
-            node[flowlabel, right] {No}
-            (loopbottom)
-            -| ($(select.west)+(-1.3,0)$)
-            |- (select.west);
-
-            % After saving configuration, re-enter acquisition loop
-            \draw[arrow]
-            (save.south)
-            |- ($(configreq.south)+(0,-0.45)$);
-
-        \end{tikzpicture}
-
-    \end{adjustbox}
-
-    \caption{
-        Top-level Arduino GIGA firmware flowchart. Following initialization,
-        the controller continuously acquires measurements from the six LTC2945
-        monitoring channels, validates I\textsuperscript{2}C communication,
-        converts valid data to engineering units, evaluates configured alarm
-        limits, updates the local display, publishes measurements through the
-        PSC/Ethernet interface, and services configuration requests.
-    }
-    \label{fig:firmware-flowchart}
-
-\end{figure}
-
-
-\subsection{PSC and EPICS Communication Flow}
-\label{sec:epics-software-flowchart}
-% =====================================================================
-
-The Arduino GIGA does not directly implement EPICS Channel Access. Instead,
-measurement and status information is transmitted through the Ethernet
-interface using the PSC protocol. The EPICS IOC uses PSCDriver to communicate
-with the GIGA, maps the received values into EPICS process variables, and makes
-those process variables available to the CS-Studio Phoebus operator interface.
-
-This separation allows the embedded controller to remain responsible for
-hardware acquisition and local alarm evaluation while the IOC provides the
-interface between the embedded hardware and the facility control system.
-Figure~\ref{fig:epics-data-flow} summarizes this software data path.
-
-\begin{figure}[H]
-    \centering
-
-    \resizebox{0.95\textwidth}{!}{%
-        \begin{tikzpicture}[
-            >=Stealth,
-            node distance=1.25cm,
-            process/.style={
-                draw,
-                rectangle,
-                rounded corners=2pt,
-                align=center,
-                minimum width=3.2cm,
-                minimum height=1.5cm,
-                text width=3.0cm,
-                line width=0.8pt
-            },
-            arrow/.style={
-                ->,
-                line width=1.0pt
-            },
-            siglabel/.style={
-                font=\scriptsize,
-                fill=white,
-                inner sep=2pt,
-                rotate=90
-            }
-            ]
-
-            \node[process] (measure)
-            {Arduino GIGA\\[2pt]
-                \footnotesize
-                Acquire and Process\\
-                Measurements};
-
-            \node[process, right=1.5cm of measure] (psc)
-            {PSC Protocol\\[2pt]
-                \footnotesize
-                Package Voltage, Current,\\
-                Alarm, and Status Data};
-
-            \node[process, right=1.5cm of psc] (ethernet)
-            {Ethernet Interface\\[2pt]
-                \footnotesize
-                Network Transport};
-
-            \node[process, right=1.5cm of ethernet] (ioc)
-            {EPICS IOC / PSCDriver\\[2pt]
-                \footnotesize
-                Decode Data and Update\\
-                EPICS Process Variables};
-
-            \node[process, right=1.5cm of ioc] (phoebus)
-            {CS-Studio Phoebus\\[2pt]
-                \footnotesize
-                Display Measurements,\\
-                Alarms, and Status};
-
-            \draw[arrow]
-            (measure.east) --
-            node[siglabel, midway] {Processed Data}
-            (psc.west);
-
-            \draw[arrow]
-            (psc.east) --
-            node[siglabel, midway] {PSC Messages}
-            (ethernet.west);
-
-            \draw[arrow]
-            (ethernet.east) --
-            node[siglabel, midway] {Ethernet}
-            (ioc.west);
-
-            \draw[arrow]
-            (ioc.east) --
-            node[siglabel, midway] {EPICS Channel Access}
-            (phoebus.west);
-
-        \end{tikzpicture}%
-    }
-
-    \caption{
-        Software communication path from the Arduino GIGA firmware through
-        PSCDriver and the EPICS IOC to the CS-Studio Phoebus operator interface.
-    }
-    \label{fig:epics-data-flow}
-\end{figure}
-
-
-% =====================================================================
-\subsection{Software Configuration Management}
-\label{sec:software-configuration}
-% =====================================================================
-
-Firmware, IOC configuration files, database definitions, and operator-interface
-files are maintained under Git version control so that hardware and software
-revisions can be associated with a defined project baseline. The current
-software implementation and revision history are available in the
-\texttt{PS\_Monitor} repository at:
-
-\begin{center}
-    \url{https://github.com/capotosto/PS_Monitor}
-\end{center}
-
-Changes made during implementation and testing are committed to the repository,
-providing traceability between the preliminary design presented in this report
-and the final implemented system. The repository therefore serves as the
-controlled source for the firmware and control-system software associated with
-the project.
-
-\section{Preliminary Component List / Bill of Materials}
-\label{sec:bom}
-
-The current bills of materials for the Sensor Board and Arduino Shield Board
-are maintained with their respective KiCad hardware-design files in the
-project \texttt{hardware} directory. They are included below for reference.
-
-\subsection{Sensor Board Bill of Materials}
-
-\begin{center}
-    \includegraphics[
-    page=1,
-    angle=90,
-    width=\textwidth,
-    height=0.95\textheight,
-    keepaspectratio
-    ]{
-        ../hardware/Isolated Multi-Rail Power Supply Monitor Sensor Board/%
-        Isolated Multi-Rail Power Supply Monitor Sensor Board BOM 8-22-2026 REV -.pdf
-    }
-\end{center}
-
-
-\subsection{Arduino Shield Board Bill of Materials}
-
-\begin{center}
-    \includegraphics[
-    page=1,
-    angle=90,
-    width=\textwidth,
-    height=0.95\textheight,
-    keepaspectratio
-    ]{
-        ../hardware/Isolated Multi-Rail Power Supply Monitor Arduino Shield Board/%
-        Isolated Multi-Rail Power Supply Monitor Arduino Shield Board BOM 8-22-2026 REV -.pdf
-    }
-\end{center}
+    \caption{Week 2 design changes and resulting impact.}
+    \label{tab:w2-changes}
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.31\textwidth}X}
+        \toprule
+        \textbf{Item} & \textbf{Preliminary-design result} & \textbf{Impact} \\
+        \midrule
+        Rail naming & The two high-current digital rails are +5 V A and +5 V B. & Some documentation and channel labels were corrected where it showed +6V; electrical architecture is unchanged. \\
+        Production shunts & 39 m\(\Omega\) selected for 2 A +5 V rails and 50 m\(\Omega\) selected for 1 A rails. & Improves headroom and keeps shunt dissipation well below the selected resistor rating. \\
+        Prototype shunt & The DC1697A shunt was changed to approximately 17.8 \(\Omega\) for low-current Arduino-driven loads. & Allows realistic ADC utilization during testing without exceeding Arduino regulator current limits. \\
+        I\textsuperscript{2}C pull-ups & External 4.7 k\(\Omega\) pull-up footprints remain available but are DNP where the selected buffer/current-source arrangement makes them unnecessary. & Reduces unnecessary loading and preserves the intended I\textsuperscript{2}C interface behavior. \\
+        Fault handling & Missing or failed sensors are represented as communication faults rather than numerical measurements. & Reduces risk of a supervisory system accepting stale or fabricated values. \\
+        Configuration and network software & Alarm/network settings, HTTP services, PSC communication, and the Phoebus interface are now part of the implemented software baseline. & Adds firmware integration work but reduces final-system risk because these interfaces can be exercised before all six production channels are assembled. \\
+        Cost/schedule baseline & No formal budget or schedule re-baseline is required solely because of the Week 2 design changes. & Component values and firmware structure changed within the existing architecture; procurement cost will be rechecked after first-article PCB testing and any resulting BOM revisions. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+The largest remaining technical risk is integration of all six isolated channels
+on the final PCB rather than operation of any single functional block. The
+single-channel prototype reduced uncertainty in the LTC2945 measurement,
+firmware scaling, alarm processing, Ethernet/PSC firmware, and operator interface.
+Final verification will focus on channel-to-channel isolation,
+concurrent I\textsuperscript{2}C operation, and confirmation that all configured settings survive normal resets and power cycles.

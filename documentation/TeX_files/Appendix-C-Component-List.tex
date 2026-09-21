@@ -1,0 +1,109 @@
+% !TeX root = ../main.tex
+\chapter{Updated Component List}
+\label{app:component-list}
+The Week 2 component list is intentionally presented in the three-column format
+requested by the assignment. Quantities represent the present design quantity
+for one complete monitoring-system hardware set and exclude optional/DNP parts
+and purchasing spares. Detailed manufacturer and distributor information
+remains in the KiCad bills of materials.
+
+\begin{longtable}{>{\raggedleft\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.70\textwidth}>{\raggedleft\arraybackslash}p{0.10\textwidth}}
+\caption{Updated preliminary component list.}\label{tab:updated-components}\\
+\toprule
+\textbf{Item} & \textbf{Part Description} & \textbf{Qty.} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Item} & \textbf{Part Description} & \textbf{Qty.} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 & Custom isolated multi-rail sensor PCB & 1 \\
+2 & Custom Arduino GIGA interface/shield PCB & 1 \\
+3 & Arduino GIGA R1 WiFi controller, ABX00063 & 1 \\
+4 & Arduino GIGA Display Shield, ASX00039 & 1 \\
+5 & LTC2945IUD-1 voltage/current monitor & 6 \\
+6 & ACPL-064L dual-channel digital optocoupler & 12 \\
+7 & TCA9803 I\textsuperscript{2}C bus buffer/repeater & 2 \\
+8 & P82B715 I\textsuperscript{2}C bus extender & 2 \\
+9 & TPS62912 low-noise 2 A buck regulator & 1 \\
+10 & W6100-Q Ethernet controller & 1 \\
+11 & SI-46014-F RJ45 Ethernet connector/magnetics assembly & 1 \\
+12 & NTA7002NT1G N-channel MOSFET & 6 \\
+13 & 39 m\(\Omega\), 1\% four-terminal current-sense resistor & 2 \\
+14 & 50 m\(\Omega\), 1\% four-terminal current-sense resistor & 4 \\
+15 & 2 k\(\Omega\) resistor & 18 \\
+16 & 4.7 k\(\Omega\) resistor, populated positions only & 8 \\
+17 & 14.7 k\(\Omega\) resistor & 1 \\
+18 & 12.3 k\(\Omega\) resistor & 1 \\
+19 & 10 k\(\Omega\) resistor & 5 \\
+20 & 49.9 \(\Omega\) resistor & 4 \\
+21 & 3.3 \(\Omega\) resistor & 4 \\
+22 & 470 \(\Omega\) resistor & 2 \\
+23 & 1 M\(\Omega\) resistor & 1 \\
+24 & 0 \(\Omega\) jumper resistor / populated zero-ohm link & 4 \\
+25 & 100 nF ceramic capacitor & 37 \\
+26 & 1 \(\mu\)F ceramic capacitor & 12 \\
+27 & 10 \(\mu\)F ceramic capacitor & 2 \\
+28 & 22 \(\mu\)F ceramic capacitor & 5 \\
+29 & 470 nF ceramic capacitor & 1 \\
+30 & 22 nF ceramic capacitor & 1 \\
+31 & 3.3 \(\mu\)F capacitor & 1 \\
+32 & 1 nF capacitor & 1 \\
+33 & 18 pF capacitor & 2 \\
+34 & 2.2 \(\mu\)H power inductor & 1 \\
+35 & 120 \(\Omega\) ferrite bead & 3 \\
+36 & Sensor-board EMI/filter bead (BLE18PS080SN1D) & 1 \\
+37 & 25 MHz crystal, FL2500169 & 1 \\
+38 & Molex 0039299049 connector/header positions & 5 \\
+39 & Molex 0039289088 connector/header & 2 \\
+40 & Molex 0039289108 connector/header & 2 \\
+41 & Arduino shield connector set & 1 \\
+42 & Keystone 5000 test point & 3 \\
+43 & Keystone 5001 test point & 2 \\
+44 & Keystone 5015 test point & 9 \\
+\end{longtable}
+
+This list is expected to change slightly after first-article assembly and final
+verification. In particular, optional pull-up resistors and other DNP footprints
+may be populated temporarily for troubleshooting, and component values may be
+adjusted if testing shows that additional margin or filtering is required.
+
+\section{Bill of Materials}
+\label{sec:bom}
+
+The current bills of materials for the Sensor Board and Arduino Shield Board
+are maintained with their respective KiCad hardware-design files in the
+project \texttt{hardware} directory. They are included below for reference.
+
+\subsection{Sensor Board Bill of Materials}
+
+\begin{center}
+    \includegraphics[
+    page=1,
+    angle=90,
+    width=\textwidth,
+    height=0.95\textheight,
+    keepaspectratio
+    ]{
+        ../hardware/Isolated Multi-Rail Power Supply Monitor Sensor Board/%
+        Isolated Multi-Rail Power Supply Monitor Sensor Board BOM 8-22-2026 REV -.pdf
+    }
+\end{center}
+
+
+\subsection{Arduino Shield Board Bill of Materials}
+
+\begin{center}
+    \includegraphics[
+    page=1,
+    angle=90,
+    width=\textwidth,
+    height=0.95\textheight,
+    keepaspectratio
+    ]{
+        ../hardware/Isolated Multi-Rail Power Supply Monitor Arduino Shield Board/%
+        Isolated Multi-Rail Power Supply Monitor Arduino Shield Board BOM 8-22-2026 REV -.pdf
+    }
+\end{center}

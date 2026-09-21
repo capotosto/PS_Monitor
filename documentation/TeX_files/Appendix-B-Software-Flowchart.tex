@@ -1,0 +1,413 @@
+% !TeX root = ../main.tex
+\chapter{Detailed Software Flowchart}
+\label{app:software-flowchart}
+This appendix provides the detailed software flow requested for the Week 2
+preliminary-design package. It shows the firmware acquisition/alarm loop and the
+PSC-to-EPICS data path used by the implemented software.
+
+The software for the Multi-Rail Isolated Power Supply Monitoring System is
+maintained with the hardware design files in the project Git repository:
+
+\begin{center}
+    \url{https://github.com/capotosto/PS_Monitor}
+\end{center}
+
+The repository provides version control for the Arduino GIGA firmware,
+hardware-design files, and EPICS IOC software used by the monitoring system.
+The embedded firmware is maintained under the \texttt{firmware} portion of the
+repository, while the EPICS IOC and associated database/configuration files are
+maintained under \texttt{epics-ioc}. The flowcharts in this section describe
+the major software operations implemented by these portions of the project.
+
+The Arduino GIGA firmware performs system initialization, acquires voltage and
+current measurements from the six LTC2945 monitor channels, evaluates alarm
+conditions, updates the local display, and publishes data through the Ethernet interface. The primary firmware execution
+sequence is:
+
+\begin{enumerate}
+    \item Initialize the GIGA Display, persistent settings, Ethernet interface,
+    I\textsuperscript{2}C interface, and channel configuration.
+
+    \item Load stored network parameters and voltage/current alarm limits from
+    persistent storage.
+
+    \item Initialize communication with each of the six LTC2945 monitoring
+    channels.
+
+    \item Enter the continuous acquisition and communication loop.
+
+    \item Poll each LTC2945 channel for voltage and current measurements.
+
+    \item Verify I\textsuperscript{2}C communication status for each channel.
+
+    \item If communication fails, mark the associated channel with an
+    I\textsuperscript{2}C error and prevent invalid measurement data from being
+    used.
+
+    \item Convert valid raw measurement data to engineering units and apply the
+    appropriate channel polarity and calibration/scaling information.
+
+    \item Compare each voltage and current measurement with its configured
+    upper and lower alarm limits.
+
+    \item Update the GIGA Display when measurement values, alarm states, or
+    communication states change.
+
+    \item Publish the current measurements and status information through the
+    Ethernet PSC protocol interface.
+
+    \item Service incoming configuration requests and store modified settings
+    when required.
+
+    \item Repeat the acquisition and communication sequence continuously.
+\end{enumerate}
+
+
+% =====================================================================
+\section{Arduino GIGA Firmware Flowchart}
+\label{sec:giga-firmware-flowchart}
+
+Figure~\ref{fig:firmware-flowchart} shows the top-level execution flow of the
+Arduino GIGA firmware. Following initialization, the controller continuously
+acquires data from each monitoring channel, verifies communication, converts
+valid measurements to engineering units, evaluates alarm limits, updates the
+local display, and services the Ethernet/PSC interface.
+
+\begin{figure}[H]
+    \centering
+
+    \begin{adjustbox}{
+            max totalsize={0.94\textwidth}{0.88\textheight},
+            center
+        }
+
+        \begin{tikzpicture}[
+            >=Stealth,
+            font=\small,
+            node distance=0.55cm and 1.6cm,
+            process/.style={
+                draw,
+                rectangle,
+                rounded corners=2pt,
+                align=center,
+                minimum width=5.0cm,
+                minimum height=0.80cm,
+                text width=4.7cm,
+                inner sep=4pt,
+                line width=0.8pt
+            },
+            decision/.style={
+                draw,
+                diamond,
+                aspect=2.4,
+                align=center,
+                text width=2.8cm,
+                inner sep=1pt,
+                line width=0.8pt
+            },
+            terminator/.style={
+                draw,
+                rectangle,
+                rounded corners=8pt,
+                align=center,
+                minimum width=3.2cm,
+                minimum height=0.75cm,
+                line width=0.8pt
+            },
+            arrow/.style={
+                ->,
+                line width=0.9pt
+            },
+            flowlabel/.style={
+                font=\scriptsize,
+                fill=white,
+                inner sep=1.5pt
+            }
+            ]
+
+            % ============================================================
+            % INITIALIZATION
+            % ============================================================
+
+            \node[terminator] (start)
+            {Power-Up / Reset};
+
+            \node[process, below=of start] (init)
+            {Initialize GIGA Hardware\\
+                Display, I\textsuperscript{2}C, Ethernet, and GPIO};
+
+            \node[process, below=of init] (settings)
+            {Load Persistent Configuration\\
+                Network Settings and Alarm Limits};
+
+            \node[process, below=of settings] (configure)
+            {Configure Six LTC2945 Monitor Channels\\
+                and Initialize PSC Communication};
+
+            % ============================================================
+            % ACQUISITION LOOP
+            % ============================================================
+
+            \node[process, below=0.9cm of configure] (select)
+            {Select Next Monitor Channel};
+
+            \node[process, below=of select] (read)
+            {Request Voltage and Current\\
+                Measurements from LTC2945};
+
+            \node[decision, below=0.70cm of read] (comm)
+            {I\textsuperscript{2}C Communication\\Successful?};
+
+            % Error branch
+            \node[process, right=2.1cm of comm] (error)
+            {Set Channel\\
+                I\textsuperscript{2}C Error Status};
+
+            % Valid measurement path
+            \node[process, below=0.75cm of comm] (convert)
+            {Convert Raw ADC Data to Engineering Units\\
+                and Apply Scaling / Rail Polarity};
+
+            \node[process, below=of convert] (alarms)
+            {Compare Voltage and Current\\
+                Against Configured Alarm Limits};
+
+            \node[decision, below=0.70cm of alarms] (last)
+            {Last Channel?};
+
+            % ============================================================
+            % SYSTEM UPDATE
+            % ============================================================
+
+            \node[process, below=0.75cm of last] (display)
+            {Update Changed Display Fields\\
+                Measurements, Alarms, and Status};
+
+            \node[process, below=of display] (psc)
+            {Publish Measurements and Status\\
+                through PSC / Ethernet};
+
+            \node[decision, below=0.70cm of psc] (configreq)
+            {Configuration\\Request Received?};
+
+            \node[process, right=2.1cm of configreq] (save)
+            {Process Request and Save\\
+                Persistent Settings};
+
+            % ============================================================
+            % PRIMARY FLOW
+            % ============================================================
+
+            \draw[arrow] (start) -- (init);
+            \draw[arrow] (init) -- (settings);
+            \draw[arrow] (settings) -- (configure);
+            \draw[arrow] (configure) -- (select);
+            \draw[arrow] (select) -- (read);
+            \draw[arrow] (read) -- (comm);
+
+            % Communication successful
+            \draw[arrow]
+            (comm.south)
+            --
+            node[flowlabel, right] {Yes}
+            (convert.north);
+
+            \draw[arrow] (convert) -- (alarms);
+            \draw[arrow] (alarms) -- (last);
+
+            % Communication failure
+            \draw[arrow]
+            (comm.east)
+            --
+            node[flowlabel, above] {No}
+            (error.west);
+
+            % Error skips conversion/alarm processing
+            \draw[arrow]
+            (error.south)
+            |- (last.east);
+
+            % More channels remain
+            \draw[arrow]
+            (last.west)
+            -- ++(-1.3,0)
+            |- node[flowlabel, near start, above] {No}
+            (select.west);
+
+            % All six channels complete
+            \draw[arrow]
+            (last.south)
+            --
+            node[flowlabel, right] {Yes}
+            (display.north);
+
+            \draw[arrow] (display) -- (psc);
+            \draw[arrow] (psc) -- (configreq);
+
+            % Configuration request
+            \draw[arrow]
+            (configreq.east)
+            --
+            node[flowlabel, above] {Yes}
+            (save.west);
+
+            % No configuration request:
+            % loop back without dropping below the figure
+            \coordinate (loopbottom)
+            at ($(configreq.south)+(0,-0.45)$);
+
+            \draw[arrow]
+            (configreq.south)
+            --
+            node[flowlabel, right] {No}
+            (loopbottom)
+            -| ($(select.west)+(-1.3,0)$)
+            |- (select.west);
+
+            % After saving configuration, re-enter acquisition loop
+            \draw[arrow]
+            (save.south)
+            |- ($(configreq.south)+(0,-0.45)$);
+
+        \end{tikzpicture}
+
+    \end{adjustbox}
+
+    \caption{
+        Top-level Arduino GIGA firmware flowchart. Following initialization,
+        the controller continuously acquires measurements from the six LTC2945
+        monitoring channels, validates I\textsuperscript{2}C communication,
+        converts valid data to engineering units, evaluates configured alarm
+        limits, updates the local display, publishes measurements through the
+        PSC/Ethernet interface, and services configuration requests.
+    }
+    \label{fig:firmware-flowchart}
+
+\end{figure}
+
+
+\section{PSC and EPICS Communication Flow}
+\label{sec:epics-software-flowchart}
+% =====================================================================
+
+The Arduino GIGA does not directly implement EPICS Channel Access. Instead,
+measurement and status information is transmitted through the Ethernet
+interface using the PSC protocol. The EPICS IOC uses PSCDriver to communicate
+with the GIGA, maps the received values into EPICS process variables, and makes
+those process variables available to the CS-Studio Phoebus operator interface.
+
+This separation allows the embedded controller to remain responsible for
+hardware acquisition and local alarm evaluation while the IOC provides the
+interface between the embedded hardware and the facility control system.
+Figure~\ref{fig:epics-data-flow} summarizes this software data path.
+
+\begin{figure}[H]
+    \centering
+
+    \resizebox{0.95\textwidth}{!}{%
+        \begin{tikzpicture}[
+            >=Stealth,
+            node distance=1.25cm,
+            process/.style={
+                draw,
+                rectangle,
+                rounded corners=2pt,
+                align=center,
+                minimum width=3.2cm,
+                minimum height=1.5cm,
+                text width=3.0cm,
+                line width=0.8pt
+            },
+            arrow/.style={
+                ->,
+                line width=1.0pt
+            },
+            siglabel/.style={
+                font=\scriptsize,
+                fill=white,
+                inner sep=2pt,
+                rotate=90
+            }
+            ]
+
+            \node[process] (measure)
+            {Arduino GIGA\\[2pt]
+                \footnotesize
+                Acquire and Process\\
+                Measurements};
+
+            \node[process, right=1.5cm of measure] (psc)
+            {PSC Protocol\\[2pt]
+                \footnotesize
+                Package Voltage, Current,\\
+                Alarm, and Status Data};
+
+            \node[process, right=1.5cm of psc] (ethernet)
+            {Ethernet Interface\\[2pt]
+                \footnotesize
+                Network Transport};
+
+            \node[process, right=1.5cm of ethernet] (ioc)
+            {EPICS IOC / PSCDriver\\[2pt]
+                \footnotesize
+                Decode Data and Update\\
+                EPICS Process Variables};
+
+            \node[process, right=1.5cm of ioc] (phoebus)
+            {CS-Studio Phoebus\\[2pt]
+                \footnotesize
+                Display Measurements,\\
+                Alarms, and Status};
+
+            \draw[arrow]
+            (measure.east) --
+            node[siglabel, midway] {Processed Data}
+            (psc.west);
+
+            \draw[arrow]
+            (psc.east) --
+            node[siglabel, midway] {PSC Messages}
+            (ethernet.west);
+
+            \draw[arrow]
+            (ethernet.east) --
+            node[siglabel, midway] {Ethernet}
+            (ioc.west);
+
+            \draw[arrow]
+            (ioc.east) --
+            node[siglabel, midway] {EPICS Channel Access}
+            (phoebus.west);
+
+        \end{tikzpicture}%
+    }
+
+    \caption{
+        Software communication path from the Arduino GIGA firmware through
+        PSCDriver and the EPICS IOC to the CS-Studio Phoebus operator interface.
+    }
+    \label{fig:epics-data-flow}
+\end{figure}
+
+
+% =====================================================================
+\section{Software Configuration Management}
+\label{sec:software-configuration}
+% =====================================================================
+
+Firmware, IOC configuration files, database definitions, and operator-interface
+files are maintained under Git version control so that hardware and software
+revisions can be associated with a defined project baseline. The current
+software implementation and revision history are available in the
+\texttt{PS\_Monitor} repository at:
+
+\begin{center}
+    \url{https://github.com/capotosto/PS_Monitor}
+\end{center}
+
+Changes made during implementation and testing are committed to the repository,
+providing traceability between the preliminary design presented in this report
+and the final implemented system. The repository therefore serves as the
+controlled source for the firmware and control-system software associated with
+the project.
+

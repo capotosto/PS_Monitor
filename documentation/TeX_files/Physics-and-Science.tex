@@ -1,0 +1,59 @@
+% !TeX root = ../main.tex
+\chapter{Role of Physics and Other Sciences}
+\label{chap:physics-science}
+
+To measure the currents of the various supplies, the load current is passed through a shunt resistor for each supply. Ohm's law, \(V=IR\), converts the sampled current into a voltage that can be measured by the LTC2945 PMIC. For example, the digital rail's 2 A current flowing
+through a 39 m\(\Omega\) shunt produces a 78 mV differential voltage. The
+resistor also converts part of the electrical energy into heat according to
+Joule heating, \(P=I^2R\). That same 2 A operating point dissipates 0.156 W in
+the shunt. These two equations create the main current-sensor design tradeoff:
+a larger resistance produces more measurable voltage and better current
+resolution, but also produces greater voltage drop and heat. The selected shunt
+must therefore provide adequate ADC signal while remaining comfortably below its
+power rating and while causing acceptably small voltage/IR drop to the monitored
+rail.
+
+Voltage measurement relies on the physics of electric potential difference and
+on analog-to-digital (ADC) conversion. Each LTC2945 is referenced to its own local
+power-supply domain via optocouplers, so it can measure the potential of that rail without
+requiring all six rails to share a common ground. The converter represents an
+analog input with a finite number of digital states. With the LTC2945's 25
+mV-per-count resolution, quantization sets the bar for the lower measurable limit. The current channel similarly resolves 25 \(\mu\)V per count across the shunt. Mathematics is required not only to convert the ADC code into volts and amps but also to determine whether the selected shunt and expected signal range make use of the full
+ADC span. The calculations in Appendix~\ref{app:design-calculations} explicitly
+convert between current, shunt voltage, ADC counts, and measurement resolution.
+
+Galvanic isolation is another important physical concept in the project. Two
+circuits can exchange information without sharing a conductive DC path by using
+an isolator. In the ACPL-064L, an electrical input drives an LED, which is then detected by a photodiode on the other side, forming an isolated barrier between the two sides of the circuit. The signal crosses the isolation barrier while the two circuit grounds remain
+electrically independent. This is important because directly connecting the
+returns of floating supplies can create ground loops or force current through a
+path that the original power system did not intend. The mathematical treatment
+of the isolation interface includes logic voltage limits, LED/interface current,
+and the allowable voltage across the isolation barrier. Although the monitored
+rails are only in the tens of volts, the isolation components have ratings in excess of 100V, providing ample headroom.
+
+The digital communication buses also depend on basic circuit behavior. An
+I\textsuperscript{2}C bus uses open-drain I/O, meaning that devices pull a
+line low while a pull-up element or active current source returns it high. Bus
+capacitance and pull-up strength determine the line's electrical rise time. Pull ups that are too weak, or too much bus capacitance can prevent a logic-high level from being
+reached quickly enough at the selected clock rate. The TCA9803 buffer used in
+the design includes an active current source on one side, which eliminates the need to be concerned with setting RC time constants so long as bus capacitance remains below the max for the driver.
+
+Power conversion on the controller hardware also uses electromagnetic energy
+storage. The TPS62912 is a switching buck regulator: it alternately connects and
+disconnects the input through switching devices while an inductor and capacitors
+store and release energy to produce a lower average DC output. The basic
+relationships among voltage, current, inductance, capacitance, switching
+frequency, ripple, and load determine output quality. For this project the regulator is required to produce a 3.3 V logic rail from a higher input while supplying the display, Ethernet, and interface electronics. The preliminary load estimate is compared with the regulator's output-current rating so the design has sufficient current and thermal margin rather than selecting the regulator only from its nominal output voltage.
+
+Finally, the project relies on mathematics to turn these physical principles
+into engineering decisions. Kirchhoff's and Ohm's laws are used to solve the
+prototype test network; \(P=VI\), \(P=I^2R\), and related equations are used for
+component heating and power budgeting; ADC scale factors are used to convert
+between raw counts and engineering units; inequalities define acceptable alarm
+regions; and tolerance analysis estimates how resistor error and converter error
+propagate into the reported current. The firmware then implements these same
+relationships numerically. In this sense the software is not separate from the
+physics of the hardware: it is the mathematical model that converts measured
+electrical quantities into the voltage, current, alarm, and status information
+presented to the user and to EPICS.
