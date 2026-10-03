@@ -1,3 +1,15 @@
+/*Embedded HTTP configuration and monitoring interface.
+
+  This module provides a webpage served directly by the
+  Arduino GIGA over Ethernet.
+
+  Supported functions:
+    - display live voltage/current measurements for all channels
+    - show alarm and sensor communication status
+    - modify voltage/current alarm limits
+    - modify static network configuration
+    - persist accepted configuration changes to internal QSPI flash
+    - synchronize changed alarm limits with the PSC/EPICS interface*/
 #include "HttpDashboard.h"
 
 #include <Arduino.h>
@@ -20,6 +32,15 @@ void initializeHttpServer() {
   httpServer.begin();
 }
 
+/*Read one line from the client.
+
+  Reading stops when:
+    - a newline is received,
+    - the client disconnects, or
+    - timeoutMs expires.
+
+  Carriage returns are discarded and input is capped at maxLength to prevent
+  an unexpectedly long request line or header from consuming excessive RAM.*/
 String readHttpLine(EthernetClient &client, uint32_t timeoutMs, size_t maxLength) {
   String line;
   line.reserve(maxLength);
@@ -43,6 +64,9 @@ String readHttpLine(EthernetClient &client, uint32_t timeoutMs, size_t maxLength
   return line;
 }
 
+/*Ignore HTTP request headers until the required blank line is
+  reached. The 30-line limit prevents a malformed client from keeping the
+  embedded server occupied indefinitely.*/
 void discardHttpHeaders(EthernetClient &client) {
   for (uint8_t i = 0; i < 30; ++i) {
     String line = readHttpLine(client, 300, 255);
@@ -52,6 +76,14 @@ void discardHttpHeaders(EthernetClient &client) {
     }
   }
 }
+
+
+/*
+  Minimal HTTP response helpers used by the dashboard endpoints.
+
+  Responses disable caching so measurements/configuration shown by the
+  browser reflect the current controller state.
+*/
 
 void sendHttpHeader(
   EthernetClient &client,
@@ -86,6 +118,11 @@ void sendNotFound(EthernetClient &client) {
   client.println(F("Not found"));
 }
 
+/*Locate a query-string parameter in the request target.
+  Example:
+    /api/limits?ch=1&vlow=4.5
+
+    key "vlow" returns "4.5"*/
 bool getQueryParameter(
   const String &target,
   const char *key,
@@ -197,6 +234,23 @@ void formatIpv4Address(
   );
 }
 
+/*Validate and store a network-configuration request from the web interface.
+
+  Required query parameters:
+    ip      - device IPv4 address
+    dns     - DNS server; 0.0.0.0 is allowed
+    gateway - default gateway; 0.0.0.0 is allowed
+    subnet  - contiguous IPv4 subnet mask
+
+  The requested values are parsed and validated before modifying the live
+  configuration structure.
+
+  The previous configuration is retained until the new values are
+  successfully written to flash. If the flash write fails,
+  the in-memory values are rolled back.
+
+  A successful change sets networkRestartRequired because the Ethernet
+  interface continues using its current address until reset/power-cycle.*/
 bool updateNetworkFromRequest(
   const String &target,
   char *errorMessage,
@@ -271,6 +325,23 @@ bool updateNetworkFromRequest(
   return true;
 }
 
+/*Validate and apply alarm-limit update from the dashboard.
+
+  Expected parameters:
+    ch    - channel number, 1 through CHANNEL_COUNT
+    vlow  - lower voltage alarm threshold
+    vhigh - upper voltage alarm threshold
+    ilow  - lower current alarm threshold
+    ihigh - upper current alarm threshold
+
+  Lower limits must remain below their corresponding upper limits.
+
+  The previous limits are saved before modification. If flash write
+  fails, the old values and alarm state are restored.
+
+  After a successful update, the new limits and alarm state are immediately
+  published to the connected PSC/EPICS client so the browser, controller,
+  and IOC remain synchronized.*/
 bool updateLimitsFromRequest(
   const String &target,
   char *errorMessage,
@@ -385,6 +456,10 @@ void printHtmlIpInput(
   );
 }
 
+/*Display confirmation after network settings have been stored.
+
+  The page explicitly tells the user to reset or power-cycle the controller before
+  reconnecting at the new address.*/
 void sendNetworkSavedPage(EthernetClient &client) {
   char newIp[20];
   formatIpv4Address(networkSettings.ip, newIp, sizeof(newIp));
@@ -412,6 +487,22 @@ void sendNetworkSavedPage(EthernetClient &client) {
   ));
 }
 
+/*Generate the complete monitoring/configuration dashboard.
+
+  The page displays:
+    - live voltage and current for every rail
+    - OK/alarm/I2C-error state
+    - editable voltage and current alarm limits
+    - current PSC/EPICS connection state
+    - current static network configuration
+    - persistent-storage status
+    - reset-required warning after a network change
+
+  Each channel uses its own form so a single set of limits can be submitted
+  without modifying the other channels.
+
+  Invalid sensor readings are displayed as "---" rather than zero so a
+  communication failure cannot be mistaken for a real electrical value.*/
 void sendDashboard(EthernetClient &client) {
   sendHttpHeader(client, "200 OK", "text/html; charset=utf-8");
 
@@ -576,6 +667,16 @@ void sendDashboard(EthernetClient &client) {
   client.println(F("</body></html>"));
 }
 
+/*Parse and dispatch one HTTP request.
+
+  Supported routes:
+    GET /                  - monitoring/configuration dashboard
+    GET /api/network?...   - validate and store network settings
+    GET /api/limits?...    - validate and store one channel's alarm limits
+
+  Any non-GET method returns HTTP 405.
+  Unknown paths return HTTP 404.
+  Invalid submitted values return HTTP 400 with a diagnostic message.*/
 void handleHttpRequest(EthernetClient &client, const String &requestLine) {
   const int firstSpace = requestLine.indexOf(' ');
   const int secondSpace = requestLine.indexOf(' ', firstSpace + 1);
@@ -630,6 +731,15 @@ void handleHttpRequest(EthernetClient &client, const String &requestLine) {
   sendNotFound(client);
 }
 
+/*Service one pending HTTP connection.
+
+  This routine is called repeatedly from the main application loop. It
+  accepts a client, reads the request line and headers, dispatches the
+  request, then closes the connection.
+
+  The implementation intentionally uses short-lived HTTP/1.1 connections
+  rather than keeping browser connections open, which keeps the embedded
+  server simple and prevents it from monopolizing the main control loop.*/
 void serviceHttp() {
   if (!ethernetHardwarePresent) {
     return;
