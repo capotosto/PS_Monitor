@@ -1,3 +1,16 @@
+/*
+  Local GIGA Display UI
+
+  The display presents all six monitored rails with Ethernet/network status.
+
+  To minimize display flicker and unnecessary re-drawing, the UI
+  maintains a cached snapshot of the values currently represented on screen.
+  During each refresh, the current application state is compared with the
+  cached state and only fields that have changed are redrawn.
+
+  A complete channel card is redrawn when its overall alarm state changes
+  because the card background/border color also changes.
+  */
 #include "DisplayUI.h"
 
 #include <Arduino.h>
@@ -36,6 +49,12 @@ constexpr int GAP_Y = 10;
 constexpr int CARD_WIDTH = 252;
 constexpr int CARD_HEIGHT = 202;
 
+/*Cached representation of the information currently drawn for one channel.
+
+  Floating-point measurements and limits are converted to integer milli-units
+  before comparison.
+  AlarmMask captures the individual alarm/fault states so the status field
+  can be refreshed when any condition changes.*/
 struct ChannelDisplaySnapshot {
   bool initialized = false;
 
@@ -66,8 +85,8 @@ HeaderDisplaySnapshot headerDisplayCache;
 /*
   Screen arrangement:
 
-    +6VA     +5V      +15V
-    +6VB     -5V      -15V
+    +5VA     +5V      +15V
+    +5VB     -5V      -15V
 
   Values are indexes into channels[].
 */
@@ -76,6 +95,9 @@ constexpr uint8_t DISPLAY_ORDER[CHANNEL_COUNT] = {
   1, 3, 5
 };
 
+/*Convert floats to 0.001 base-unit resolution for display
+  change detection. For voltage this corresponds to 1 mV; for current stored
+  in amperes it corresponds to 1 mA.*/
 int32_t toDisplayedMilli(float value) {
   return static_cast<int32_t>(lroundf(value * 1000.0f));
 }
@@ -88,6 +110,16 @@ uint32_t packIp(const IPAddress &ip) {
     static_cast<uint32_t>(ip[3]);
 }
 
+/*Encode the alarm/fault conditions that affect the channel status display:
+
+    bit 0 - voltage below lower limit
+    bit 1 - voltage above upper limit
+    bit 2 - current below lower limit
+    bit 3 - current above upper limit
+    bit 4 - LTC2945/I2C communication fault
+
+  The mask is cached so the header status is redrawn only when one of these
+  conditions changes.*/
 uint8_t makeDisplayAlarmMask(const MonitorChannel &channel) {
   uint8_t mask = 0;
 
@@ -110,6 +142,7 @@ uint8_t makeDisplayAlarmMask(const MonitorChannel &channel) {
   return mask;
 }
 
+/*Capture the current channel state*/
 ChannelDisplaySnapshot captureChannel(
   const MonitorChannel &channel
 ) {
@@ -170,6 +203,8 @@ bool headerChanged(
     previous.packedIp != current.packedIp;
 }
 
+/*Convert a display slot number (0-5) into the upper-left pixel coordinates
+  of its channel card within the 3-column by 2-row layout.*/
 void cardPosition(
   uint8_t displaySlot,
   int &x,
@@ -217,6 +252,7 @@ void clearField(
   display.fillRect(x, y, width, height, background);
 }
 
+//Draw screen elements that do not normally change during operation
 void drawStaticLayout() {
   display.fillScreen(COLOR_BACKGROUND);
   display.fillRect(
@@ -230,6 +266,12 @@ void drawStaticLayout() {
   printAt(14, 9, 3, COLOR_WHITE, "MULTI-RAIL MONITOR");
 }
 
+/*Draw the Ethernet status area in the screen header.
+  Display states:
+    - no Ethernet hardware detected
+    - Ethernet hardware present but physical link is down
+    - active Ethernet connection showing the current IP address and the
+      HTTP/PSC service ports*/
 void drawHeaderNetworkStatus() {
   display.fillRect(
     500,
@@ -297,6 +339,12 @@ void drawHeaderNetworkStatus() {
   printAt(510, 35, 1, COLOR_MUTED, line2);
 }
 
+/*Update the status indicator in a channel card:
+
+    I2C - sensor communication unavailable
+    ALM - one or more configured alarm conditions active
+    OK  - sensor online and no alarm conditions active
+  Communication failure takes priority over normal alarm indication.*/
 void drawChannelHeaderState(
   uint8_t channelIndex,
   uint8_t displaySlot
@@ -331,6 +379,7 @@ void drawChannelHeaderState(
   );
 }
 
+//Redraw only the voltage field. Invalid measurements are displayed as "---"
 void drawChannelVoltage(
   uint8_t channelIndex,
   uint8_t displaySlot
@@ -372,6 +421,7 @@ void drawChannelVoltage(
   );
 }
 
+//Redraw only the current field. Current is stored internally in amps
 void drawChannelCurrent(
   uint8_t channelIndex,
   uint8_t displaySlot
@@ -467,6 +517,7 @@ void drawChannelLimits(
   );
 }
 
+//Redraw an entire channel card.
 void drawCompleteChannelCard(
   uint8_t channelIndex,
   uint8_t displaySlot
@@ -509,6 +560,15 @@ void drawCompleteChannelCard(
   drawChannelLimits(channelIndex, displaySlot);
 }
 
+/*Refresh one channel using change detection.
+
+  The current channel state is compared with the cached state already shown
+  on screen.
+    - first update or overall alarm change -> redraw complete card
+    - voltage/validity change             -> redraw voltage only
+    - current/validity change             -> redraw current only
+    - alarm-limit change                  -> redraw limits only
+    - sensor/alarm-bit change             -> redraw status only*/
 void refreshChannelCard(
   uint8_t channelIndex,
   uint8_t displaySlot
