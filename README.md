@@ -9,8 +9,8 @@ The Multi-Rail Isolated Power Supply Monitoring System measures the voltage and 
 
 The monitored rails are:
 
-- `+6VA`
-- `+6VB`
+- `+5VA`
+- `+5VB`
 - `+5V`
 - `-5V`
 - `+15V`
@@ -45,7 +45,7 @@ The monitored rails are:
 ```text
 ┌──────────────────────────────────────────────┐
 │ Floating Power-Supply Rails                  │
-│ +6VA, +6VB, +5V, -5V, +15V, and -15V        │
+│ +5VA, +5VB, +5V, -5V, +15V, and -15V        │
 └──────────────────────┬───────────────────────┘
                        │
                        ▼

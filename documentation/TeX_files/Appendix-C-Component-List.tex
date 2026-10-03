@@ -77,33 +77,780 @@ The current bills of materials for the Sensor Board and Arduino Shield Board
 are maintained with their respective KiCad hardware-design files in the
 project \texttt{hardware} directory. They are included below for reference.
 
+\begin{weekthreechange}
+    The BOMs below were updated udring the DDR to add extended BOM costs for quantity ranges 1, 100, and 1000 boards.
+
+    Price breaks were set for using the required quantity of components at production quantities, going to re-spooled or full reels, so some components may have the ~\$7 reeling fees added.
+\end{weekthreechange}
 \subsection{Sensor Board Bill of Materials}
+    \subsubsection{Preliminary}
+        \begin{center}
+            \includegraphics[
+            page=1,
+            angle=90,
+            width=\textwidth,
+            height=0.9\textheight,
+            keepaspectratio
+            ]{
+                ../hardware/Isolated Multi-Rail Power Supply Monitor Sensor Board/%
+                Isolated Multi-Rail Power Supply Monitor Sensor Board BOM 8-22-2026 REV -.pdf
+            }
+        \end{center}
 
-\begin{center}
-    \includegraphics[
-    page=1,
-    angle=90,
-    width=\textwidth,
-    height=0.95\textheight,
-    keepaspectratio
-    ]{
-        ../hardware/Isolated Multi-Rail Power Supply Monitor Sensor Board/%
-        Isolated Multi-Rail Power Supply Monitor Sensor Board BOM 8-22-2026 REV -.pdf
-    }
-\end{center}
+        \begin{landscape}
+            \subsubsection{Final}
+                \begin{center}
+                    \scriptsize
+
+                    \captionof{table}{Final Sensor Board Bill of Materials and Production Cost Analysis}
+                    \label{tab:sensor-bom-cost}
+
+                    \resizebox{0.96\linewidth}{!}{%
+                        \begin{tabular}{
+                                p{0.17\linewidth}
+                                r
+                                p{0.24\linewidth}
+                                p{0.15\linewidth}
+                                p{0.20\linewidth}
+                                p{0.12\linewidth}
+                                r
+                                r
+                                r
+                            }
+                            \toprule
+                            \textbf{Reference} &
+                            \textbf{Qty./System} &
+                            \textbf{Specification} &
+                            \textbf{Manufacturer} &
+                            \textbf{Mfr. P/N} &
+                            \textbf{Pricing Source} &
+                            \textbf{1 System} &
+                            \textbf{100 Systems} &
+                            \textbf{1000 Systems} \\
+                            \midrule
+
+                            C1,\allowbreak C3,\allowbreak C21,\allowbreak C23,\allowbreak C26,\allowbreak C28,\allowbreak C31,\allowbreak C33,\allowbreak C36,\allowbreak C38,\allowbreak C41,\allowbreak C43
+                            & 12
+                            & 1 \textmu{}F $\pm$10\%, 50 V, X5R, 0603
+                            & Samsung Electro-Mechanics
+                            & CL10A105KB8NNNC
+                            & DigiKey
+                            & \$1.12
+                            & \$54.73
+                            & \$374.72 \\
+
+                            C2,\allowbreak C4,\allowbreak C5,\allowbreak C11,\allowbreak C12,\allowbreak C14,\allowbreak C15,\allowbreak C17,\allowbreak C22,\allowbreak C24,\allowbreak C25,\allowbreak C27,\allowbreak C29,\allowbreak C30,\allowbreak C32,\allowbreak C34,\allowbreak C35,\allowbreak C37,\allowbreak C39,\allowbreak C40,\allowbreak C42,\allowbreak C44,\allowbreak C45
+                            & 23
+                            & 100 nF $\pm$10\%, 50 V, X5R, 0402
+                            & Murata Electronics
+                            & GRM155R61H104KE14D
+                            & Mouser
+                            & \$0.44
+                            & \$34.83
+                            & \$180.00 \\
+
+                            C6
+                            & 1
+                            & 2.2 nF $\pm$10\%, 50 V, X7R, 0402
+                            & Murata Electronics
+                            & GRM155R71H222KA01D
+                            & DigiKey
+                            & \$0.22
+                            & \$8.20
+                            & \$15.25 \\
+
+                            C7,\allowbreak C8
+                            & 2
+                            & 10 \textmu{}F $\pm$10\%, 25 V, X7S, 0805
+                            & TDK
+                            & C2012X7S1E106K125AC
+                            & DigiKey
+                            & \$1.77
+                            & \$61.21
+                            & \$446.16 \\
+
+                            C9
+                            & 1
+                            & 470 nF $\pm$10\%, 25 V, X5R, 0402
+                            & TDK
+                            & C1005X5R1E474K050BB
+                            & DigiKey
+                            & \$0.20
+                            & \$10.40
+                            & \$28.95 \\
+
+                            C10,\allowbreak C13,\allowbreak C16,\allowbreak C19,\allowbreak C20
+                            & 5
+                            & 22 \textmu{}F $\pm$20\%, 10 V, X7S, 0805
+                            & Cal-Chip Electronics
+                            & GMC21X7S226M10NT
+                            & DigiKey
+                            & \$4.52
+                            & \$421.15
+                            & \$4,148.50 \\
+
+                            FB1
+                            & 1
+                            & Ferrite bead, 8.5 $\Omega$ @ 100 MHz, 8 A, 4 m$\Omega$ max DCR, 0603
+                            & Murata Electronics
+                            & BLE18PS080SN1D
+                            & Mouser
+                            & \$0.62
+                            & \$23.50
+                            & \$89.50 \\
+
+                            J101,\allowbreak J102,\allowbreak J104,\allowbreak J105,\allowbreak J108
+                            & 5
+                            & 4-position Mini-Fit Jr. vertical header, 4.2 mm
+                            & Molex
+                            & 0039299049
+                            & DigiKey
+                            & \$15.78
+                            & \$931.41
+                            & \$7,941.18 \\
+
+                            J103
+                            & 1
+                            & 8-position Mini-Fit Jr. vertical header, 4.2 mm
+                            & Molex
+                            & 0039289088
+                            & DigiKey
+                            & \$9.16
+                            & \$364.00
+                            & \$3,249.31 \\
+
+                            J106,\allowbreak J107
+                            & 2
+                            & 10-position Mini-Fit Jr. vertical header, 4.2 mm
+                            & Molex
+                            & 0039289108
+                            & DigiKey
+                            & \$14.94
+                            & \$790.75
+                            & \$6,722.03 \\
+
+                            L1
+                            & 1
+                            & 2.2 \textmu{}H $\pm$20\%, 4.7 A rated, 6.2 A Isat
+                            & Würth Elektronik
+                            & 74438356022
+                            & DigiKey
+                            & \$3.88
+                            & \$190.92
+                            & \$1,702.10 \\
+
+                            Q1,\allowbreak Q2,\allowbreak Q3,\allowbreak Q4,\allowbreak Q5,\allowbreak Q6
+                            & 6
+                            & N-MOSFET, 30 V, 154 mA, 300 mW, SC-75
+                            & onsemi
+                            & NTA7002NT1G
+                            & Mouser
+                            & \$2.03
+                            & \$60.46
+                            & \$432.00 \\
+
+                            R6,\allowbreak R12,\allowbreak R13,\allowbreak R33,\allowbreak R34,\allowbreak R35,\allowbreak R36,\allowbreak R37,\allowbreak R38,\allowbreak R39,\allowbreak R40,\allowbreak R41,\allowbreak R42,\allowbreak R43,\allowbreak R44,\allowbreak R45,\allowbreak R46,\allowbreak R47
+                            & 18
+                            & 2.00 k$\Omega$ $\pm$1\%, 0.10 W, 0402
+                            & Panasonic Industry
+                            & ERJ-2RKF2001X
+                            & DigiKey
+                            & \$0.62
+                            & \$24.19
+                            & \$103.80 \\
+
+                            R7,\allowbreak R18
+                            & 2
+                            & 39 m$\Omega$ $\pm$1\%, 0.75 W, Kelvin 2010
+                            & Ohmite
+                            & LVK20R039FER
+                            & DigiKey
+                            & \$4.56
+                            & \$176.40
+                            & \$1,503.00 \\
+
+                            R8,\allowbreak R11,\allowbreak R19,\allowbreak R20
+                            & 4
+                            & 50 m$\Omega$ $\pm$1\%, 0.75 W, Kelvin 2010
+                            & Ohmite
+                            & LVK20R050FER
+                            & Newark
+                            & \$9.85
+                            & \$376.64
+                            & \$2,140.00 \\
+
+                            R9,\allowbreak R10
+                            & 2
+                            & 0 $\Omega$ jumper, 1206
+                            & Keystone Electronics
+                            & 5108
+                            & DigiKey
+                            & \$0.81
+                            & \$51.00
+                            & \$447.00 \\
+
+                            R21
+                            & 1
+                            & 0 $\Omega$ jumper, 1/16 W, 0402
+                            & Vishay Dale
+                            & CRCW04020000Z0ED
+                            & DigiKey
+                            & \$0.20
+                            & \$8.09
+                            & \$14.18 \\
+
+                            R23,\allowbreak R24
+                            & 2
+                            & 4.70 k$\Omega$ $\pm$1\%, 1/16 W, 0402
+                            & Vishay Dale
+                            & CRCW04024K70FKED
+                            & DigiKey
+                            & \$0.30
+                            & \$10.45
+                            & \$26.40 \\
+
+                            R25
+                            & 1
+                            & 14.7 k$\Omega$ $\pm$0.1\%, 1/16 W, 0402
+                            & Panasonic Industry
+                            & ERA-2APB1472X
+                            & DigiKey
+                            & \$0.96
+                            & \$43.31
+                            & \$312.74 \\
+
+                            R26
+                            & 1
+                            & 4.70 k$\Omega$ $\pm$0.1\%, 1/16 W, 0402
+                            & Panasonic Industry
+                            & ERA-2ARB472X
+                            & DigiKey
+                            & \$1.20
+                            & \$52.45
+                            & \$409.25 \\
+
+                            TP1,\allowbreak TP3
+                            & 2
+                            & Red through-hole test point
+                            & Keystone Electronics
+                            & 5000
+                            & DigiKey
+                            & \$0.81
+                            & \$41.80
+                            & \$418.00 \\
+
+                            TP2
+                            & 1
+                            & Black through-hole test point
+                            & Keystone Electronics
+                            & 5001
+                            & DigiKey
+                            & \$0.54
+                            & \$20.90
+                            & \$209.00 \\
+
+                            TP4,\allowbreak TP5,\allowbreak TP6,\allowbreak TP7,\allowbreak TP8,\allowbreak TP9
+                            & 6
+                            & SMT miniature test point
+                            & Keystone Electronics
+                            & 5015
+                            & DigiKey
+                            & \$3.43
+                            & \$160.94
+                            & \$1,335.67 \\
+
+                            U1,\allowbreak U8,\allowbreak U11,\allowbreak U14,\allowbreak U17,\allowbreak U20
+                            & 6
+                            & Power/current monitor, 4--80 V input, 12-QFN
+                            & Analog Devices
+                            & LTC2945IUD\#TRPBF
+                            & DigiKey
+                            & \$98.56
+                            & \$6,287.96
+                            & \$62,816.56 \\
+
+                            U2,\allowbreak U3,\allowbreak U9,\allowbreak U10,\allowbreak U12,\allowbreak U13,\allowbreak U15,\allowbreak U16,\allowbreak U18,\allowbreak U19,\allowbreak U21,\allowbreak U22
+                            & 12
+                            & Dual digital optoisolator, 3.75 kVrms, 10 MBd, 8-SO
+                            & Broadcom
+                            & ACPL-064L-500E
+                            & DigiKey
+                            & \$52.51
+                            & \$3,506.85
+                            & \$34,532.19 \\
+
+                            U4
+                            & 1
+                            & 2 A adjustable synchronous buck, 3--17 V input
+                            & Texas Instruments
+                            & TPS62912RPUR
+                            & DigiKey
+                            & \$5.06
+                            & \$176.32
+                            & \$1,565.46 \\
+
+                            U5,\allowbreak U6
+                            & 2
+                            & Dual-channel I\textsuperscript{2}C level translator/buffer, 8-VSSOP
+                            & Texas Instruments
+                            & TCA9803DGKR
+                            & DigiKey
+                            & \$2.85
+                            & \$126.53
+                            & \$1,077.39 \\
+
+                            U7
+                            & 1
+                            & I\textsuperscript{2}C bus buffer/re-driver, 4.5--12 V, 8-SOIC
+                            & Texas Instruments
+                            & P82B715DR
+                            & DigiKey
+                            & \$5.42
+                            & \$188.32
+                            & \$1,582.29 \\
+
+                            \midrule
+
+                            \multicolumn{6}{r}{\textbf{Component subtotal}}
+                            & \textbf{\$242.36}
+                            & \textbf{\$14,203.71}
+                            & \textbf{\$133,822.63} \\
+
+                            PCB
+                            & 1
+                            & Custom fabricated bare Sensor Board PCB; 5-board MOQ for prototype quantity
+                            & ---
+                            & Custom
+                            &
+                            & \$473.57
+                            & \$1,288.53
+                            & \$6,825.82 \\
+
+                            \midrule
+
+                            \multicolumn{6}{r}{\textbf{Sensor Board total including PCB}}
+                            & \textbf{\$715.93}
+                            & \textbf{\$15,492.24}
+                            & \textbf{\$140,648.45} \\
+
+                            \bottomrule
+                        \end{tabular}%
+                    }
+
+                    \vspace{0.6em}
+
+                    \begin{minipage}{0.94\linewidth}
+                        \footnotesize
+                        \textit{Pricing note:}
+                        Costs are extended purchase costs for each production scale.
+                        A 10\% spare allowance is included for non-module components;
+                        Arduino modules are purchased at exact system quantity.
+                        For 100- and 1000-system production, custom reels/re-reels and
+                        full manufacturer reels were compared lower line purchase cost was used.
+                        Bare PCB fabrication is included from the provided quote.
+                        Shipping, tax, tariffs, PCB assembly, enclosure, cables, and other
+                        non-PCB system hardware are excluded.
+                    \end{minipage}
+
+                \end{center}
+            \end{landscape}
 
 
-\subsection{Arduino Shield Board Bill of Materials}
+    \subsection{Arduino Shield Board Bill of Materials}
+        \subsubsection{Preliminary}
+            \begin{center}
+                \includegraphics[
+                page=1,
+                angle=90,
+                width=\textwidth,
+                height=0.95\textheight,
+                keepaspectratio
+                ]{
+                    ../hardware/Isolated Multi-Rail Power Supply Monitor Arduino Shield Board/%
+                    Isolated Multi-Rail Power Supply Monitor Arduino Shield Board BOM 8-22-2026 REV -.pdf
+                }
+            \end{center}
 
-\begin{center}
-    \includegraphics[
-    page=1,
-    angle=90,
-    width=\textwidth,
-    height=0.95\textheight,
-    keepaspectratio
-    ]{
-        ../hardware/Isolated Multi-Rail Power Supply Monitor Arduino Shield Board/%
-        Isolated Multi-Rail Power Supply Monitor Arduino Shield Board BOM 8-22-2026 REV -.pdf
-    }
-\end{center}
+            \begin{landscape}
+                \subsubsection{Final}
+                    \begin{center}
+                        \scriptsize
+
+                        \captionof{table}{Final Arduino Shield Board Bill of Materials and Production Cost Analysis}
+                        \label{tab:shield-bom-cost}
+
+                        \resizebox{0.96\linewidth}{!}{%
+                            \begin{tabular}{
+                                    p{0.17\linewidth}
+                                    r
+                                    p{0.24\linewidth}
+                                    p{0.15\linewidth}
+                                    p{0.20\linewidth}
+                                    p{0.12\linewidth}
+                                    r
+                                    r
+                                    r
+                                }
+                                \toprule
+                                \textbf{Reference} &
+                                \textbf{Qty./System} &
+                                \textbf{Specification} &
+                                \textbf{Manufacturer} &
+                                \textbf{Mfr. P/N} &
+                                \textbf{Pricing Source} &
+                                \textbf{1 System} &
+                                \textbf{100 Systems} &
+                                \textbf{1000 Systems} \\
+                                \midrule
+
+                                A201
+                                & 1
+                                & Arduino GIGA R1 WiFi module
+                                & Arduino
+                                & ABX00063
+                                & DigiKey
+                                & \$69.60
+                                & \$6,229.02
+                                & \$62,290.20 \\
+
+                                C17,\allowbreak C201,\allowbreak C202,\allowbreak C203,\allowbreak
+                                C211,\allowbreak C215,\allowbreak C216,\allowbreak C217,\allowbreak
+                                C220,\allowbreak C221,\allowbreak C223,\allowbreak C224,\allowbreak
+                                C225,\allowbreak C227
+                                & 14
+                                & 100 nF $\pm$10\%, 50 V, X5R, 0402
+                                & Murata Electronics
+                                & GRM155R61H104KE14D
+                                & Mouser
+                                & \$0.27
+                                & \$25.48
+                                & \$120.00 \\
+
+                                C218
+                                & 1
+                                & 3.3 \textmu{}F $\pm$10\%, 25 V, X5R, 0603
+                                & Cal-Chip Electronics, Inc.
+                                & GMC10X5R335K25NT
+                                & DigiKey
+                                & \$0.92
+                                & \$26.95
+                                & \$166.17 \\
+
+                                C219
+                                & 1
+                                & 1 nF $\pm$10\%, 2 kV, X7R, 1206
+                                & KYOCERA AVX
+                                & 1206GC102KAT1A
+                                & DigiKey
+                                & \$0.60
+                                & \$19.19
+                                & \$101.12 \\
+
+                                C222,\allowbreak C226
+                                & 2
+                                & 18 pF $\pm$5\%, 50 V, C0G/NP0, 0402
+                                & Murata Electronics
+                                & GRM1555C1H180JA01D
+                                & DigiKey
+                                & \$0.30
+                                & \$10.21
+                                & \$29.53 \\
+
+                                FB201,\allowbreak FB202,\allowbreak FB203
+                                & 3
+                                & Ferrite bead, 120 $\Omega$ @ 100 MHz, 3 A, 0603
+                                & Pulse Electronics
+                                & BBUP00160805121Y00
+                                & DigiKey
+                                & \$0.52
+                                & \$24.98
+                                & \$147.91 \\
+
+                                J201
+                                & 1
+                                & RJ45 MagJack, 10/100Base-T, through-hole
+                                & Bel Fuse
+                                & SI-46014-F
+                                & DigiKey
+                                & \$11.62
+                                & \$469.26
+                                & \$4,251.93 \\
+
+                                J309
+                                & 1
+                                & 8-position Mini-Fit Jr. vertical header, 4.2 mm
+                                & Molex
+                                & 0039289088
+                                & DigiKey
+                                & \$9.16
+                                & \$364.00
+                                & \$3,249.31 \\
+
+                                N101
+                                & 1
+                                & Arduino GIGA Display Shield module
+                                & Arduino
+                                & ASX00039
+                                & DigiKey
+                                & \$63.60
+                                & \$5,692.01
+                                & \$56,920.10 \\
+
+                                N201
+                                & 1
+                                & Arduino stacking header set
+                                & Adafruit Industries
+                                & 85
+                                & DigiKey
+                                & \$3.90
+                                & \$214.50
+                                & \$2,145.00 \\
+
+                                R23,\allowbreak R24,\allowbreak R205,\allowbreak R206,\allowbreak R207
+                                & 5
+                                & 4.70 k$\Omega$ $\pm$1\%, 1/16 W, 0402
+                                & Vishay Dale
+                                & CRCW04024K70FKED
+                                & DigiKey
+                                & \$0.60
+                                & \$12.69
+                                & \$42.31 \\
+
+                                R101,\allowbreak R102,\allowbreak R103,\allowbreak R104,\allowbreak R105
+                                & 5
+                                & 10 k$\Omega$ $\pm$1\%, 0.10 W, 50 V, 0402
+                                & Panasonic Industry
+                                & ERJ-2RKF1002X
+                                & DigiKey / Newark
+                                & \$0.31
+                                & \$16.90
+                                & \$41.71 \\
+
+                                R208
+                                & 1
+                                & 12.3 k$\Omega$ $\pm$0.1\%, 1/16 W, 0402
+                                & KOA Speer
+                                & RN73R1ETTP1232B25
+                                & DigiKey
+                                & \$0.20
+                                & \$13.28
+                                & \$59.25 \\
+
+                                R209,\allowbreak R210,\allowbreak R215,\allowbreak R216
+                                & 4
+                                & 49.9 $\Omega$ $\pm$1\%, 1/16 W, 0402
+                                & Vishay Dale
+                                & CRCW040249R9FKED
+                                & DigiKey
+                                & \$0.50
+                                & \$12.40
+                                & \$45.81 \\
+
+                                R211,\allowbreak R212,\allowbreak R213,\allowbreak R214
+                                & 4
+                                & 3.30 $\Omega$ $\pm$1\%, 1/16 W, 0402
+                                & Vishay Dale
+                                & CRCW04023R30FKED
+                                & DigiKey
+                                & \$0.50
+                                & \$14.08
+                                & \$58.96 \\
+
+                                R217
+                                & 1
+                                & 1.00 M$\Omega$ $\pm$1\%, 1/16 W, 0402
+                                & Vishay Dale
+                                & CRCW04021M00FKED
+                                & DigiKey
+                                & \$0.20
+                                & \$8.73
+                                & \$16.70 \\
+
+                                R218,\allowbreak R219
+                                & 2
+                                & 470 $\Omega$ $\pm$1\%, 0.10 W, 0402
+                                & Panasonic Industry
+                                & ERJ-2RKF4700X
+                                & DigiKey
+                                & \$0.30
+                                & \$10.41
+                                & \$26.10 \\
+
+                                R220
+                                & 1
+                                & 0 $\Omega$ jumper, 1/16 W, 0402
+                                & Vishay Dale
+                                & CRCW04020000Z0ED
+                                & DigiKey
+                                & \$0.20
+                                & \$8.09
+                                & \$14.18 \\
+
+                                TP101
+                                & 1
+                                & Red through-hole test point
+                                & Keystone Electronics
+                                & 5000
+                                & DigiKey
+                                & \$0.54
+                                & \$20.90
+                                & \$209.00 \\
+
+                                TP102
+                                & 1
+                                & Black through-hole test point
+                                & Keystone Electronics
+                                & 5001
+                                & DigiKey
+                                & \$0.54
+                                & \$20.90
+                                & \$209.00 \\
+
+                                TP201,\allowbreak TP202,\allowbreak TP203
+                                & 3
+                                & SMT miniature test point
+                                & Keystone Electronics
+                                & 5015
+                                & DigiKey
+                                & \$1.96
+                                & \$99.70
+                                & \$765.24 \\
+
+                                U7
+                                & 1
+                                & I\textsuperscript{2}C bus buffer/re-driver, 4.5--12 V, 8-SOIC
+                                & Texas Instruments
+                                & P82B715DR
+                                & DigiKey
+                                & \$5.42
+                                & \$188.32
+                                & \$1,582.29 \\
+
+                                U202
+                                & 1
+                                & Hardwired TCP/IP Ethernet controller, QFN
+                                & WIZnet
+                                & W6100Q
+                                & Mouser
+                                & \$7.96
+                                & \$280.90
+                                & \$2,416.00 \\
+
+                                Y201
+                                & 1
+                                & 25 MHz crystal, $\pm$10 ppm, 18 pF load, 3.2$\times$2.5 mm
+                                & Diodes Incorporated
+                                & FL2500169
+                                & DigiKey
+                                & \$1.18
+                                & \$55.81
+                                & \$431.12 \\
+
+                                \midrule
+
+                                \multicolumn{6}{r}{\textbf{Component subtotal}}
+                                & \textbf{\$180.90}
+                                & \textbf{\$13,838.70}
+                                & \textbf{\$135,338.93} \\
+
+                                PCB
+                                & 1
+                                & Custom fabricated bare Arduino Shield PCB; 5-board MOQ for prototype quantity
+                                & ---
+                                & Custom
+                                & Vendor quote
+                                & \$122.19
+                                & \$250.77
+                                & \$1,402.23 \\
+
+                                \midrule
+
+                                \multicolumn{6}{r}{\textbf{Arduino Shield total including PCB}}
+                                & \textbf{\$303.09}
+                                & \textbf{\$14,089.47}
+                                & \textbf{\$136,741.16} \\
+
+                                \bottomrule
+                            \end{tabular}%
+                        }
+
+                        \vspace{0.6em}
+
+                        \begin{minipage}{0.94\linewidth}
+                            \footnotesize
+
+                            \textit{PCB pricing note:}
+                            Arduino Shield PCB fabrication is quoted at \$122.19 for the
+                            5-board minimum order, \$250.77 for 100 boards, and \$1,402.23
+                            for 1000 boards. For the single-system scenario, the full
+                            5-board minimum-order cost is included even though only one PCB
+                            is required.
+
+                            \medskip
+
+                            \textit{Component pricing note:}
+                            Costs are extended purchase costs for each production scale.
+                            A 10\% spare allowance is included for non-module components,
+                            while the Arduino GIGA R1 WiFi and GIGA Display modules are
+                            purchased at the exact required system quantity. For the
+                            100- and 1000-system production cases, cut-tape pricing,
+                            distributor re-reel services, and full manufacturer reels were
+                            compared where applicable, and the lowest practical purchase
+                            cost was used. Shipping, tax, tariffs, PCB assembly, enclosure,
+                            cables, and other non-PCB system hardware are excluded.
+                        \end{minipage}
+
+                    \end{center}
+                \end{landscape}
+
+    \subsection{System Costs}
+        \begin{table}[H]
+            \centering
+            \caption{System Cost versus Production Quantity}
+            \label{tab:component-cost-summary}
+            \resizebox{\textwidth}{!}{%
+                \begin{tabular}{rrrrrrr}
+                    \toprule
+                    \textbf{Qty.} &
+                    \textbf{Sensor Components} &
+                    \textbf{Sensor PCB} &
+                    \textbf{Shield Components} &
+                    \textbf{Shield PCB} &
+                    \textbf{Total Purchase Cost} &
+                    \textbf{Cost/System} \\
+                    \midrule
+                    1
+                    & \$242.36
+                    & \$473.57
+                    & \$180.90
+                    & \$122.19
+                    & \$1,019.03
+                    & \$1,019.03 \\
+
+                    100
+                    & \$14,203.71
+                    & \$1,288.53
+                    & \$13,838.70
+                    & \$250.77
+                    & \$29,581.71
+                    & \$295.82 \\
+
+                    1,000
+                    & \$133,822.63
+                    & \$6,825.82
+                    & \$135,338.93
+                    & \$1,402.23
+                    & \$277,389.61
+                    & \$277.39 \\
+                    \bottomrule
+                \end{tabular}%
+            }
+            \vspace{0.5em}
+
+            \begin{minipage}{0.95\textwidth}
+                \footnotesize
+                	\textit{PCB pricing note:} The Sensor Board is quoted at \$473.57 for the 5-board minimum order, \$1,288.53 for 100 boards, and \$6,825.82 for 1,000 boards. The Arduino Shield Board is quoted at \$122.19 for the 5-board minimum order, \$250.77 for 100 boards, and \$1,402.23 for 1,000 boards. The 1-system scenario therefore includes the full 5-board MOQ purchase cost for each PCB type.
+
+                    \textit{Component pricing note:} Shipping, tax, tariffs, PCB assembly, enclosure, cables, and other non-PCB system hardware are not included.
+            \end{minipage}
+        \end{table}

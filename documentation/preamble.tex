@@ -16,7 +16,7 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 
-\pdfminorversion=7
+\usepackage{soul}
 
 
 % ============================================================
@@ -33,6 +33,7 @@
 % GRAPHICS AND PDF INCLUSION
 % ============================================================
 
+\usepackage{pdflscape}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{float}
@@ -41,7 +42,7 @@
 
 
 % ============================================================
-% TIKZ
+% TIKZ / PGFPLOTS
 % ============================================================
 
 \usepackage{tikz}
@@ -56,6 +57,11 @@
     shapes.geometric
 }
 
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\pgfplotsset{compat=1.18}
+
 
 % ============================================================
 % TABLES
@@ -65,7 +71,7 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{tabularx}
-\usepackage{pgfplotstable}
+\usepackage{caption}
 
 
 % ============================================================
@@ -83,10 +89,36 @@
 
 
 % ============================================================
-% COLORS AND HYPERLINKS
+% COLORS
 % ============================================================
 
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
+
+
+% ============================================================
+% TCOLORBOX / WEEK 3 CHANGE HIGHLIGHTING
+% ============================================================
+
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{weekthreechange}{
+    colback=yellow!22,
+    colframe=yellow!22,
+    boxrule=0pt,
+    arc=0pt,
+    outer arc=0pt,
+    left=3pt,
+    right=3pt,
+    top=3pt,
+    bottom=3pt,
+    breakable
+}
+
+
+% ============================================================
+% URLS AND HYPERLINKS
+% ============================================================
+
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 
@@ -97,8 +129,8 @@
 
 \usepackage{fancyhdr}
 
-\newcommand{\manualdate}{September 15, 2026}
-\newcommand{\manualrev}{Rev. ET450-W1}
+\newcommand{\manualdate}{September 30, 2026}
+\newcommand{\manualrev}{Rev. ET450-W3}
 
 \newcommand{\appref}[1]{%
     \hyperref[#1]{Appendix~\ref*{#1}}%

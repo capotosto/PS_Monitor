@@ -1,0 +1,89 @@
+% !TeX root = ../main.tex
+\chapter{Cost Analysis, Design for Manufacturing, and Sustainability}
+\label{chap:cost-dfm-sustainability}
+
+\begin{weekthreechange}
+    \section{Cost Analysis}
+    The finalized bill of materials was used to evaluate the expected hardware cost
+    of the isolated multi-rail power supply monitor at both the prototype and proposed production quantities. Component pricing was obtained from distributors, including DigiKey, Mouser, Newark, Master Electronics, and Allied Electronics. For the 100- and 1000-system production cases, cut-tape pricing, re-reel services, and full manufacturer reels were compared where applicable, and the lowest practical purchase cost was used. A 10\% spare allowance was included for non-module components, while the Arduino GIGA R1 WiFi and GIGA Display modules were purchased at the exact required system quantity.
+
+    The component quantities per-board were summed, and then multiplied by the number of assemblies to produce to get the quantities and costs listed in the BOM.
+
+    Bare PCB fabrication was also included in the analysis. The Sensor Board was quoted at \$473.57 for the 5-board minimum order, \$1,288.53 for 100 boards, and \$6,825.82 for 1000 boards. The Arduino Shield Board was quoted at \$122.19 for the 5-board minimum order, \$250.77 for 100 boards, and \$1,402.23 for 1000 boards. For the single-system case, the full minimum-order cost is included even though only one PCB of each type is required.
+
+    \begin{table}[H]
+        \centering
+        \caption{Estimated Hardware Cost Versus Production Quantity}
+        \label{tab:system-production-cost}
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{rrrrrrr}
+                \toprule
+                \textbf{Production Qty.} &
+                \textbf{Sensor Components} &
+                \textbf{Sensor PCB} &
+                \textbf{Shield Components} &
+                \textbf{Shield PCB} &
+                \textbf{Total Purchase Cost} &
+                \textbf{Cost/System} \\
+                \midrule
+                1
+                & \$242.36
+                & \$473.57
+                & \$180.90
+                & \$122.19
+                & \$1,019.03
+                & \$1,019.03 \\
+                100
+                & \$14,203.71
+                & \$1,288.53
+                & \$13,838.70
+                & \$250.77
+                & \$29,581.71
+                & \$295.82 \\
+
+                1,000
+                & \$133,822.63
+                & \$6,825.82
+                & \$135,338.93
+                & \$1,402.23
+                & \$277,389.61
+                & \$277.39 \\
+                \bottomrule
+            \end{tabular}%
+        }
+    \end{table}
+
+    The cost analysis shows a substantial reduction in per-system cost when produced in volume. The prototype case is below some minimum order quantities, pushing the estimated hardware purchase cost to \$1,326.11 for one complete system. At a production quantity of 100 systems, the estimated cost decreases to \$298.56 per system. At 1000 systems, additional component and PCB quantity discounts reduce the
+    estimated cost to \$277.53 per system.
+
+    \section{Design for Manufacturing}
+
+    DFM, or Design for manufacturing was considered during final component and PCB selection. The six measurement channels use a repeated circuit architecture, which reduces the number of unique circuit blocks that must be fabricated, inspected, and tested. Reuse of common component values and package sizes also reduces the number of unique feeder setups and component reels required during assembly. Standard surface-mount packages and conventional PCB fabrication processes were favored so that the design can be manufactured without specialized assembly processes.
+
+    Surface mount components were selected for personal preference and ease of hand-assembly and wider component availability along with much smaller component footprints when compared to through hole devices. Connectors used were through hole so a selective solder process, hand-installation process, or wave soldering process will still be required for autoamted assembly.
+
+    The production cost analysis also influenced component packaging decisions. At higher quantities, distributor re-reel services and full manufacturer reels were evaluated against cut-tape pricing to reduce component cost while still providing packaging compatible with automated assembly. The PCB designs use standard fabrication methods and do not depend on unusual substrates/dielectrics, materials or proprietary manufacturing processes, allowing production to be sourced from
+    any number of run-of-the-mill PCB and assembly vendors.
+
+    \section{Design for Assembly}
+
+    Design for assembly was addressed by minimizing the number of unique components, using repeated measurement-channel circuitry, and using connectors and modules that simplify final system integration. The Arduino GIGA R1 WiFi and GIGA Display are COTS (commercial off the shelf) pluggable modules rather than being reproduced as custom boards, reducing assembly complexity and allowing independent replacement of those modules if necessary.
+
+    Test points are included at important nodes to support board-level     inspection, troubleshooting, and functional test after assembly. The repeated channel architecture also allows a common test procedure to be applied to each measurement channel rather than requiring a different assembly and test process for every monitored rail. These choices reduce assembly complexity and improve serviceability during both prototype development and future production.
+
+    \section{Sustainability and Serviceability}
+    Sustainability was considered primarily through serviceability, component reuse, and reduction of unnecessary replacement. The system is divided into separate parts - a Sensor Board, Arduino Shield, controller, and display assemblies, allowing a failed subsystem to be replaced or repaired without discarding the complete monitoring system. The use of commercially available components and standard packages also improves the likelihood that equivalent or replacement parts can be sourced during the service life of the design.
+
+    Configuration values, alarm limits, and network settings are implemented in
+    software rather than requiring hardware modifications for routine changes. This allows the system to be modified for changing operating requirements without replacing components or boards. The use of repeated channel circuitry and a limited set of common component values also reduces the number of spare part types that must be stocked. At production quantities, purchasing components in appropriate reel quantities further reduces packaging and handling associated with many small individual orders.
+
+    \textit{Cost scope note:} The values in Table~\ref{tab:system-production-cost}
+    include electronic components and bare PCB fabrication. They do not include PCB
+    assembly labor or assembly service, shipping, sales tax, tariffs, enclosure
+    hardware, cabling, or other system-level mechanical components.
+
+    \section{Procurements}
+    All components needed have been procured from vendors, including Digikey, Mouser, Master Electronics, Texas Instruments webstore, JLCPCB, and PCBWay.
+
+    Assembly of the boards is slated to begin the week of October 5, 2026.
+\end{weekthreechange}

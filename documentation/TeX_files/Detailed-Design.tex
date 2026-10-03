@@ -2,8 +2,12 @@
 \chapter{Detailed Design Review}
 \label{chap:detailed-design}
 
+\begin{weekthreechange}
+    The preliminary architecture has been carried forward into this detailed implementation of six galvanically isolated V/I measurement channels, an Arduino Giga R1 micro, display module, ethernet interface, EPICS IOC, and Phoebus control panels. The monitored rails in this design are digital supplies +5VA, +5VB, and analog voltages +/-5V, and +/-15V. Component-level ratings, procurement, and porduction cost impacts are reviewed in the BOM and cost analysis sections of the following review.
+\end{weekthreechange}
+
 \section{Purpose and Scope}
-This chapter documents the preliminary hardware and software design of the
+This chapter documents the hardware and software design of the
 Multi-Rail Isolated Power Supply Monitoring System. The design monitors six
 power-supply rails, measures rail voltage and load current, preserves electrical
 isolation between floating supplies and the controller, evaluates measurements
@@ -11,11 +15,10 @@ against user-configurable alarm limits, presents local status on the controller
 display, and publishes measurements and status to an EPICS control-system
 interface.
 
-This preliminary design is intended to establish the major analog and digital
+This design is intended to establish the major analog and digital
 functional blocks, document supporting engineering calculations, define the
 hardware schematic baseline, and provide software flowcharts detailed enough to
-support implementation. Simulation and additional verification results can be
-added in the subsequent design phase.
+support implementation.
 
 \section{Problem Definition}
 The project addresses the need to monitor several low-voltage power-supply rails
@@ -481,7 +484,7 @@ The major system functions are summarized below.
                 \vspace{0.25cm}
 
                 \caption{
-                    Preliminary functional block diagram of the multi-rail isolated
+                    Functional block diagram of the multi-rail isolated
                     power supply monitoring system. Six independent power-supply rails
                     are measured using high-side current sensing and LTC2945 voltage/current
                     monitoring channels. Digital isolation preserves electrical independence
@@ -498,19 +501,19 @@ The major system functions are summarized below.
 
 \end{figure}
 
-\section{Preliminary Engineering Calculations}
+\section{Engineering Calculations}
 \label{sec:engineering-calculations}
 
 \section{Functional Specifications}
 \label{sec:functional-specifications}
-The functional specifications used for the preliminary design are summarized in
+The functional specifications used for the design are summarized in
 Table~\ref{tab:functional-specifications}. These values define the intended
 operating envelope of the prototype and establish the quantities that must be
 checked during circuit analysis and later verification testing.
 
 \begin{table}[H]
     \centering
-    \caption{Preliminary functional specifications.}
+    \caption{Functional specifications.}
     \label{tab:functional-specifications}
     \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.27\textwidth}X}
         \toprule
@@ -563,10 +566,10 @@ channel polarity and scaling are applied. The EPICS IOC is intentionally kept
 outside the embedded controller so that the Arduino is responsible for hardware
 acquisition while the IOC is responsible for exposing process variables to the remote user control system.
 
-\section{Preliminary Design Schematics}
+\section{Design Schematics}
 \label{sec:prelim-schematics}
 
-The preliminary hardware schematics are maintained in KiCad and are included
+The hardware schematics are maintained in KiCad and are included
 below directly from the plotted PDF files in the project hardware directory.
 
 \subsection{Sensor Board Schematic}
@@ -657,3 +660,9 @@ single-channel prototype reduced uncertainty in the LTC2945 measurement,
 firmware scaling, alarm processing, Ethernet/PSC firmware, and operator interface.
 Final verification will focus on channel-to-channel isolation,
 concurrent I\textsuperscript{2}C operation, and confirmation that all configured settings survive normal resets and power cycles.
+
+\begin{weekthreechange}
+    Following the PDR, the hardware design was finalized to the component level without change. The measurement architecture developed in the PDR is unchanged. Component selections were once again verified, confirming voltage, current, powe,r and tolerance of components were within requirements to meet the design specifications. Component availability and part numbers were verified against the BOM to ensure correct parts were specified.
+
+    The hardware and firmware were reviewed together to ensure the software's scaling settings correspond to the component values selected, and to confirm channel polarity is consistent between the input and the software's final readout to the user.
+\end{weekthreechange}

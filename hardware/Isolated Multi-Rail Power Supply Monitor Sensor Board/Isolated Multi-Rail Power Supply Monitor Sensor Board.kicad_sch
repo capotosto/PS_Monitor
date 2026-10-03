@@ -8,6 +8,256 @@
 		(date "2026-08-05")
 	)
 	(lib_symbols
+		(symbol "+12VA_1"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR0131"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "+5VA"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"+12VA\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+12VA_1_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+12VA_1_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "+12VB_1"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR0150"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "+5VB"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"+12V\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+12VB_1_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+12VB_1_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "+12vb:+12VB"
 			(power)
 			(pin_numbers
@@ -6266,7 +6516,7 @@
 		)
 		(uuid "25438487-fa58-499b-94b7-0fdf090e57ed")
 	)
-	(text_box "6VA MONITORS"
+	(text_box "5VA MONITORS"
 		(exclude_from_sim no)
 		(at 87.63 62.23 0)
 		(size 106.68 59.69)
@@ -6366,7 +6616,7 @@
 		)
 		(uuid "5b5b1bd7-35a2-4f49-a39b-0c8d7a813eaa")
 	)
-	(text_box "6VB MONITORS"
+	(text_box "5VB MONITORS"
 		(exclude_from_sim no)
 		(at 195.58 62.23 0)
 		(size 102.87 59.69)
@@ -10886,7 +11136,7 @@
 		)
 		(uuid "353b04fb-ac89-4886-b402-bfcad6379be2")
 	)
-	(label "6VB_SDA"
+	(label "5VB_SDA"
 		(at 273.05 82.55 180)
 		(effects
 			(font
@@ -10976,7 +11226,7 @@
 		)
 		(uuid "4d68f79c-5063-440e-96ef-99bb749a22b5")
 	)
-	(label "6VA_SCL"
+	(label "5VA_SCL"
 		(at 383.54 81.28 180)
 		(effects
 			(font
@@ -10986,7 +11236,7 @@
 		)
 		(uuid "56a177d6-a8da-48ee-83d7-fcdaaca37e6a")
 	)
-	(label "+6VB_OUT"
+	(label "+5VB_OUT"
 		(at 33.02 166.37 0)
 		(effects
 			(font
@@ -11017,7 +11267,7 @@
 		)
 		(uuid "6a1aa84b-c0a6-49d3-9715-bdb23c1c0c64")
 	)
-	(label "6VB_SCL"
+	(label "5VB_SCL"
 		(at 383.54 83.82 180)
 		(effects
 			(font
@@ -11027,7 +11277,7 @@
 		)
 		(uuid "6eeaf1f9-5728-428f-bd70-0aca98d542ba")
 	)
-	(label "6VA_SDA"
+	(label "5VA_SDA"
 		(at 168.91 82.55 180)
 		(effects
 			(font
@@ -11037,7 +11287,7 @@
 		)
 		(uuid "717da61e-3ceb-42ef-b78f-280bacbf904f")
 	)
-	(label "+6VB_OUT"
+	(label "+5VB_OUT"
 		(at 152.4 15.24 270)
 		(effects
 			(font
@@ -11070,7 +11320,7 @@
 		)
 		(uuid "84d4bb64-47c9-44cd-a5c8-f93427715c9f")
 	)
-	(label "+6VA_OUT"
+	(label "+5VA_OUT"
 		(at 156.21 68.58 180)
 		(effects
 			(font
@@ -11081,7 +11331,7 @@
 		)
 		(uuid "8849508e-a351-4804-ba8f-2cdfd1f88ef0")
 	)
-	(label "+6VA_OUT"
+	(label "+5VA_OUT"
 		(at 74.93 166.37 180)
 		(effects
 			(font
@@ -11112,7 +11362,7 @@
 		)
 		(uuid "93d8fad8-5332-4e1f-9fc1-8cfd3f78731e")
 	)
-	(label "6VA_SCL"
+	(label "5VA_SCL"
 		(at 168.91 85.09 180)
 		(effects
 			(font
@@ -11163,7 +11413,7 @@
 		)
 		(uuid "a228bda8-a2ab-4cc4-872b-8486940df800")
 	)
-	(label "+6VA_OUT"
+	(label "+5VA_OUT"
 		(at 143.51 15.24 270)
 		(effects
 			(font
@@ -11246,7 +11496,7 @@
 		)
 		(uuid "b997866f-f690-4ad5-82bd-2f5c764d29f2")
 	)
-	(label "6VB_SDA"
+	(label "5VB_SDA"
 		(at 383.54 88.9 180)
 		(effects
 			(font
@@ -11256,7 +11506,7 @@
 		)
 		(uuid "b99c264b-bd51-4ab6-96e6-e50abdeb3f10")
 	)
-	(label "+6VB_OUT"
+	(label "+5VB_OUT"
 		(at 260.35 68.58 180)
 		(effects
 			(font
@@ -11267,7 +11517,7 @@
 		)
 		(uuid "bd424ce1-4097-4cc6-9aa6-24c27ac6bc5c")
 	)
-	(label "+6VA_OUT"
+	(label "+5VA_OUT"
 		(at 69.85 204.47 180)
 		(effects
 			(font
@@ -11278,7 +11528,7 @@
 		)
 		(uuid "bf215aa7-7fd4-43c9-b94c-76d2496fba4d")
 	)
-	(label "6VB_SCL"
+	(label "5VB_SCL"
 		(at 273.05 85.09 180)
 		(effects
 			(font
@@ -11310,7 +11560,7 @@
 		)
 		(uuid "ce03b78b-4bbb-45f7-ac44-f926d6079308")
 	)
-	(label "6VA_SDA"
+	(label "5VA_SDA"
 		(at 383.54 86.36 180)
 		(effects
 			(font
@@ -11394,7 +11644,7 @@
 		)
 		(uuid "f828afb9-f6aa-4823-a864-d8f8bfd4c572")
 	)
-	(label "+6VB_OUT"
+	(label "+5VB_OUT"
 		(at 27.94 204.47 0)
 		(effects
 			(font
@@ -12974,6 +13224,7 @@
 		)
 	)
 	(symbol
+		(lib_name "+12VA_1")
 		(lib_id "power:+12VA")
 		(at 120.65 67.31 0)
 		(unit 1)
@@ -12991,7 +13242,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6VA"
+		(property "Value" "+5VA"
 			(at 120.65 63.5 0)
 			(effects
 				(font
@@ -14642,7 +14893,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6VA"
+		(property "Value" "+5VA"
 			(at 39.37 93.98 0)
 			(effects
 				(font
@@ -16327,7 +16578,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6VB"
+		(property "Value" "+5VB"
 			(at 40.64 119.38 0)
 			(effects
 				(font
@@ -18427,6 +18678,7 @@
 		)
 	)
 	(symbol
+		(lib_name "+12VB_1")
 		(lib_id "+12vb:+12VB")
 		(at 224.79 67.31 0)
 		(unit 1)
@@ -18444,7 +18696,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+6VB"
+		(property "Value" "+5VB"
 			(at 224.79 63.5 0)
 			(effects
 				(font
@@ -20606,7 +20858,7 @@
 				)
 			)
 		)
-		(property "Value" "+6VB"
+		(property "Value" "+5VB"
 			(at 33.02 123.19 0)
 			(effects
 				(font
@@ -22220,7 +22472,7 @@
 				)
 			)
 		)
-		(property "Value" "+6VA"
+		(property "Value" "+5VA"
 			(at 31.75 97.79 0)
 			(effects
 				(font
