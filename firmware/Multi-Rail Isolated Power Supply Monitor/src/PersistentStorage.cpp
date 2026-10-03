@@ -1,3 +1,25 @@
+/*
+  Persistent configuration storage for the PSU monitor.
+
+  Alarm limits and network settings are stored in the Arduino GIGA's internal
+  QSPI
+
+  Each stored settings image contains:
+    - a magic value identifying the file format
+    - a format/version number
+    - the expected channel count
+    - alarm limits for every monitored channel
+    - Ethernet/network configuration
+    - an FNV-1a checksum
+
+  Saved data is validated before it is applied. Invalid, incompatible, or
+  corrupted settings are rejected and compiled defaults are used instead.
+
+  Settings are first written to a temporary file and then renamed into place
+  to reduce the chance of losing configuration if power is removed during a
+  write operation.
+*/
+
 #include "PersistentStorage.h"
 
 #include <Arduino.h>
@@ -14,6 +36,8 @@
 #include "AppConfig.h"
 #include "AppState.h"
 
+/*The GIGA's default QSPI block device contains a few MBR partitions.
+  Partition 4 is reserved for application/user storage.*/
 using namespace mbed;
 
 namespace {
@@ -22,6 +46,10 @@ MBRBlockDevice qspiUserPartition(qspiRoot, 4);
 LittleFileSystem qspiUserFileSystem("user");
 }
 
+/*Calculate a 32-bit checksum.
+
+  This is used to detect accidental corruption of the settings structure in
+  flash.*/
 uint32_t calculateChecksum(
   const uint8_t *bytes,
   size_t byteCount
@@ -37,6 +65,11 @@ uint32_t calculateChecksum(
   return hash;
 }
 
+/*Calculate the checksum over every byte preceding the checksum field.
+
+  PersistentSettings is stored directly so changes to its layout must be
+  accompanied by a SETTINGS_VERSION change to prevent an older stored image
+  from being interpreted using a newer structure layout.*/
 uint32_t calculateSettingsChecksum(
   const PersistentSettings &settings
 ) {
@@ -71,6 +104,12 @@ bool addressIsAll(
          address[3] == value;
 }
 
+/*Validate an IPv4 host address.
+  Reject:
+    - 0.0.0.0
+    - 255.255.255.255
+    - loopback addresses (127.x.x.x)
+    - multicast/experimental address space above 223.x.x.x*/
 bool hostAddressIsValid(const uint8_t address[4]) {
   if (addressIsAll(address, 0) ||
       addressIsAll(address, 255)) {
@@ -89,6 +128,7 @@ bool optionalHostAddressIsValid(const uint8_t address[4]) {
          hostAddressIsValid(address);
 }
 
+/*Test no 1 bit follows a 0 bit in the netmask*/
 bool subnetMaskIsValid(const uint8_t subnet[4]) {
   const uint32_t mask =
     (static_cast<uint32_t>(subnet[0]) << 24) |
@@ -125,6 +165,7 @@ bool networkSettingsAreValid(
          subnetMaskIsValid(settings.subnet);
 }
 
+/*Build a complete persistent-settings image*/
 void buildPersistentSettings(PersistentSettings &settings) {
   memset(&settings, 0, sizeof(settings));
 
@@ -140,6 +181,14 @@ void buildPersistentSettings(PersistentSettings &settings) {
   settings.checksum = calculateSettingsChecksum(settings);
 }
 
+/*Validate a settings image before allowing it to affect the running system.
+    - expected magic number
+    - compatible structure version
+    - expected number of channels
+    - checksum integrity
+    - valid network configuration
+    - valid alarm limits for every channel
+*/
 bool persistentSettingsAreValid(
   const PersistentSettings &settings
 ) {
@@ -160,6 +209,7 @@ bool persistentSettingsAreValid(
   return true;
 }
 
+/*Read PersistentSettings structure from QSPI and validate it.*/
 bool readPersistentSettingsFile(
   const char* path,
   PersistentSettings& settings
@@ -179,6 +229,15 @@ bool readPersistentSettingsFile(
          persistentSettingsAreValid(settings);
 }
 
+/*
+  Apply persistent settings to the live application state.
+
+  Alarm states are recalculated immediately after restoring each channel's
+  limits so the displayed/network alarm state remains consistent.
+
+  When FORCE_COMPILED_NETWORK_ON_BOOT is enabled, saved network parameters
+  are deliberately ignored while saved alarm limits are still restored.
+*/
 void applyPersistentSettings(
   const PersistentSettings &settings
 ) {
@@ -194,6 +253,16 @@ void applyPersistentSettings(
   }
 }
 
+/*Save the current configuration to internal QSPI flash.
+
+  A temporary-file replacement scheme is used:
+
+    1. Build and checksum the new settings image.
+    2. Write it completely to SETTINGS_TEMP_FILE.
+    3. Flush and close the temporary file.
+    4. Remove the previous SETTINGS_FILE.
+    5. Rename the verified temporary file to SETTINGS_FILE.
+  Returns false if storage is unavailable or any file operation fails.*/
 bool savePersistentSettings() {
   if (!settingsStorageReady) {
     return false;
@@ -239,6 +308,13 @@ bool savePersistentSettings() {
   return true;
 }
 
+/*Restore persistent configuration from QSPI flash.
+
+  The normal settings file is tried first. If it is missing or invalid, the
+  temporary file is checked as a recovery path for an interrupted save.
+
+  No settings are applied unless the complete stored image passes all
+  integrity and range checks*/
 bool loadPersistentSettings() {
   if (!settingsStorageReady) {
     return false;
@@ -282,6 +358,13 @@ bool loadPersistentSettings() {
   return false;
 }
 
+/*Initialize the user-settings filesystem in internal QSPI flash.
+    1. Mount LittleFS on MBR part. 4.
+    2. If mounting fails and formatting is permitted, reformat only the
+       application/user partition.
+    3. Attempt to load previously saved settings.
+    4. If no valid settings exist, restore compiled defaults and save them
+       as the initial persistent configuration.*/
 bool initializeSettingsStorage() {
   int result = qspiUserFileSystem.mount(&qspiUserPartition);
 
