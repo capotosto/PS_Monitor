@@ -25,6 +25,10 @@ TwoWire &sensorBus = Wire2;
   The two negative rails remain in SENSE+ high-side mode. Only the reported
   voltage sign is inverted in software.
 */
+
+// Constructor arguments:
+//   I2C bus, device address, shunt resistance,
+//   voltage polarity multiplier, current polarity multiplier
 LTC2945 sensors[CHANNEL_COUNT] = {
   {sensorBus, LTC_ADDRESS_6VA,  SHUNT_6VA_OHMS,  +1.0f, +1.0f},
   {sensorBus, LTC_ADDRESS_6VB,  SHUNT_6VB_OHMS,  +1.0f, +1.0f},
@@ -58,8 +62,9 @@ void reportSensorTransition(
   Serial.println(currentOnline ? "ONLINE" : "OFFLINE");
 }
 
-}  // namespace
+}
 
+//Prints the channel names and I2C addresses to console. 
 void printSensorConfiguration() {
   Serial.println();
   Serial.println("LTC2945 sensor configuration:");
@@ -75,6 +80,18 @@ void printSensorConfiguration() {
   Serial.println();
 }
 
+/*
+  Initializes the I2C bus and each LTC2945 monitor.
+
+  Each channel begins in an invalid/offline state. A sensor that responds
+  successfully is configured by LTC2945::begin().
+  
+  Failed initialization records the I2C error and immediately sets the failure count to the
+  offline threshold.
+
+  A complete measurement pass is performed before the display and PSC
+  interfaces begin so users get initialized data.
+*/
 void initializeSensors() {
   sensorBus.begin();
   sensorBus.setClock(SENSOR_I2C_CLOCK_HZ);
@@ -112,6 +129,24 @@ void initializeSensors() {
   updateSensorMeasurements();
 }
 
+/*
+  Polls all six LTC2945 channels and updates the shared MonitorChannel state.
+
+  Successful reads:
+    - replace V/I with the newest measurement
+    - mark the reading valid and sensor online
+    - clear the communication error/failure counter
+    - update the timestamp and alarm state
+
+  Failed reads:
+    - preserve the last valid voltage/current values
+    - record the LTC2945 communication error
+    - increment the fail counter
+    - mark the sensor offline only after the configured failure threshold
+
+  The failure threshold prevents a single transient I2C error from causing
+  an unnecessary ONLINE/OFFLINE state transition.
+*/
 void updateSensorMeasurements() {
   for (uint8_t i = 0; i < CHANNEL_COUNT; ++i) {
     MonitorChannel &channel = channels[i];
@@ -147,6 +182,7 @@ void updateSensorMeasurements() {
       */
     }
 
+    // Log sensor state changes only to prevent needless prints
     reportSensorTransition(
       i,
       previousOnline,
