@@ -31,11 +31,11 @@ void setup() {
     delay(10);
   }
 
-  initializeSettingsStorage();
-  initializeSensors();
-  initializeDisplay();
-  initializeEthernet();
-  redrawDisplay();
+  initializeSettingsStorage();  //Initialize QSPI configuration
+  initializeSensors();  //Initialize I2C PMICs
+  initializeDisplay();  //Initialize display shield
+  initializeEthernet();  //Initialize ethernet shield
+  redrawDisplay();  //Redraw display
 }
 
 void loop() {
@@ -43,19 +43,19 @@ void loop() {
 
   if (now - lastSensorPollMs >= SENSOR_POLL_PERIOD_MS) {
     lastSensorPollMs = now;
-    updateSensorMeasurements();
+    updateSensorMeasurements();  //Update the sensor readouts
   }
 
   if (now - lastDisplayMs >= DISPLAY_REFRESH_PERIOD_MS) {
     lastDisplayMs = now;
-    redrawDisplay();
+    redrawDisplay();  //Redraw display with new values
   }
 
   /*
     PSC is serviced both before and after HTTP so a browser request cannot
     unnecessarily delay the persistent IOC connection.
   */
-  servicePsc();
-  serviceHttp();
-  servicePsc();
+  servicePsc();  //R/W to the IOC
+  serviceHttp();  //R/W to the webpage
+  servicePsc();  //R/W to the IOC
 }
