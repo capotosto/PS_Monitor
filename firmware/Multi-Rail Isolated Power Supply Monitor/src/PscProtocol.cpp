@@ -1,3 +1,24 @@
+/*
+  PSC protocol server for communication between the Arduino GIGA and
+  the EPICS PSCDriver IOC.
+
+  Packet format:
+    Bytes 0-1 : ASCII magic "PS"
+    Bytes 2-3 : 16-bit message ID, big-endian
+    Bytes 4-7 : 32-bit body length, big-endian
+    Bytes 8+  : message body
+
+  The server:
+    - accepts one PSC client connection at a time
+    - periodically publishes measurements and alarm states
+    - publishes a complete state snapshot when a client connects
+    - accepts alarm-limit setpoints from the IOC
+    - validates and stores accepted limits in persistent storage
+    - echoes the actual stored value so EPICS AO records can resynchronize
+
+  All multibyte numeric values are serialized in big-endian order.
+*/
+
 #include "PscProtocol.h"
 
 #include <Arduino.h>
@@ -14,6 +35,8 @@ namespace {
 EthernetServer pscServer(PSC_PORT);
 EthernetClient pscClient;
 
+/* Incremental receive-parser state. Ethernet data may arrive in partial 
+packets, so the header and body are assembled across servicePsc() calls.*/
 uint32_t lastPscPublishMs = 0;
 uint8_t pscHeaderBuffer[8];
 uint8_t pscBodyBuffer[PSC_MAX_BODY_LENGTH];
@@ -40,6 +63,8 @@ void resetPscReceiveState() {
   pscReadingBody = false;
 }
 
+/*PSC messages use big-endian. Helpers convert ints and floats between
+wire represnetation and Giga native.*/
 uint16_t readU16BigEndian(const uint8_t *source) {
   return
     (static_cast<uint16_t>(source[0]) << 8) |
@@ -79,6 +104,12 @@ void writeFloatBigEndian(uint8_t *destination, float value) {
   writeU32BigEndian(destination, bits);
 }
 
+/*Writes a PSC packet segment to the connected TCP client.
+
+  EthernetClient::write() is not assumed to transmit the complete buffer
+  in one call. Continue writing until all bytes are sent, the connection
+  closes, or PSC_WRITE_TIMEOUT_MS expires.*/
+
 bool writeAllPscBytes(const uint8_t *data, size_t length) {
   if (!pscIsConnected()) {
     return false;
@@ -105,6 +136,10 @@ bool writeAllPscBytes(const uint8_t *data, size_t length) {
   return offset == length;
 }
 
+/*Builds and transmits one PSC message.
+  Header:
+    "PS" + uint16 message ID + uint32 payload length
+*/
 bool sendPscMessage(
   uint16_t messageId,
   const uint8_t *body,
@@ -127,6 +162,17 @@ bool sendPscMessage(
   return bodyLength == 0 || writeAllPscBytes(body, bodyLength);
 }
 
+/*
+  Alarm/status bit definitions sent in PSC_MSG_ALARMS:
+
+    bit 0 - voltage low alarm
+    bit 1 - voltage high alarm
+    bit 2 - current low alarm
+    bit 3 - current high alarm
+    bit 4 - sensor offline / communication fault
+
+  Remaining bits are reserved.
+*/
 uint32_t alarmMaskForChannel(const MonitorChannel &channel) {
   uint32_t mask = 0;
 
@@ -149,6 +195,10 @@ uint32_t alarmMaskForChannel(const MonitorChannel &channel) {
   return mask;
 }
 
+/*Write out voltage/current pairs for all channels.
+
+  Invalid channels are written as NaN rather than 0.0 so an
+  I2C or sensor failure cannot be mistaken for real readouts.*/
 bool sendPscMeasurements() {
   uint8_t body[CHANNEL_COUNT * 2 * sizeof(float)];
   size_t offset = 0;
@@ -203,6 +253,20 @@ bool sendPscAlarms() {
   return sendPscMessage(PSC_MSG_ALARMS, body, sizeof(body));
 }
 
+/*PSC setpoint address map.
+
+  Each channel holds four consecutive addresses:
+
+    channel * 4 + 0 : voltage low limit
+    channel * 4 + 1 : voltage high limit
+    channel * 4 + 2 : current low limit
+    channel * 4 + 3 : current high limit
+
+  Example:
+    addresses 0-3   -> channel 0
+    addresses 4-7   -> channel 1
+    ...
+*/
 float limitValueByAddress(uint32_t address) {
   const uint8_t channelIndex = address / 4;
   const uint8_t fieldIndex = address % 4;
@@ -251,6 +315,9 @@ void sendAllPscSetpointEchoes() {
   }
 }
 
+/*Send all states required to synchronize the IOC.
+  This prevents the IOC from waiting for multiple periodic publish cycles
+  before measurements, limits, alarms, and AO setpoint readbacks are valid.*/
 void sendCompletePscSnapshot() {
   if (!pscIsConnected()) {
     return;
@@ -263,6 +330,16 @@ void sendCompletePscSnapshot() {
   lastPscPublishMs = millis();
 }
 
+/*Apply one alarm-limit update received from EPICS.
+
+  The requested value is accepted only if:
+    1. the address maps to a valid channel/limit field,
+    2. the value is finite,
+    3. the complete set of limits remains logically valid, and
+    4. the updated configuration can be saved to persistent storage.
+
+  If validation or persistent storage fails, the previous limits are
+  restored so RAM and NVM configuration remain consistent.*/
 bool applyPscSetpoint(uint32_t address, float requestedValue) {
   if (address >= CHANNEL_COUNT * 4 || !isfinite(requestedValue)) {
     return false;
@@ -306,6 +383,10 @@ bool applyPscSetpoint(uint32_t address, float requestedValue) {
   return true;
 }
 
+/*Process a complete received PSC message. The embedded controller currently
+accepts only PSC_MSG_SETPOINT messagesfrom the IOC. All other message types
+are ignored and reported over the serial console.*/
+
 void handlePscMessage(
   uint16_t messageId,
   const uint8_t *body,
@@ -342,6 +423,22 @@ void handlePscMessage(
   sendPscAlarms();
 }
 
+/*
+  Incremental PSC packet parser.
+
+  TCP is a byte stream, so a complete PSC packet may not arrive in a single
+  read. This state machine:
+
+    1. searches for the "PS" synchronization bytes,
+    2. collects the remaining 8-byte header,
+    3. extracts message ID and body length,
+    4. validates the body length,
+    5. collects the body,
+    6. dispatches the complete message.
+
+  If synchronization is lost, incoming bytes are discarded until another
+  valid "PS" header prefix is found.
+*/
 void consumePscByte(uint8_t value) {
   if (pscReadingBody) {
     pscBodyBuffer[pscBodyIndex++] = value;
@@ -428,6 +525,19 @@ void acceptPscClient() {
   sendCompletePscSnapshot();
 }
 
+/*
+  Non-blocking PSC network service routine.
+
+  Called repeatedly from the main application loop to:
+    - detect disconnected clients,
+    - accept a new IOC connection,
+    - consume all currently available receive bytes,
+    - periodically publish measurements and alarm state.
+
+  Limits are not sent every cycle because they change only when
+  configuration is modified; a complete copy is sent on initial connection
+  and after a setpoint transaction.
+*/
 void servicePsc() {
   if (!ethernetHardwarePresent) {
     return;
