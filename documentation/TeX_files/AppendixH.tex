@@ -1,0 +1,24 @@
+% !TeX root = ../main.tex
+
+\chapter{Employer Letter}
+\label{chap:emp_letter}
+
+\IfFileExists{./TeX_files/Employer_Letter.pdf}{%
+    \includepdf[
+    pages=-,
+    fitpaper=true,
+    pagecommand={}
+    ]{./TeX_files/Employer_Letter.pdf}
+}{%
+    \begin{center}
+        \vspace*{2in}
+        \fbox{
+            \parbox[c][3in][c]{0.8\textwidth}{
+                \centering
+                \textbf{Employer Acknowledgement Letter}\\[1em]
+                Signed letter from supervisor\\
+                To be inserted once he signs...
+            }
+        }
+    \end{center}
+}

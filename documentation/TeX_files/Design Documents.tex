@@ -2,6 +2,33 @@
 \chapter{Design Documents}
 \label{chap:design_documents}
 \section{Schematics}
+The hardware schematics are maintained in KiCad and are included
+below directly from the plotted PDF files in the project hardware directory.
+
+\subsection{Sensor Board Schematic}
+
+\includepdf[
+pages=-,
+angle=90,
+scale=0.90,
+pagecommand={}
+]{
+    ../hardware/Isolated Multi-Rail Power Supply Monitor Sensor Board/%
+    Isolated Multi-Rail Power Supply Monitor Sensor Board.pdf
+}
+
+\subsection{Arduino Shield Board Schematic}
+
+\includepdf[
+pages=-,
+angle=90,
+scale=0.90,
+pagecommand={}
+]{
+    ../hardware/Isolated Multi-Rail Power Supply Monitor Arduino Shield Board/%
+    Isolated Multi-Rail Power Supply Monitor Arduino Shield Board.pdf
+}
+
 
 \newpage
 \section{Software Flow Chart}
@@ -417,3 +444,18 @@ the project.
 
 \newpage
 \section{Source Code}
+\label{sec:source-code}
+
+The following listings provide the source code for the Arduino
+GIGA firmware and the configuration files used by the EPICS IOC.
+
+The original source files and revision history are maintained at:
+
+\begin{center}
+    \url{https://github.com/capotosto/PS_Monitor}
+\end{center}
+
+The embedded firmware, IOCs, and supporting scripts were developed through an
+iterative workflow combining self-authored code and AI-assisted optimizations, refactoring, expanding of features, etc. (OpenAI, 2026).
+
+\input{./TeX_files/Source-Code-Listings.tex}

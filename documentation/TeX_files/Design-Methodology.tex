@@ -1,5 +1,51 @@
 % !TeX root = ../main.tex
-\chapter{Design Methodology}
-\label{ch:metodology}
 
-%This should be a statement of the extensive work done for the preliminary and detailed designs. It should address the theories, models, and techniques used in the design phase, the major design trade-offs, the broader context (social, ethical, etc.), and the primary design choices. Graphs are encouraged if appropriate. Refer to the PDR and DDR.)
+\chapter{Design Methodology}
+\label{ch:methodology}
+
+The design process involved an iterative engineering method
+starting with requirements determination and preliminary
+design and moving on to detailed circuit design, prototyping,
+implementation, and testing.
+
+\section{Engineering Analysis}
+
+Component selection, schematic drawing, PCB designing,
+power budgeting, current sense resistor calculation,
+and electrical operating limitations verification were
+some of the tasks performed during the preliminary and
+detailed designs.
+
+The calculations based on Ohm's law, power dissipation,
+ADC resolution, component tolerance values, and signal
+isolation techniques were used to determine the circuit
+requirements. Calculations are provided in
+Appendix~\ref{app:design-calculations}.
+
+\section{Design Trade-offs}
+
+Among the main trade-offs of the design were resolution,
+power dissipation, isolation, cost, and development time.
+
+For measuring current, high precision shunt resistors were
+selected balancing resolution against voltage and power
+dissipation. Independent isolated channels were selected to
+maintain the isolation/floating rails of the measured supplies although
+this entailed extra circuitry.
+
+For speeding up the development process, Arduino GIGA
+platform with its set of peripherals and display capability
+was used. Wired Ethernet was chosen for ease of integration into a control system.
+
+\section{Broader Considerations}
+
+In addition to that, safety of electricity use,
+accuracy and reliability of measurements, maintainability,
+cybersecurity, and responsible components sourcing were
+among other considerations of the design which will be
+addressed in Chapter~\ref{ch:impacts}.
+
+Both preliminary and detailed design were then improved
+through prototyping process discovering some hardware and
+communication issues which required changes including
+changes to the I2C circuit.

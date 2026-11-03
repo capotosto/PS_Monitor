@@ -2,3 +2,48 @@
 
 \chapter{Technology Solution}
 \label{chap:tech-sol}
+
+This implemented solution is a six-channel isolated power
+supply monitoring system with capabilities of local and
+remote voltage, current, alarm and communication status
+monitoring.
+
+Each channel is based on a LTC2945 power monitor IC
+and current-sense resistor. Optoisolators maintain
+the isolation of the monitored supplies. An Arduino GIGA R1
+WiFi board is used for processing the measurements,
+alarm limit evaluation, and visualization on the local
+touch screen display. Ethernet connectivity allows the user to
+integrate the system with an EPICS IOC and Phoebus
+operator interface.
+
+\section{Standards and Design Considerations}
+
+Standard I2C communication, Ethernet TCP/IP networking
+and EPICS Channel Access are incorporated in this design.
+Electrical design considerations include operational
+constraints of components, PCB trace sizing, current-sense
+resistor power consumption and isolation needs. Guidance
+of IPC-2152 was considered for PCB trace size selection,
+while the electrical operational constraints come from the
+component datasheets.
+
+This system is designed for laboratory use. Network
+interfaces of this prototype do not provide the necessary
+security features for deployment in untrusted networks.
+No formal product safety, EMC and regulatory
+certification was conducted on the prototype.
+
+\section{Performance Summary}
+
+Testing of the system was performed to evaluate the
+measurement accuracy, alarm operation, configuration
+retention and communication. Voltage and current
+measurements were compared with reference instruments
+according to the criteria provided in
+Chapter~\ref{chap:solution-efficacy}.
+
+The prototype implements all the desired monitoring
+capabilities, but testing revealed measurement errors
+and some start-up and recovery problems that require
+further evaluation.
