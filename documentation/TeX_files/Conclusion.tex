@@ -1,0 +1,65 @@
+% !TeX root = ../main.tex
+
+\chapter{Conclusions}
+\label{chap:conclusions}
+\subsection{Did the Project Meet the Requirements of the Scope?}
+
+The project fulfilled the major requirements of the original project scope.
+
+The completed system provides six independent voltage and current monitoring channels corresponding to +5VA, +5VB, +5~V, $-$5~V, +15~V, and $-$15~V. The high side current sensing is used for each channel while the electrical isolation is preserved between independently referenced monitored supplies and the common controller.
+
+The completed hardware includes the sensor interface, current sense resistors, isolation circuitry, Arduino GIGA controller interface, local display, controller power circuitry and Ethernet interface. The software implementation includes the embedded measurement acquisition, conversion to engineering units, configurable limits, alarm processing, persistent configuration storage, local graphical display, network communication, the EPICS IOC, process variable database records and the Phoebus operator interface.
+
+The final system testing confirmed the correct operation of all six measurement channels, the correct positive and negative voltage representation, programmable limit operation, persistent settings, local display operation, Ethernet communication, EPICS monitoring, communication recovery, repeatability, and end-to-end operation.
+
+The hardware, firmware, IOC files, operator interface files, documentation and other project artifacts were also maintained under revision control as required by the project scope.
+
+Based on the completed implementation and the final system test results, the capstone project is therefore considered to have fulfilled its technical scope.
+
+\subsection{Was the Project Completed on Time?}
+
+The project was completed within the planned capstone schedule.
+
+The original project plan distributed the development across the eight week ET410 planning phase and the following eight week ET450 implementation phase, with the completed system expected to be ready for demonstration by Week 7 of ET450. The final automated system test was completed on October 18, 2026, giving the completed and verified system before the planned final demonstration period.
+
+The project experienced the schedule risk during the hardware bring-up. Troubleshooting of the isolated I\textsuperscript{2}C interface required additional effort after the SDA polarity problem and other communication problems were discovered. The startup sequencing and Ethernet integration also required the troubleshooting that was not anticipated in the initial plan.
+
+These problems consumed the schedule margin, but they were fixed without preventing the completion of the prototype and final system test within the capstone schedule. The project is therefore considered to have fulfilled the schedule requirement.
+
+\subsection{Was the Project Completed Under Budget?}
+
+The project was not completed within the original preliminary hardware budget.
+
+The initial project proposal assumed the material and contingency budget of \$660. This estimate was based on the incomplete information about the detailed component selection, custom PCB layout and final vendor pricing.
+
+After completion of the detailed design and Bill of Materials, the estimated one system hardware purchase cost became \$1,019.03. It includes \$242.36 in the Sensor Board components, \$473.57 for the minimum Sensor Board PCB order, \$180.90 in the Arduino Shield components, and \$122.19 for the minimum Arduino Shield PCB order.
+
+Compared to the original \$660 estimate, the final documented hardware purchase estimate is \$359.03 higher than the preliminary budget. The additional cost is due to a better definition of the component as well as the minimum order cost related to the fabrication of the custom PCBs.
+
+Thus, the cost estimate was good to use as a preliminary cost estimate value but did not provide enough cost to build a complete prototype of a custom PCB. The project should be considered above the original hardware budget.
+
+This cost comparison concerns only the documented prototype hardware cost. Laboratory test equipment, software, labor, shipping, taxes, enclosure hardware, cabling and any other items not included into the project cost analysis are not included into this cost comparison.
+
+\subsection{Did the Quality and Performance Meet Stakeholder Expectations?}
+
+The quality and performance of the completed prototype met the expectations set for the capstone project.
+
+The main project stakeholders are the project developer, the course instructor and the potential technical users of the system. The best evidence of system quality is the completed acceptance test. All twelve expected system tests were completed successfully, all six monitored rails passed the voltage and current check, and the complete system demonstration was successful without any system failures.
+
+The prototype showed the capability to collect isolated voltage and current measurements, display the data locally, compare the data with configurable limits, keep the configuration after the restart, send the data via Ethernet, support the EPICS integration, present the data using Phoebus and to restore the operation after the network connection interruption.
+
+The project provided the possibility to develop the repeatable automated test procedure instead of using the subjective one. The raw data were saved and used for the creation of a test report including the measurement data, pass/fail result and the test evidence. It improves the confidence in the final result and allows assessing future revisions of the hardware.
+
+The prototype still includes some features which should be improved in the future production revision of the design, such as SDA inverter modification, modified implementation of the I\textsuperscript{2}C pull-up, correct startup sequence and the possible implementation of the per-channel calibration. They do not prevent the prototype from meeting the acceptance criteria, but may influence the manufacturability and further improvements of the design.
+
+Based on the final test results, the completed project can be stated to meet the stakeholder expectations in terms of functionality and performance.
+
+\subsection{Overall Project Assessment}
+
+The Multi-Rail Isolated Power Supply Monitoring System successfully passed the full project cycle including the project definition and preliminary design, custom hardware development, firmware implementation, network and EPICS integration, board bring-up, troubleshooting and system verification.
+
+The biggest challenges of the project were related to the hardware integration instead of development of the individual functions of the system. The troubleshooting of the isolated I\textsuperscript{2}C interface showed the necessity to check the component version, polarity, pull-up requirement, signal states and startup behavior in the physical implementation. These issues were found by the measurements, fixed and retested in the final system tests.
+
+The completed prototype met the defined project scope, completed in the required time and met the final technical acceptance criteria. Although the project cost exceeds the original preliminary hardware budget, the detailed cost estimation provides more realistic basis for the estimation of the cost of prototype and future production revision.
+
+Finally, the successful completion of the system test showed that the hardware, embedded firmware, local user interface, Ethernet communication, EPICS IOC, Phoebus interface and the automated test software work as the integrated system. Thus, the project successfully reached the main goal of development and demonstration of the functioning six-channel isolated power supply monitoring system.

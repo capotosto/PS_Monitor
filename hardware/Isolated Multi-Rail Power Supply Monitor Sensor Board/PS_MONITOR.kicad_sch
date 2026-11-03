@@ -5,6 +5,224 @@
 	(uuid "4e2fc831-971c-401a-a148-87fbd8666055")
 	(paper "B")
 	(lib_symbols
+		(symbol "74xGxx:74LVC2G04"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "74LVC2G04"
+				(at 2.54 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Dual NOT Gate, Low-Voltage CMOS"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "Dual Gate NOT LVC CMOS"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SG-* SOT*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "74LVC2G04_1_1"
+				(polyline
+					(pts
+						(xy -7.62 6.35) (xy -7.62 -6.35) (xy 5.08 0) (xy -7.62 6.35)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -15.24 0 0)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output inverted
+					(at 12.7 0 180)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "74LVC2G04_2_1"
+				(polyline
+					(pts
+						(xy -7.62 6.35) (xy -7.62 -6.35) (xy 5.08 0) (xy -7.62 6.35)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -15.24 0 0)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output inverted
+					(at 12.7 0 180)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "74LVC2G04_3_0"
+				(rectangle
+					(start -5.08 -5.08)
+					(end 5.08 5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "74LVC2G04_3_1"
+				(pin power_in line
+					(at 0 10.16 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -10.16 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "ACPL-064L_1"
 			(pin_names
 				(offset 0)
@@ -3457,7 +3675,7 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 64.77) (xy 181.61 64.77)
+			(xy 179.07 64.77) (xy 181.61 64.77)
 		)
 		(stroke
 			(width 0)
@@ -3577,6 +3795,16 @@
 	)
 	(wire
 		(pts
+			(xy 179.07 90.17) (xy 176.53 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ab49c59-8fe3-4771-8ec6-544231b86327")
+	)
+	(wire
+		(pts
 			(xy 87.63 49.53) (xy 81.28 49.53)
 		)
 		(stroke
@@ -3584,6 +3812,16 @@
 			(type default)
 		)
 		(uuid "8ebf78ba-6575-4e4e-abd9-456b94dd36de")
+	)
+	(wire
+		(pts
+			(xy 168.91 83.82) (xy 171.45 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90620b8a-e472-4374-9fe2-987710971928")
 	)
 	(wire
 		(pts
@@ -3604,16 +3842,6 @@
 			(type default)
 		)
 		(uuid "91ba1bd8-3711-4062-b1f1-a73710e9eebb")
-	)
-	(wire
-		(pts
-			(xy 156.21 83.82) (xy 140.97 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "925c1799-38b6-48b5-9124-31f77fa4b6e5")
 	)
 	(wire
 		(pts
@@ -3687,7 +3915,7 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 64.77) (xy 163.83 78.74)
+			(xy 179.07 64.77) (xy 179.07 78.74)
 		)
 		(stroke
 			(width 0)
@@ -3747,7 +3975,7 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 90.17) (xy 163.83 88.9)
+			(xy 179.07 90.17) (xy 179.07 88.9)
 		)
 		(stroke
 			(width 0)
@@ -3794,6 +4022,16 @@
 			(type default)
 		)
 		(uuid "e379cd6a-a1ba-404e-aacb-70c0aaef97b9")
+	)
+	(wire
+		(pts
+			(xy 176.53 90.17) (xy 176.53 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e4ac139f-9cd4-4566-84a8-05f49573478c")
 	)
 	(wire
 		(pts
@@ -4627,7 +4865,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_FET:BS170F")
-		(at 161.29 83.82 0)
+		(at 176.53 83.82 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4636,7 +4874,7 @@
 		(fields_autoplaced yes)
 		(uuid "3194cd85-12f3-47f1-8122-03b7e343a6e1")
 		(property "Reference" "Q1"
-			(at 167.64 82.5499 0)
+			(at 182.88 82.5499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4645,7 +4883,7 @@
 			)
 		)
 		(property "Value" "BS170F"
-			(at 167.64 85.0899 0)
+			(at 182.88 85.0899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4654,7 +4892,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-416"
-			(at 166.37 85.725 0)
+			(at 181.61 85.725 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4665,7 +4903,7 @@
 			)
 		)
 		(property "Datasheet" "http://www.diodes.com/assets/Datasheets/BS170F.pdf"
-			(at 166.37 87.63 0)
+			(at 181.61 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4675,7 +4913,7 @@
 			)
 		)
 		(property "Description" "0.15A Id, 60V Vds, N-Channel MOSFET, SOT-23"
-			(at 161.29 83.82 0)
+			(at 176.53 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4684,7 +4922,7 @@
 			)
 		)
 		(property "Distributor" "Digikey"
-			(at 161.29 83.82 0)
+			(at 176.53 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4693,7 +4931,7 @@
 			)
 		)
 		(property "DPN" "NTA7002NT1GOSDKR-ND"
-			(at 161.29 83.82 0)
+			(at 176.53 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4702,7 +4940,7 @@
 			)
 		)
 		(property "MPN" "NTA7002NT1G"
-			(at 161.29 83.82 0)
+			(at 176.53 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4711,7 +4949,7 @@
 			)
 		)
 		(property "Manufacturer" "onsemi"
-			(at 161.29 83.82 0)
+			(at 176.53 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4720,7 +4958,7 @@
 			)
 		)
 		(property "NOTE" ""
-			(at 161.29 83.82 0)
+			(at 176.53 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5803,7 +6041,7 @@
 	)
 	(symbol
 		(lib_id "power:GNDD")
-		(at 163.83 90.17 0)
+		(at 176.53 92.71 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5812,7 +6050,7 @@
 		(fields_autoplaced yes)
 		(uuid "c567cee6-7655-4047-94e3-fba398d1c2d5")
 		(property "Reference" "#PWR0147"
-			(at 163.83 96.52 0)
+			(at 176.53 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5821,7 +6059,7 @@
 			)
 		)
 		(property "Value" "GNDD"
-			(at 163.83 93.98 0)
+			(at 176.53 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5829,7 +6067,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 163.83 90.17 0)
+			(at 176.53 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5838,7 +6076,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 163.83 90.17 0)
+			(at 176.53 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5847,7 +6085,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
-			(at 163.83 90.17 0)
+			(at 176.53 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6036,6 +6274,106 @@
 				)
 				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/ec57128e-6b5d-4a9e-a13d-a751bdf4709f"
 					(reference "U16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "74xGxx:74LVC2G04")
+		(at 156.21 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "daebe4a6-0790-4d58-96e4-98ab48536fe3")
+		(property "Reference" "U23"
+			(at 154.94 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74LVC2G04"
+			(at 154.94 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 156.21 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf"
+			(at 156.21 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual NOT Gate, Low-Voltage CMOS"
+			(at 156.21 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8c8e466b-8556-420f-a0ba-9ac3be74ba31")
+		)
+		(pin "3"
+			(uuid "9871fcd0-7aec-4888-9176-acaccaa08094")
+		)
+		(pin "5"
+			(uuid "0a190f23-dba9-42b1-8aaa-ae239eaa8b1f")
+		)
+		(pin "6"
+			(uuid "edffef50-e41c-4f47-83d7-e8961f95f603")
+		)
+		(pin "4"
+			(uuid "8ad7cf9c-ed90-4859-ba2d-3e01ef222e0b")
+		)
+		(pin "2"
+			(uuid "2a2391de-c259-4d2d-9b60-539f23e9e8eb")
+		)
+		(instances
+			(project ""
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/021b0d77-1a17-4dfd-abed-baa29872da02"
+					(reference "U27")
+					(unit 1)
+				)
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/045337ca-d664-4499-ad2d-f49275e881e0"
+					(reference "U25")
+					(unit 1)
+				)
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/639ff2f2-2971-4292-8847-70fa6093411d"
+					(reference "U23")
+					(unit 1)
+				)
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/65528f40-caa2-4101-8e90-976c921bc4e1"
+					(reference "U28")
+					(unit 1)
+				)
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/dbf7d9de-fa0e-497b-9b6d-cfd38bf449d0"
+					(reference "U24")
+					(unit 1)
+				)
+				(path "/88e57a81-cd5f-47b2-b68c-bf249e42aae1/ec57128e-6b5d-4a9e-a13d-a751bdf4709f"
+					(reference "U26")
 					(unit 1)
 				)
 			)

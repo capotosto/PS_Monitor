@@ -1,0 +1,448 @@
+% !TeX root = ../main.tex
+
+\chapter{Chosen Conceptual Design}
+\label{chap:con-design}
+The major system functions are summarized below.
+
+\begin{enumerate}
+	\item \textbf{Power-Supply Interface:} Connect to the six monitored rails and
+	route each rail through the associated voltage/current monitoring channel.
+	\item \textbf{Current Measurement:} Convert load current to a differential
+	voltage across a precision shunt resistor and digitize it with the
+	LTC2945.
+	\item \textbf{Voltage Measurement:} Measure the monitored rail voltage using
+	the LTC2945 supply-voltage ADC channel.
+	\item \textbf{Electrical Isolation:} Maintain galvanic isolation between each
+	floating monitored supply and the common controller-side I\textsuperscript{2}C bus.
+	\item \textbf{Digital Acquisition:} Poll each monitor, identify communication
+	faults, apply channel-specific sign/scaling information, and calculate
+	engineering-unit values.
+	\item \textbf{Alarm Processing:} Compare voltage and current values against
+	configured upper and lower limits and generate channel alarm states.
+	\item \textbf{Local User Interface:} Present all rail measurements, alarms,
+	network state, and communication status on the Arduino GIGA Display.
+	\item \textbf{Network/EPICS Interface:} Publish measurements, alarm limits,
+	alarm state, and connection status over Ethernet for the EPICS IOC and
+	Phoebus interface.
+\end{enumerate}
+
+\subsection{Functional Block Diagram}
+
+\begin{figure}[H]
+	\centering
+	
+	\makebox[\textwidth][c]{%
+		\rotatebox{90}{%
+			\begin{minipage}{0.9\textheight}
+				\centering
+				
+				\resizebox{0.78\textheight}{!}{%
+					\begin{tikzpicture}[
+						>=Stealth,
+						font=\small,
+						block/.style={
+							draw,
+							rectangle,
+							rounded corners=2pt,
+							align=center,
+							minimum height=1.25cm,
+							minimum width=2.75cm,
+							text width=2.45cm,
+							inner sep=5pt,
+							line width=0.8pt
+						},
+						rail/.style={
+							draw,
+							rectangle,
+							rounded corners=2pt,
+							align=center,
+							minimum height=0.55cm,
+							minimum width=1.35cm,
+							font=\footnotesize,
+							line width=0.7pt
+						},
+						group/.style={
+							draw,
+							dashed,
+							rounded corners=4pt,
+							inner sep=8pt,
+							line width=0.8pt
+						},
+						signal/.style={
+							->,
+							line width=0.9pt
+						},
+						line/.style={
+							line width=0.9pt
+						},
+						bus/.style={
+							line width=1.1pt
+						},
+						busarrow/.style={
+							->,
+							line width=1.1pt
+						},
+						siglabel/.style={
+							font=\scriptsize,
+							fill=white,
+							inner sep=1.5pt,
+							text depth=0pt,
+							text height=1.5ex,
+							align=center
+						}
+						]
+						
+						% ============================================================
+						% MONITORED POWER RAILS
+						% ============================================================
+						
+						\node[rail] (p6a) at (0, 2.25) {+6 V A};
+						\node[rail] (p6b) at (0, 1.35) {+6 V B};
+						\node[rail] (p5)  at (0, 0.45) {+5 V};
+						\node[rail] (m5)  at (0,-0.45) {$-5$ V};
+						\node[rail] (p15) at (0,-1.35) {+15 V};
+						\node[rail] (m15) at (0,-2.25) {$-15$ V};
+						
+						\node[
+						above=0.30cm of p6a,
+						font=\bfseries
+						] {Monitored Power-Supply Rails};
+						
+						
+						% ============================================================
+						% RAIL COLLECTION BUS
+						% ============================================================
+						
+						\coordinate (railBusTop)    at (1.15, 2.25);
+						\coordinate (railBusBottom) at (1.15,-2.25);
+						\coordinate (railBusMid)    at (1.15, 0);
+						
+						\draw[bus] (railBusTop) -- (railBusBottom);
+						
+						% Individual rail connections -- no overlapping arrowheads.
+						\foreach \railname/\y in {
+							p6a/2.25,
+							p6b/1.35,
+							p5/0.45,
+							m5/-0.45,
+							p15/-1.35,
+							m15/-2.25
+						}{
+							\draw[line] (\railname.east) -- (1.15,\y);
+						}
+						
+						
+						% ============================================================
+						% POWER-SUPPLY INTERFACE BOARD
+						% ============================================================
+						
+						\node[
+						block,
+						anchor=west
+						] (shunts) at (2.15,0)
+						{
+							High-Side\\
+							Current-Sense Shunts\\[2pt]
+							\footnotesize
+							One independent\\
+							sense element per rail
+						};
+						
+						\node[
+						block,
+						right=0.65cm of shunts
+						] (ltc)
+						{
+							LTC2945\\
+							Voltage / Current\\
+							Monitor Channels\\[2pt]
+							\footnotesize
+							Six independent\\
+							channels
+						};
+						
+						\node[
+						block,
+						right=0.65cm of ltc
+						] (iso)
+						{
+							I\textsuperscript{2}C Digital\\
+							Isolation\\[2pt]
+							\footnotesize
+							One isolated interface\\
+							per monitored rail
+						};
+						
+						
+						\draw[busarrow]
+						(railBusMid)
+						--
+						(shunts.west);
+						
+						
+						\draw[busarrow]
+						(shunts.east)
+						--
+						node[
+						siglabel,
+						midway,
+						rotate=90,
+						above=6pt
+						]
+						{Sense Voltage}
+						(ltc.west);
+						
+						
+						\draw[busarrow]
+						(ltc.east)
+						--
+						node[
+						siglabel,
+						midway,
+						above=4pt
+						]
+						{I\textsuperscript{2}C}
+						(iso.west);
+						
+						
+						% ============================================================
+						% POWER-SUPPLY INTERFACE GROUP
+						% ============================================================
+						
+						\begin{scope}[on background layer]
+							\node[
+							group,
+							fit=(shunts)(ltc)(iso)
+							] (interfaceGroup) {};
+						\end{scope}
+						
+						\node[
+						font=\bfseries,
+						fill=white,
+						inner sep=2pt,
+						anchor=south
+						]
+						at (interfaceGroup.north)
+						{Power Supply Interface Board};
+						
+						
+						% ============================================================
+						% ISOLATION BARRIER
+						% ============================================================
+						
+						\coordinate (barrierTop)
+						at ($(iso.north east)+(0.50,0.55)$);
+						
+						\coordinate (barrierBottom)
+						at ($(iso.south east)+(0.50,-0.55)$);
+						
+						% Keep only the dashed isolation-barrier line; no text label.
+						\draw[
+						dashed,
+						line width=1.1pt
+						]
+						(barrierTop) -- (barrierBottom);
+						
+						
+						% ============================================================
+						% ARDUINO GIGA
+						% ============================================================
+						
+						\node[
+						block,
+						right=1.45cm of iso
+						] (giga)
+						{
+							Arduino GIGA R1 WiFi\\[2pt]
+							\footnotesize
+							Acquire Measurements\\
+							Apply Scaling and Polarity\\
+							Evaluate Alarm Limits\\
+							Manage Configuration
+						};
+						
+						
+						\draw[busarrow]
+						(iso.east)
+						--
+						node[
+						siglabel,
+						midway,
+						rotate=90,
+						above=6pt
+						]
+						{Isolated I\textsuperscript{2}C}
+						(giga.west);
+						
+						
+						% ============================================================
+						% DISPLAY AND ETHERNET
+						% ============================================================
+						
+						\node[
+						block,
+						right=1.25cm of giga,
+						yshift=1.55cm
+						] (display)
+						{
+							GIGA Display Shield\\[2pt]
+							\footnotesize
+							Voltage / Current\\
+							Alarm Status\\
+							Communication Status
+						};
+						
+						\node[
+						block,
+						right=1.25cm of giga,
+						yshift=-1.55cm
+						] (ethernet)
+						{
+							Ethernet Interface\\[2pt]
+							\footnotesize
+							PSC Protocol\\
+							Configuration Interface
+						};
+						
+						\coordinate (controllerBranch)
+						at ($(giga.east)+(0.55,0)$);
+						
+						\draw[line]
+						(giga.east)
+						--
+						(controllerBranch);
+						
+						\draw[signal]
+						(controllerBranch)
+						|-
+						(display.west);
+						
+						\draw[signal]
+						(controllerBranch)
+						|-
+						(ethernet.west);
+						
+						\fill (controllerBranch) circle (1.5pt);
+						
+						
+						% ============================================================
+						% CONTROLLER GROUP
+						% ============================================================
+						
+						\begin{scope}[on background layer]
+							\node[
+							group,
+							fit=(giga)(display)(ethernet)
+							] (controllerGroup) {};
+						\end{scope}
+						
+						\node[
+						font=\bfseries,
+						fill=white,
+						inner sep=2pt,
+						anchor=south
+						]
+						at (controllerGroup.north)
+						{Controller Assembly};
+						
+						
+						% ============================================================
+						% EPICS IOC
+						% ============================================================
+						
+						\node[
+						block,
+						right=1.20cm of ethernet
+						] (ioc)
+						{
+							EPICS IOC / PSCDriver\\[2pt]
+							\footnotesize
+							Receive Measurements\\
+							Publish Engineering Values\\
+							Generate EPICS Alarms
+						};
+						
+						\draw[busarrow]
+						(ethernet.east)
+						--
+						node[
+						siglabel,
+						midway,
+						rotate=90,
+						above=6pt
+						]
+						{Ethernet}
+						(ioc.west);
+						
+						
+						% ============================================================
+						% PHOEBUS
+						% ============================================================
+						
+						\node[
+						block,
+						right=1.20cm of ioc
+						] (phoebus)
+						{
+							CS-Studio Phoebus\\[2pt]
+							\footnotesize
+							Operator Interface\\
+							Voltage / Current Display\\
+							Alarm and System Status
+						};
+						
+						\draw[busarrow]
+						(ioc.east)
+						--
+						node[
+						siglabel,
+						midway,
+						rotate=90,
+						below=6pt
+						]
+						{EPICS Channel Access}
+						(phoebus.west);
+						
+						
+						% ============================================================
+						% SUPERVISORY GROUP
+						% ============================================================
+						
+						\begin{scope}[on background layer]
+							\node[
+							group,
+							fit=(ioc)(phoebus)
+							] (supervisoryGroup) {};
+						\end{scope}
+						
+						\node[
+						font=\bfseries,
+						fill=white,
+						inner sep=2pt,
+						anchor=south
+						]
+						at (supervisoryGroup.north)
+						{Supervisory Control System};
+						
+					\end{tikzpicture}%
+				}
+				
+				\vspace{0.25cm}
+				
+				\caption{
+					Functional block diagram of the multi-rail isolated
+					power supply monitoring system. Six independent power-supply rails
+					are measured using high-side current sensing and LTC2945 voltage/current
+					monitoring channels. Digital isolation preserves electrical independence
+					between the monitored supplies and the common controller. The Arduino
+					GIGA processes the measurements, provides a local operator display, and
+					transmits measurement and status information over Ethernet to the EPICS
+					IOC and CS-Studio Phoebus operator interface.
+				}
+				\label{fig:functional-block-diagram}
+				
+			\end{minipage}%
+		}%
+	}
+	
+\end{figure}

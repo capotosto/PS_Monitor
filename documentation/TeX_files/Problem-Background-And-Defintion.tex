@@ -1,0 +1,51 @@
+% !TeX root = ../main.tex
+\chapter{Problem Background and Definition}
+\label{chap:detailed-design}
+
+\section{Purpose and Scope}
+This chapter documents the hardware and software design of the
+Multi-Rail Isolated Power Supply Monitoring System. The design monitors six
+power-supply rails, measures rail voltage and load current, preserves electrical
+isolation between floating supplies and the controller, evaluates measurements
+against user-configurable alarm limits, presents local status on the controller
+display, and publishes measurements and status to an EPICS control-system
+interface.
+
+This design is intended to establish the major analog and digital
+functional blocks, document supporting engineering calculations, define the
+hardware schematic baseline, and provide software flowcharts detailed enough to
+support implementation.
+
+\section{Problem Definition}
+The project addresses the need to monitor several low-voltage power-supply rails
+that do not necessarily share a common reference. A conventional
+monitoring circuit that directly connects the grounds together
+would defeat the electrical isolation of the supplies and could create unwanted
+return paths. However, the user needs a single location from which to observe rail voltage, rail current, alarm state, communication status, and the overall condition of the power system.
+
+The required monitoring system must therefore make accurate measurements on
+six separate rails while preserving isolation between the monitored domains. It
+must support both positive and negative rails, detect sensor or communication
+faults, provide configurable voltage and current limits, retain configuration
+information after reset, present useful local status, and make the same data
+available to the facility control system over Ethernet. The monitored rails in
+the present design are +5 V A, +5 V B, +/-5 V, and +/-15 V.
+
+\section{Proposed Solution}
+The proposed solution assigns one LTC2945 voltage/current monitor to each power
+rail. Load current is converted to a small differential voltage by a precision
+high-side shunt resistor and the LTC2945 digitizes both the shunt voltage and the
+rail voltage. Each sensor remains referenced to its own monitored supply domain.
+The I\textsuperscript{2}C communication path is then isolated so that digital
+measurement data can be transferred to a common Arduino GIGA R1 WiFi controller
+without directly bonding the isolated supply returns together.
+
+The Arduino GIGA performs channel acquisition, engineering-unit conversion,
+negative-rail sign handling, alarm evaluation, configuration storage, display
+updates, and network communication. A local GIGA Display Shield provides
+immediate status at the hardware. Ethernet transports measurement and status
+data using the PSC protocol to an EPICS IOC, where PSCDriver and EPICS records
+make the values available to a CS-Studio Phoebus operator interface. This
+architecture separates the rail-side analog measurement functions from the
+controller and supervisory-control functions while maintaining a single user
+interface for the complete system.

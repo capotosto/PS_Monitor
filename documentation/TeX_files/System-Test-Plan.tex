@@ -1,0 +1,664 @@
+% !TeX root = ../main.tex
+\chapter{System Test Plan}
+\label{ch:system-test-plan}
+
+\section{Introduction}
+
+Once the detailed design and prototype construction have been done, then it is time to test the
+entire power supply monitoring system to ensure that the hardware, embedded firmware,
+user interface, and EPICS interface are working as expected. This chapter describes the test plan
+that will be used in the evaluation of the prototype.
+
+The purpose of testing is not just checking individual components of the design, but to demonstrate that the entire system is capable of monitoring all six power supply rails,
+displaying measurements locally, sending measurements through the network and operating within
+limits. Some parts of the system test will also be videotaped for use in the final project video.
+
+\subsection{System Under Test}
+
+The system under test is the completed six-channel power supply monitoring system
+developed for this capstone project. The system monitors the following power rails:
+
+\begin{itemize}
+    \item \(+\SI{5}{\volt}{A}\)
+    \item \(+\SI{5}{\volt}{B}\)
+    \item \(+\SI{5}{\volt}\)
+    \item \(-\SI{5}{\volt}\)
+    \item \(+\SI{15}{\volt}\)
+    \item \(-\SI{15}{\volt}\)
+\end{itemize}
+
+Each rail has its own separate voltage and current monitoring. The measurement
+circuits are isolated from the communication channel on the Arduino side and are
+connected to Arduino GIGA R1 WiFi. The Arduino has a local graphical display by
+using GIGA Display Shield and Ethernet connection by a custom interface shield I've built.
+The Ethernet connection works with EPICS Input/Output Controller (IOC), making
+it possible to monitor the rails measurement and status remotely.
+
+The testing of the system checks out the entire system but not each circuit block separately. This test involves the sensor circuits, isolation circuits, Arduino firmware, display, Ethernet connection, EPICS IOC, and related software
+as one whole system.
+
+\subsubsection{Test Objectives}
+
+The primary objectives of the system test are to verify that:
+
+\begin{enumerate}
+    \item the complete system powers on and initializes without errors;
+    \item all six power rails are identified and displayed correctly;
+    \item the voltage measurement for each rail agrees with an external reference
+    measurement within the specified system tolerance;
+    \item the current measurement for each rail agrees with the applied load within
+    the specified system tolerance;
+    \item positive and negative supply rails are reported with the correct voltage
+    polarity and current convention;
+    \item measurements shown on the local display correspond with the values available
+    through EPICS;
+    \item voltage and current operating limits produce the appropriate status indication;
+    \item user-configurable settings remain stored following a power cycle;
+    \item Ethernet or IOC communication can be interrupted and restored without
+    requiring a complete reprogramming of the monitor;
+    \item measurement data can be recorded and used to generate a permanent test report;
+    and
+    \item the completed system can successfully perform the functions required for
+    the final capstone demonstration.
+\end{enumerate}
+
+\subsection{Scope of Testing}
+
+\subsubsection{Features to be Tested}
+
+System testing will include the following functions:
+
+\begin{itemize}
+    \item system startup and initialization;
+    \item detection and monitoring of all six power rails;
+    \item voltage measurement;
+    \item current measurement;
+    \item measurement response to changes in load;
+    \item correct handling of positive and negative rails;
+    \item local GIGA Display operation;
+    \item Ethernet communication;
+    \item EPICS process-variable updates;
+    \item voltage and current limit/status indications;
+    \item storage and restoration of persistent settings;
+    \item communication-loss recovery;
+    \item repeated measurements to identify intermittent operation; and
+    \item automatic recording and reporting of system test results.
+\end{itemize}
+
+\subsubsection{Features Not Included in This Test}
+
+The system test is intended to verify the functional requirements of the prototype only. The following
+tests are therefore outside the scope of this system-level test plan:
+
+\begin{itemize}
+    \item EMC testing;
+    \item qualification tests for environmental temperature/humidity;
+    \item qualification tests for vibrations or mechanical shock;
+    \item qualification tests for life cycle/accelerated aging;
+    \item destructive overvoltage tests; and
+    \item destructive overcurrent tests.
+\end{itemize}
+
+
+\subsection{Test Equipment and Software}
+
+The following equipment and software will be used during system testing:
+
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{p{0.27\textwidth} p{0.63\textwidth}}
+    \toprule
+    \textbf{Equipment/Software} & \textbf{Purpose} \\
+    \midrule
+    \endfirsthead
+
+    \toprule
+    \textbf{Equipment/Software} & \textbf{Purpose} \\
+    \midrule
+    \endhead
+
+    Power supply monitor prototype &
+    Complete hardware and firmware system under test. \\
+
+    DC bench supplies &
+    Provide the six input rails required by the monitor. \\
+
+    Rigol DL3021 electronic load &
+    Provide programmable and repeatable loading of individual power rails. \\
+
+    Computer running EPICS IOC &
+    Receive voltage, current, and status information from the Arduino over Ethernet. \\
+
+    Phoebus/EPICS display &
+    Provide operator-level observation of process variables and system status. \\
+
+    Python scripts &
+    Control the electronic load, acquire EPICS values using PyEPICS, save raw
+    test data, and automate portions of the test sequence. \\
+
+    Ethernet network &
+    Provide communication between the Arduino and EPICS IOC. \\
+
+    \bottomrule
+\end{longtable}
+
+\subsection{Test Configuration}
+
+During testing, the assembled power supply monitor will be operated in its normal
+system configuration. All six monitored supplies will be connected to the appropriate
+monitoring inputs. The Arduino, GIGA Display Shield, custom monitoring hardware,
+and Ethernet interface will be powered and operating simultaneously.
+
+For measurements involving the programmable electronic load, only the rail under
+test will be connected to the electronic load. The remaining rails will remain
+energized so that the monitor continues operating as a complete system, and may or may not be connected across resistive loads.
+
+The electronic load measurement will provide the reference for both load voltage and current.
+
+\subsection{System Acceptance Criteria}
+
+The test is intended to establish whether the assembled prototype satisfies its
+functional requirements. The following system-level acceptance criteria will be used.
+
+\begin{longtable}{p{0.28\textwidth} p{0.62\textwidth}}
+    \toprule
+    \textbf{Parameter} & \textbf{Acceptance Criterion} \\
+    \midrule
+    \endfirsthead
+
+    \toprule
+    \textbf{Parameter} & \textbf{Acceptance Criterion} \\
+    \midrule
+    \endhead
+
+    System startup &
+    System initialization should not involve a firmware error or user action,
+    and all six rails should be shown. \\
+
+    Voltage measurement &
+    The monitor reading should match the external reference voltage within
+    \(\pm 2\%\) across the full tested operating range. \\
+
+    Current measurement &
+    Monitor reading should match the reference current within \(\pm 5\%\)
+    across the full intended operating range. In addition, the uncertainty and
+    resolution of the reference device should be considered at low currents. \\
+
+    Positive/negative rail determination &
+    Each measurement should use the correct polarity. The current in the negative
+    channel should follow the sign convention used in the firmware. \\
+
+    Display functionality &
+    The display should show the proper identification of the rail, along with
+    the rail voltage, current, and limits. \\
+
+    EPICS operation &
+    All process variables should communicate and report their status
+    without errors in normal operations. \\
+
+    Display and EPICS agreement &
+    Local and remote readings should be identical to the same underlying
+    measurement. Differences from rounding to integer in display are allowable. \\
+
+    Limit status &
+    Any programmed limit should change status as the corresponding measurement
+    crosses the limit and return to the normal status upon the measurement
+    returning to the allowable range. \\
+
+    Persistent configuration &
+    Any stored settings should be preserved after powering down and up the
+    system. \\
+
+    Network recovery &
+    After the restoration of Ethernet communication, EPICS should continue to
+    update without any firmware reprogramming. \\
+
+    Test data &
+    Each automatic test should yield a recorded raw-data file allowing for
+    test results reconstruction. \\
+
+    \bottomrule
+\end{longtable}
+
+The voltage and current accuracy requirements above are system-level requirements
+rather than component-level accuracy specifications. They include the combined effects
+of the sensor, shunt resistor, analog-to-digital conversion, calibration, wiring,
+firmware calculations, and reference-instrument uncertainty.
+\newpage
+\subsection{System Test Matrix}
+
+The system tests that are planned are listed in Table~\ref{tab:system-test-matrix} below.
+
+\newcommand{\testresult}[1]{%
+    \begin{tabular}[t]{@{}l@{}}
+        \CheckBox[name=#1-pass,width=1.1em,height=1.1em]{} Pass \\[0.25em]
+        \CheckBox[name=#1-fail,width=1.1em,height=1.1em]{} Fail \\[0.25em]
+        \CheckBox[name=#1-retest,width=1.1em,height=1.1em]{} Retest
+    \end{tabular}%
+}
+\begin{Form}
+
+    \begin{longtable}{
+            p{0.065\textwidth}
+            p{0.16\textwidth}
+            p{0.29\textwidth}
+            p{0.25\textwidth}
+            p{0.105\textwidth}
+        }
+        \caption{System Level Test Matrix}
+        \label{tab:system-test-matrix} \\
+
+        \toprule
+        \textbf{ID} &
+        \textbf{Test} &
+        \textbf{Method} &
+        \textbf{Pass Criterion} &
+        \textbf{Result} \\
+        \midrule
+        \endfirsthead
+
+        \toprule
+        \textbf{ID} &
+        \textbf{Test} &
+        \textbf{Method} &
+        \textbf{Pass Criterion} &
+        \textbf{Result} \\
+        \midrule
+        \endhead
+
+        ST-01 &
+        Power On and Initialization &
+        Apply power to the entire system and check the operation of Arduino, the local
+        display, the sensor channels and the network interface. &
+        The system initializes properly, all six channels are operational. &
+        \testresult{ST01} \\
+
+        \addlinespace[0.4em]
+
+        ST-02 &
+        Rail Identification &
+        Apply power to the six rails and correlate the displayed channel with the
+        corresponding input physical connection. &
+        The correct rail identification with the right polarity occurs. &
+        \testresult{ST02} \\
+
+        \addlinespace[0.4em]
+
+        ST-03 &
+        Voltage Accuracy &
+        Measure each rail using a DMM or the E-Load and compare the reference value
+        with the local and EPICS values at different operating points. &
+        The error is within the specified voltage tolerance. &
+        \testresult{ST03} \\
+
+        \addlinespace[0.4em]
+
+        ST-04 &
+        Current Accuracy &
+        Apply different loads to each rail using the programmable electronic load and
+        compare the reference current with the monitor measurement. &
+        The error is within the specified current tolerance. &
+        \testresult{ST04} \\
+
+        \addlinespace[0.4em]
+
+        ST-05 &
+        Dynamic Load Response &
+        Change the current of the electronic load while monitoring the local display
+        and EPICS values. &
+        The current and voltage readings change accordingly to the load change. &
+        \testresult{ST05} \\
+
+        \addlinespace[0.4em]
+
+        ST-06 &
+        Local Display &
+        Monitor voltage, current, rail identification and status of all channels. &
+        All necessary information is visible and correlates with the connected rail. &
+        \testresult{ST06} \\
+
+        \addlinespace[0.4em]
+
+        ST-07 &
+        EPICS Communications &
+        Run the IOC and check all voltage, current and status process variables. &
+        All necessary process variables are connected and updated properly. &
+        \testresult{ST07} \\
+
+        \addlinespace[0.4em]
+
+        ST-08 &
+        Limit / Alarm Operation &
+        Set a limit and change the current of the electronic load or supply until the
+        measured value reaches this limit. &
+        The proper limit indication is created and then is cleared when the value is
+        inside the limits. &
+        \testresult{ST08} \\
+
+        \addlinespace[0.4em]
+
+        ST-09 &
+        Persistent Settings &
+        Change some settings, cycle system power and check the value after the
+        power-up. &
+        The stored value is restored properly. &
+        \testresult{ST09} \\
+
+        \addlinespace[0.4em]
+
+        ST-10 &
+        Communication Recovery &
+        Disconnect Ethernet while the system is running and reconnect the network and
+        monitor the IOC. &
+        Monitoring on the local machine continues and communication recovers. &
+        \testresult{ST10} \\
+
+        \addlinespace[0.4em]
+
+        ST-11 &
+        Repeatability &
+        Make repeated measurements at selected points, including after power cycle. &
+        Measurement remains within the specified acceptance limits with no
+        intermittent failures of the channels. &
+        \testresult{ST11} \\
+
+        \addlinespace[0.4em]
+
+        ST-12 &
+        End-To-End Demonstration &
+        Run all parts of the system and demonstrate the operation of local and remote
+        monitoring by changing the load on the selected channel. &
+        All hardware, firmware, display, network, IOC and test software run
+        cooperatively with no system level failure. &
+        \testresult{ST12} \\
+
+        \bottomrule
+    \end{longtable}
+
+\end{Form}
+\newpage
+\subsection{Detailed Test Procedures}
+
+\subsubsection{ST-01: Power-On and Initialization}
+
+\begin{enumerate}
+    \item Inspect all power, sensor, display, and Ethernet connections.
+    \item Verify that the electronic load is disabled.
+    \item Energize the required monitored power supplies.
+    \item Apply power to the Arduino and monitoring electronics.
+    \item Observe the Arduino startup sequence.
+    \item Confirm that the GIGA Display initializes.
+    \item Confirm that all six expected rail channels are displayed.
+    \item Start or verify operation of the EPICS IOC.
+    \item Verify that the IOC establishes communication with the monitor.
+    \item Record any startup errors or unexpected behavior.
+\end{enumerate}
+
+The test passes when the complete system reaches its normal operating state without
+manual recovery, all six rail channels are present, and network communication can
+be established.
+
+\subsubsection{ST-03 and ST-04: Voltage and Current Measurement}
+
+Voltage and current accuracy testing will be performed for each of the six rails.
+Testing will be automated where practical to improve repeatability and preserve the
+raw test data.
+
+For each selected rail:
+
+\begin{enumerate}
+    \item Select the rail to be tested in the Python test program.
+    \item Verify the physical connection of the rail and electronic load.
+    \item Connect the DMM directly across the rail.
+    \item Set the electronic load to its initial test condition with the input disabled.
+    \item Enable the load.
+    \item Allow the readings to stabilize.
+    \item Record the DMM or E-Load reference voltage.
+    \item Record the electronic-load reference current.
+    \item Acquire the corresponding EPICS voltage and current values using PyEPICS.
+    \item Calculate the voltage and current measurement errors.
+    \item Repeat the measurement at several loads distributed throughout the intended
+    operating range of the rail.
+    \item Disable the load before changing connections.
+    \item Save all raw measurements to the test-data file.
+\end{enumerate}
+
+Voltage error will be calculated as
+
+\begin{equation}
+    \text{Voltage Error (\%)} =
+    \frac{V_{\text{monitor}}-V_{\text{reference}}}
+    {|V_{\text{reference}}|}
+    \times 100.
+\end{equation}
+
+Current error will be calculated as
+
+\begin{equation}
+    \text{Current Error (\%)} =
+    \frac{I_{\text{monitor}}-I_{\text{reference}}}
+    {|I_{\text{reference}}|}
+    \times 100.
+\end{equation}
+
+Absolute error will also be retained in the raw data. This is particularly important
+for low-current measurements where percentage error alone can become misleading.
+
+A rail passes when each required measurement point remains within the specified
+acceptance criteria. If a point fails, the rail may be retested after the cause of
+the failure is investigated. Original failed data will not be deleted when a retest
+is performed.
+
+\subsubsection{ST-07: EPICS Communication Test}
+
+\begin{enumerate}
+    \item Power the complete monitor and connect it to the Ethernet network.
+    \item Start the EPICS IOC.
+    \item Verify that the IOC connects to the Arduino TCP server.
+    \item Observe the voltage and current process variables for all six rails.
+    \item Compare the EPICS values with the local display.
+    \item Change the load on a selected rail.
+    \item Verify that the corresponding EPICS voltage and current values update.
+    \item Repeat the load change on at least one positive and one negative rail.
+\end{enumerate}
+
+The test passes when the required process variables remain connected, values change
+in response to the physical system, and EPICS and local-display values agree within
+their displayed resolution.
+
+\subsubsection{ST-08: Limit and Status Test}
+
+\begin{enumerate}
+    \item Select a rail for testing.
+    \item Record the existing voltage and current limit settings.
+    \item Configure a test limit that can be crossed safely without exceeding the
+    electrical rating of the hardware.
+    \item Operate the rail below the limit and verify that normal status is displayed.
+    \item Increase or decrease the applied load until the selected threshold is crossed.
+    \item Verify the local status indication.
+    \item Verify the corresponding EPICS status.
+    \item Return the measurement to the normal operating range.
+    \item Verify that the status returns to normal.
+    \item Restore the original limit setting.
+\end{enumerate}
+
+No test limit shall require the monitored supply, sensor, wiring, or electronic load
+to be operated outside its rated limits.
+
+\subsubsection{ST-09: Persistent Settings Test}
+
+\begin{enumerate}
+    \item Change one or more user-adjustable system settings to known values.
+    \item Verify that the settings are accepted by the firmware.
+    \item Remove power from the Arduino and monitor electronics.
+    \item Wait several seconds.
+    \item Restore power.
+    \item Allow the firmware to complete initialization.
+    \item Read the previously modified settings.
+    \item Compare the restored values with the values stored before power removal.
+\end{enumerate}
+
+The test passes when all settings intended to be persistent are restored without
+requiring Ethernet communication or manual re-entry.
+
+\subsubsection{ST-10: Communication-Loss and Recovery Test}
+
+\begin{enumerate}
+    \item Establish normal communication between the monitor and IOC.
+    \item Verify that EPICS values are updating.
+    \item Disconnect the Ethernet cable.
+    \item Verify that local monitoring and the GIGA Display continue operating.
+    \item Observe the IOC response to the communication failure.
+    \item Reconnect the Ethernet cable.
+    \item Verify that communication is re-established.
+    \item Confirm that the process variables resume updating with valid values.
+\end{enumerate}
+
+The system passes if the loss of Ethernet communication does not prevent local
+operation and normal EPICS communications resume after the network connection is
+restored.
+
+\subsection{Automated Test Data Collection}
+
+A Python test application will be used for measurement testing. The application
+interfaces with the Rigol DL3021 programmable electronic load and the EPICS IOC.
+EPICS Channel Access is performed using the PyEPICS library.
+
+The test operator may select an individual power rail instead of being required to
+test all six rails in a single session. This permits channels to be tested or
+retested at different times while retaining all results as part of the same system
+test campaign.
+
+For each test point, the following information will be retained when applicable:
+
+\begin{itemize}
+    \item test date and time;
+    \item rail identification;
+    \item test iteration;
+    \item electronic-load operating mode;
+    \item programmed load value;
+    \item reference voltage;
+    \item reference current;
+    \item EPICS voltage measurement;
+    \item EPICS current measurement;
+    \item absolute voltage error;
+    \item percentage voltage error;
+    \item absolute current error;
+    \item percentage current error;
+    \item applicable limits;
+    \item test result; and
+    \item operator notes.
+\end{itemize}
+
+Raw data will be preserved independently from the final report so that the report
+can be regenerated without repeating the physical test. After the required tests
+have been completed, the saved data will be processed using ReportLab to produce
+a final test report containing the recorded values and pass/fail results.
+
+\subsection{Test Execution and Result Classification}
+
+Each test will be assigned one of the following results:
+
+\begin{description}
+    \item[PASS:] The test was completed and all applicable acceptance criteria were met.
+    \item[FAIL:] The test was completed but one or more acceptance criteria were not met.
+    \item[INCOMPLETE:] The test could not be completed because of an unrelated equipment,
+    software, or setup problem.
+    \item[RETEST:] A previously failed or incomplete test was repeated following a
+    corrective action.
+\end{description}
+
+A failed test will not be deleted or overwritten following corrective action. The
+original result and subsequent retest will both be retained to provide traceability
+of the development process.
+
+\subsection{Suspension and Resumption Criteria}
+
+Testing will be immediately suspended if any of the following conditions occur:
+
+\begin{itemize}
+    \item unexpected overheating of a component or conductor;
+    \item evidence of a short circuit or incorrect wiring;
+    \item operation outside the rated voltage or current of the test equipment;
+    \item unstable or uncontrolled power-supply output;
+    \item a firmware condition that could apply an unintended load;
+    \item loss of isolation where isolation is required; or
+    \item any condition that could damage the prototype or test equipment.
+\end{itemize}
+
+Testing may resume after the cause has been identified, corrective action has been
+completed, and the affected portion of the system has been inspected or verified
+before power is reapplied.
+
+\subsection{Test Responsibilities}
+
+As the designer and developer of the capstone project, Mike Capotosto will serve as the
+primary test operator. Responsibilities include:
+
+\begin{itemize}
+    \item preparing and inspecting the test setup;
+    \item configuring the test equipment;
+    \item executing each test procedure;
+    \item recording results;
+    \item identifying and documenting failures;
+    \item making required corrections;
+    \item performing retests;
+    \item maintaining the raw test data; and
+    \item preparing the final test report and demonstration.
+\end{itemize}
+
+Where practical, automated data acquisition will be used to reduce transcription
+errors and improve repeatability.
+
+\subsection{Testing Risks and Contingencies}
+
+Several risks may affect system testing. Improper electronic-load connections,
+particularly when testing the negative supply rails, could damage the electronic
+load or power supply. Connections will therefore be verified before the load input
+is enabled.
+
+Network problems could also produce an apparent measurement failure when the actual
+sensor hardware is operating correctly. Local display values and direct instrument
+measurements will be used to distinguish a network or IOC problem from a hardware
+measurement problem.
+
+A failed sensor channel could prevent the complete six-channel system test from
+being performed. Because the test software allows individual rail selection, completed
+channel data can be retained while the affected channel is repaired and subsequently
+retested.
+
+Finally, automatic test software itself could introduce an error in the recorded
+results. Critical results will therefore be compared with the front-panel readings
+of the electronic load, local display, and EPICS interface during
+initial testing to confirm correct operation of the automation.
+
+\subsection{Test Deliverables}
+
+The completed system test will produce the following deliverables:
+
+\begin{itemize}
+    \item this system test plan;
+    \item saved raw test data;
+    \item automatically generated test report;
+    \item documentation of failed tests and corrective actions;
+    \item results of any required retests;
+    \item photographs of the final test configuration; and
+    \item video footage demonstrating selected system-level tests.
+\end{itemize}
+
+\subsection{Test Completion Criteria}
+
+System-level testing will be considered complete when:
+
+\begin{enumerate}
+    \item every test identified in Table~\ref{tab:system-test-matrix} has been executed;
+    \item each of the six rail channels has completed voltage and current verification;
+    \item all critical functional tests have received a PASS result;
+    \item any failed tests have been documented and either corrected and retested or
+    identified as known limitations;
+    \item raw test data has been preserved;
+    \item the final test report has been generated
+\end{enumerate}
+
+Successful completion of this test plan will demonstrate that the individual hardware
+and software portions developed throughout the project operate together as a complete
+power supply monitoring system.

@@ -22629,7 +22629,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "9de4e5d4-873b-4f55-a37c-70c088638c5c")
 		(property "Reference" "R101"

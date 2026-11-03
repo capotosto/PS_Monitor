@@ -1,3 +1,6 @@
 [submodule "external/Py_Instrument_Driver_Package"]
 	path = external/Py_Instrument_Driver_Package
 	url = https://github.com/capotosto/Py_Instrument_Driver_Package.git
+[submodule "FunctionalTests/Py_Instrument_Driver_Package"]
+	path = FunctionalTests/Py_Instrument_Driver_Package
+	url = https://github.com/capotosto/Py_Instrument_Driver_Package.git

@@ -26,6 +26,10 @@ uint32_t lastDisplayMs = 0;
 void setup() {
   Serial.begin(115200);
 
+  Serial.begin(115200);
+
+  delay(10000);
+
   const uint32_t serialWaitStart = millis();
   while (!Serial && millis() - serialWaitStart < 1500) {
     delay(10);

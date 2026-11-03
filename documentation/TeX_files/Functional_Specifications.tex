@@ -1,0 +1,32 @@
+% !TeX root = ../main.tex
+\chapter{Functional Specifications}
+\label{app:functional_specs}
+The functional specifications used for the design are summarized in
+Table~\ref{tab:functional-specifications}. These values define the intended
+operating envelope of the prototype and establish the quantities that must be
+checked during circuit analysis and later verification testing.
+
+\begin{table}[H]
+    \centering
+    \caption{Functional specifications.}
+    \label{tab:functional-specifications}
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.27\textwidth}X}
+        \toprule
+        \textbf{Function} & \textbf{Specification} \\
+        \midrule
+        Monitored rails & +5 V A, +5 V B, +5 V, -5 V, +15 V, and -15 V \\
+        Number of channels & Six independent voltage/current measurement channels \\
+        +5 V A/B current range & 0 to 2 A design range per rail \\
+        +5 V, -5 V, +15 V, -15 V current range & 0 to 1 A design range per rail \\
+        Voltage measurement resolution & 25 mV/LSB nominal using the LTC2945 rail-voltage ADC \\
+        Current-sense resolution & 25 \(\mu\)V/LSB across the selected shunt resistor; approximately 0.641 mA/LSB with 39 m\(\Omega\) and 0.500 mA/LSB with 50 m\(\Omega\) \\
+        Isolation & Independent digital isolation for every floating monitor channel \\
+        Alarm processing & User-configurable upper/lower voltage and current limits with local and EPICS status indication \\
+        Fault handling & Detect failed I\textsuperscript{2}C transactions and prevent invalid data from being treated as a valid measurement \\
+        Local interface & GIGA Display Shield showing voltage, current, alarm state, communication state, and configured limits \\
+        Network interface & Ethernet PSC server for EPICS IOC communication plus browser-based configuration/monitoring services \\
+        Configuration retention & Network parameters and alarm limits stored in nonvolatile memory \\
+        Controller logic level & 3.3 V; external interfaces must not exceed the GIGA I/O limits \\
+        \bottomrule
+    \end{tabularx}
+\end{table}

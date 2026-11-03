@@ -1,0 +1,74 @@
+% !TeX root = ../main.tex
+\chapter{Potential Social, Ethical, Legal, and Environmental Impacts of the Project}
+\label{ch:impacts}
+
+\section{Societal Impact}
+
+The principal societal impact of the monitoring system is the improved data availability. The six isolated power supplies that would otherwise have to be monitored individually can now be measured from one local display and from the EPICS
+control system. Abnormal voltage, current, or communication conditions can be detected faster. In a laboratory or industrial setting, this can reduce troubleshooting time and help to avoid operation of the equipment with a power supply failure.
+
+There is also a obligation associated with presenting measurements to an
+operator. Erroneous data can be more problematic than unavailable data if an operator
+believes that a failed measurement is a good one. For this reason, communication failure
+detection was included in the design. The firmware distinguishes an failed or
+offline sensor from a legitimate zero measurement, and presents the communication state together with the measured values. This was an important design decision
+since the monitor is meant to present information which an operator can rely on for making maintenance and operational decisions.
+
+\section{Global Impact}
+
+The design is dependent on a global electronics supply chain. ICs, passive components, PCB fabrication, and commercial Arduino modules can be manufactured in several different countries even when they are supplied through United States distributors. This gives access to a wide range of
+components and lower manufacturing costs, but at the same time creates risks associated with component availability, obsolescence, shipping disruptions, and
+supplier dependence.
+
+The design mitigates some of these risks through the use of standard component
+packages, conventional PCB assembly, repetitive circuit blocks, and standard interfaces such as I\textsuperscript{2}C and Ethernet. makes qualification of replacement components or alternate manufacturing sources much easier than it would be with highly proprietary hardware.
+
+Global sourcing creates an ethical obligation that is not completely covered by component price and technical performance. For a production version of the monitor, the selection of a supplier should also include consideration of responsible labor practices, material sourcing, regulatory compliance, and traceability of the supplier. These considerations considerations would become increasingly important for large scale production of the design.
+
+\section{Legal and Regulatory Impact}
+
+This project is an engineering prototype and can't be considered to have any system-level regulatory approval solely because individual components
+carry approvals or compliance markings. If the monitor were converted into a commercial product, the required regulatory evaluation would depend on the installation, enclosure, power source, network interfaces, and markets
+in which it would be sold.
+
+For example, no attention was paid to RoHS compliance, as the boards are intentionally assembled with leaded solder, so leaded HASL or ENIG were both acceptable ordering options. Use of the monitor with leaded solder however, would be an issue for many markets with RoHS mandates.
+
+EMC, product-safety, and radio-frequency requirements would also have to be identified for the final installation before the production product could be offered for sale. EMC lab compliance testing can be extremely expensive.
+
+The distinction between component compliance and system compliance is therefore important. The design can take advantage of the recognized components and accepted engineering practice without implying any approval not obtained for the finished assembly. This can most easily be related to the idea of "UL Listed" and "UL Registered" (UL vs UR labels) - UL listed components are certified on their own standing, but UR components need to be certified in the installation, and are only a recognized component of a system.
+
+\section{Ethical Impact}
+
+The first ethical obligation associated with the monitor is the accurate and
+unambiguous presentation of the measured information. The system should not hide
+sensor failures or substitute erroneous data with apparently valid measurements. The implemented communication failure detection, alarm indication, and separate sensor failure reporting were included partly for this reason.
+
+The next consideration is network security. The current HTTP and PSC interfaces
+are designed for use in a controlled local network. They do not have security features necessary to be connected to an untrusted network. If the design were deployed in an unprotected network, additional requirements for authentication, access control, encryption, network segmentation, and configuration management should be dfined. Any possibility of unauthorized modification of alarm limits or the network configuration would undermine the reliability of the monitoring system, even if the measurement hardware would continue operating properly.
+
+Ethical considerations also also relevant to procurement. Cost and availability are important engineering considerations, but they should not be the only criteria for selecting a production supplier. Labor practices, material sourcing, counterfeit parts risk, and the ability to provide traceable parts are also appropriate considerations for a product moving from prototype quantities into
+production.
+
+\section{Environmental Impact}
+
+The main environmental impacts of the monitor come from PCB fabrication,
+semiconductor manufacturing, raw-materials, transportation, electricity consumption, and eventual electronic waste. It's impossible to make a design with zero environmental impact, but some aspects of this design reduce the quantity of hardware that would need to be disposed of during the useful service life of the product.
+
+The Sensor Board, Arduino Shield, Arduino GIGA, display, and other major
+assemblies are separable. Therefore, a failed subsystem can therefore be repaired or replaced independent of the complete monitoring system. Standard component
+packages and commercially available modules were preferred where possible, and this increases the probability of replacement of an individual component. Alarm limits and network configuration are stored in software which allows changing the configuration without producing a new PCB.
+
+For production quantities, RoHS-compliant
+components should be used where possible. The end-of-life plan should include recovery or recycling of the electronic assemblies. These considerations align with RoHS and WEEE requirements to
+encourage collection, reuse, recovery, and recycling of electronic equipment.
+
+\section{Relationship to the Original Requirements}
+
+Several of the societal and ethical considerations described above were indirectly represented in the original requirements definition. Electrical
+isolation was explicitly required to allow the monitoring of one rail would not defeat the isolation of the other. The communication fault detection was required to ensure erroneous data would not be interpreted as a valid electrical measurement. User-configurable alarm limits, local status indication, EPICS monitoring, and
+persistent configuration storage were also included as functional requirements. These requirements increase the reliability, maintainability, and the quality of the
+information presented to the operator.
+
+Environmental considerations were introduced later in the design through
+serviceability, component reuse, and the use of common parts. Regulatory certification, ethical supplier selection, and cybersecurity requirements were not among major items in the original requirements
+definition. If the prototype were developed into a production product, these aspects should be transformed into explicit requirements with acceptance criteria.

@@ -1,0 +1,766 @@
+/*Embedded HTTP configuration and monitoring interface.
+
+  This module provides a webpage served directly by the
+  Arduino GIGA over Ethernet.
+
+  Supported functions:
+    - display live voltage/current measurements for all channels
+    - show alarm and sensor communication status
+    - modify voltage/current alarm limits
+    - modify static network configuration
+    - persist accepted configuration changes to internal QSPI flash
+    - synchronize changed alarm limits with the PSC/EPICS interface*/
+#include "HttpDashboard.h"
+
+#include <Arduino.h>
+//#include <Ethernet.h>
+#include <Ethernet_Generic.hpp>
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "AppConfig.h"
+#include "AppState.h"
+#include "PersistentStorage.h"
+#include "PscProtocol.h"
+#include "EthernetServices.h"
+
+namespace {
+EthernetServer httpServer(HTTP_PORT);
+}
+
+void initializeHttpServer() {
+  httpServer.begin();
+}
+
+/*Read one line from the client.
+
+  Reading stops when:
+    - a newline is received,
+    - the client disconnects, or
+    - timeoutMs expires.
+
+  Carriage returns are discarded and input is capped at maxLength to prevent
+  an unexpectedly long request line or header from consuming excessive RAM.*/
+String readHttpLine(EthernetClient &client, uint32_t timeoutMs, size_t maxLength) {
+  String line;
+  line.reserve(maxLength);
+
+  const uint32_t start = millis();
+
+  while (client.connected() && (millis() - start < timeoutMs)) {
+    while (client.available()) {
+      const char c = static_cast<char>(client.read());
+
+      if (c == '\n') {
+        return line;
+      }
+
+      if (c != '\r' && line.length() < maxLength) {
+        line += c;
+      }
+    }
+  }
+
+  return line;
+}
+
+/*Ignore HTTP request headers until the required blank line is
+  reached. The 30-line limit prevents a malformed client from keeping the
+  embedded server occupied indefinitely.*/
+void discardHttpHeaders(EthernetClient &client) {
+  for (uint8_t i = 0; i < 30; ++i) {
+    String line = readHttpLine(client, 300, 255);
+
+    if (line.length() == 0) {
+      break;
+    }
+  }
+}
+
+
+/*
+  Minimal HTTP response helpers used by the dashboard endpoints.
+
+  Responses disable caching so measurements/configuration shown by the
+  browser reflect the current controller state.
+*/
+
+void sendHttpHeader(
+  EthernetClient &client,
+  const char *status,
+  const char *contentType
+) {
+  client.print(F("HTTP/1.1 "));
+  client.println(status);
+  client.print(F("Content-Type: "));
+  client.println(contentType);
+  client.println(F("Cache-Control: no-store"));
+  client.println(F("Access-Control-Allow-Origin: *"));
+  client.println(F("Connection: close"));
+  client.println();
+}
+
+void sendRedirectToDashboard(EthernetClient &client) {
+  client.println(F("HTTP/1.1 303 See Other"));
+  client.println(F("Location: /"));
+  client.println(F("Cache-Control: no-store"));
+  client.println(F("Connection: close"));
+  client.println();
+}
+
+void sendBadRequest(EthernetClient &client, const char *message) {
+  sendHttpHeader(client, "400 Bad Request", "text/plain; charset=utf-8");
+  client.println(message);
+}
+
+void sendNotFound(EthernetClient &client) {
+  sendHttpHeader(client, "404 Not Found", "text/plain; charset=utf-8");
+  client.println(F("Not found"));
+}
+
+/*Locate a query-string parameter in the request target.
+  Example:
+    /api/limits?ch=1&vlow=4.5
+
+    key "vlow" returns "4.5"*/
+bool getQueryParameter(
+  const String &target,
+  const char *key,
+  String &value
+) {
+  const int questionMark = target.indexOf('?');
+
+  if (questionMark < 0) {
+    return false;
+  }
+
+  int start = questionMark + 1;
+
+  while (start < static_cast<int>(target.length())) {
+    int end = target.indexOf('&', start);
+
+    if (end < 0) {
+      end = target.length();
+    }
+
+    const String pair = target.substring(start, end);
+    const int equals = pair.indexOf('=');
+
+    if (equals > 0 && pair.substring(0, equals) == key) {
+      value = pair.substring(equals + 1);
+      return true;
+    }
+
+    start = end + 1;
+  }
+
+  return false;
+}
+
+bool parseStrictFloat(const String &text, float &value) {
+  if (text.length() == 0) {
+    return false;
+  }
+
+  char *endPointer = nullptr;
+  value = strtof(text.c_str(), &endPointer);
+
+  return endPointer != text.c_str() &&
+         *endPointer == '\0' &&
+         isfinite(value);
+}
+
+bool parseStrictInt(const String &text, int &value) {
+  if (text.length() == 0) {
+    return false;
+  }
+
+  char *endPointer = nullptr;
+  const long parsed = strtol(text.c_str(), &endPointer, 10);
+
+  if (endPointer == text.c_str() || *endPointer != '\0') {
+    return false;
+  }
+
+  value = static_cast<int>(parsed);
+  return true;
+}
+
+bool parseIpv4Address(
+  const String &text,
+  uint8_t address[4]
+) {
+  int values[4];
+  char trailingCharacter = '\0';
+
+  const int fields = sscanf(
+    text.c_str(),
+    "%d.%d.%d.%d%c",
+    &values[0],
+    &values[1],
+    &values[2],
+    &values[3],
+    &trailingCharacter
+  );
+
+  if (fields != 4) {
+    return false;
+  }
+
+  for (uint8_t i = 0; i < 4; ++i) {
+    if (values[i] < 0 || values[i] > 255) {
+      return false;
+    }
+
+    address[i] = static_cast<uint8_t>(values[i]);
+  }
+
+  return true;
+}
+
+void formatIpv4Address(
+  const uint8_t address[4],
+  char *buffer,
+  size_t bufferSize
+) {
+  snprintf(
+    buffer,
+    bufferSize,
+    "%u.%u.%u.%u",
+    address[0],
+    address[1],
+    address[2],
+    address[3]
+  );
+}
+
+/*Validate and store a network-configuration request from the web interface.
+
+  Required query parameters:
+    ip      - device IPv4 address
+    dns     - DNS server; 0.0.0.0 is allowed
+    gateway - default gateway; 0.0.0.0 is allowed
+    subnet  - contiguous IPv4 subnet mask
+
+  The requested values are parsed and validated before modifying the live
+  configuration structure.
+
+  The previous configuration is retained until the new values are
+  successfully written to flash. If the flash write fails,
+  the in-memory values are rolled back.
+
+  A successful change sets networkRestartRequired because the Ethernet
+  interface continues using its current address until reset/power-cycle.*/
+bool updateNetworkFromRequest(
+  const String &target,
+  char *errorMessage,
+  size_t errorMessageSize
+) {
+  String ipText;
+  String dnsText;
+  String gatewayText;
+  String subnetText;
+
+  if (!getQueryParameter(target, "ip", ipText) ||
+      !getQueryParameter(target, "dns", dnsText) ||
+      !getQueryParameter(target, "gateway", gatewayText) ||
+      !getQueryParameter(target, "subnet", subnetText)) {
+    snprintf(
+      errorMessage,
+      errorMessageSize,
+      "Required parameters: ip, dns, gateway, subnet"
+    );
+    return false;
+  }
+
+  NetworkSettings requestedSettings;
+
+  if (!parseIpv4Address(ipText, requestedSettings.ip) ||
+      !parseIpv4Address(dnsText, requestedSettings.dns) ||
+      !parseIpv4Address(gatewayText, requestedSettings.gateway) ||
+      !parseIpv4Address(subnetText, requestedSettings.subnet)) {
+    snprintf(
+      errorMessage,
+      errorMessageSize,
+      "Enter each address in dotted-decimal form"
+    );
+    return false;
+  }
+
+  if (!hostAddressIsValid(requestedSettings.ip)) {
+    snprintf(errorMessage, errorMessageSize, "Invalid device IP address");
+    return false;
+  }
+
+  if (!optionalHostAddressIsValid(requestedSettings.dns)) {
+    snprintf(errorMessage, errorMessageSize, "Invalid DNS address");
+    return false;
+  }
+
+  if (!optionalHostAddressIsValid(requestedSettings.gateway)) {
+    snprintf(errorMessage, errorMessageSize, "Invalid gateway address");
+    return false;
+  }
+
+  if (!subnetMaskIsValid(requestedSettings.subnet)) {
+    snprintf(errorMessage, errorMessageSize, "Invalid subnet mask");
+    return false;
+  }
+
+  const NetworkSettings previousSettings = networkSettings;
+  networkSettings = requestedSettings;
+
+  if (!savePersistentSettings()) {
+    networkSettings = previousSettings;
+
+    snprintf(
+      errorMessage,
+      errorMessageSize,
+      "Persistent storage write failed; network was not changed"
+    );
+    return false;
+  }
+
+  networkRestartRequired = true;
+  return true;
+}
+
+/*Validate and apply alarm-limit update from the dashboard.
+
+  Expected parameters:
+    ch    - channel number, 1 through CHANNEL_COUNT
+    vlow  - lower voltage alarm threshold
+    vhigh - upper voltage alarm threshold
+    ilow  - lower current alarm threshold
+    ihigh - upper current alarm threshold
+
+  Lower limits must remain below their corresponding upper limits.
+
+  The previous limits are saved before modification. If flash write
+  fails, the old values and alarm state are restored.
+
+  After a successful update, the new limits and alarm state are immediately
+  published to the connected PSC/EPICS client so the browser, controller,
+  and IOC remain synchronized.*/
+bool updateLimitsFromRequest(
+  const String &target,
+  char *errorMessage,
+  size_t errorMessageSize
+) {
+  String channelText;
+  String voltageLowText;
+  String voltageHighText;
+  String currentLowText;
+  String currentHighText;
+
+  if (!getQueryParameter(target, "ch", channelText) ||
+      !getQueryParameter(target, "vlow", voltageLowText) ||
+      !getQueryParameter(target, "vhigh", voltageHighText) ||
+      !getQueryParameter(target, "ilow", currentLowText) ||
+      !getQueryParameter(target, "ihigh", currentHighText)) {
+    snprintf(
+      errorMessage,
+      errorMessageSize,
+      "Required parameters: ch, vlow, vhigh, ilow, ihigh"
+    );
+    return false;
+  }
+
+  int channelNumber = 0;
+  float voltageLow = 0.0f;
+  float voltageHigh = 0.0f;
+  float currentLow = 0.0f;
+  float currentHigh = 0.0f;
+
+  if (!parseStrictInt(channelText, channelNumber) ||
+      !parseStrictFloat(voltageLowText, voltageLow) ||
+      !parseStrictFloat(voltageHighText, voltageHigh) ||
+      !parseStrictFloat(currentLowText, currentLow) ||
+      !parseStrictFloat(currentHighText, currentHigh)) {
+    snprintf(errorMessage, errorMessageSize, "One or more values are invalid");
+    return false;
+  }
+
+  if (channelNumber < 1 || channelNumber > CHANNEL_COUNT) {
+    snprintf(errorMessage, errorMessageSize, "Channel must be 1 through 6");
+    return false;
+  }
+
+  if (!(voltageLow < voltageHigh)) {
+    snprintf(errorMessage, errorMessageSize, "vlow must be less than vhigh");
+    return false;
+  }
+
+  if (!(currentLow < currentHigh)) {
+    snprintf(errorMessage, errorMessageSize, "ilow must be less than ihigh");
+    return false;
+  }
+
+  MonitorChannel &channel = channels[channelNumber - 1];
+  const AlarmLimits previousLimits = channel.limits;
+
+  channel.limits.voltageLow = voltageLow;
+  channel.limits.voltageHigh = voltageHigh;
+  channel.limits.currentLow = currentLow;
+  channel.limits.currentHigh = currentHigh;
+
+  updateAlarmState(channel);
+
+  if (!savePersistentSettings()) {
+    channel.limits = previousLimits;
+    updateAlarmState(channel);
+
+    snprintf(
+      errorMessage,
+      errorMessageSize,
+      "Persistent storage write failed; limits were not changed"
+    );
+    return false;
+  }
+
+  sendPscLimits();
+  sendPscAlarms();
+  sendPscChannelSetpointEchoes(channelNumber - 1);
+  return true;
+}
+
+void printHtmlFloatInput(
+  EthernetClient &client,
+  const char *formId,
+  const char *name,
+  float value
+) {
+  client.print(F("<input type='number' step='0.001' form='"));
+  client.print(formId);
+  client.print(F("' name='"));
+  client.print(name);
+  client.print(F("' value='"));
+  client.print(value, 3);
+  client.print(F("' required>"));
+}
+
+void printHtmlIpInput(
+  EthernetClient &client,
+  const char *name,
+  const uint8_t address[4]
+) {
+  char addressText[20];
+  formatIpv4Address(address, addressText, sizeof(addressText));
+
+  client.print(F("<input class='ipinput' type='text' name='"));
+  client.print(name);
+  client.print(F("' value='"));
+  client.print(addressText);
+  client.print(
+    F("' inputmode='decimal' pattern='[0-9]{1,3}(\\.[0-9]{1,3}){3}' required>")
+  );
+}
+
+/*Display confirmation after network settings have been stored.
+
+  The page explicitly tells the user to reset or power-cycle the controller before
+  reconnecting at the new address.*/
+void sendNetworkSavedPage(EthernetClient &client) {
+  char newIp[20];
+  formatIpv4Address(networkSettings.ip, newIp, sizeof(newIp));
+
+  sendHttpHeader(client, "200 OK", "text/html; charset=utf-8");
+
+  client.println(F(
+    "<!doctype html><html><head><meta charset='utf-8'>"
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+    "<title>Network settings saved</title>"
+    "<style>"
+    "body{font-family:Arial,sans-serif;background:#101820;color:#eef4f8;margin:32px}"
+    "a{color:#67c7ff}code{background:#243342;padding:4px 6px}"
+    "</style></head><body>"
+    "<h1>Network settings saved</h1>"
+    "<p>The GIGA is still using its old address for this session.</p>"
+    "<p>Reset or power-cycle the board, then open:</p><p><code>http://"
+  ));
+  client.print(newIp);
+  client.println(F(
+    "/</code></p>"
+    "<p>Use the reset button or cycle power after this page finishes loading.</p>"
+    "<p><a href='/'>Return to the current dashboard</a></p>"
+    "</body></html>"
+  ));
+}
+
+/*Generate the complete monitoring/configuration dashboard.
+
+  The page displays:
+    - live voltage and current for every rail
+    - OK/alarm/I2C-error state
+    - editable voltage and current alarm limits
+    - current PSC/EPICS connection state
+    - current static network configuration
+    - persistent-storage status
+    - reset-required warning after a network change
+
+  Each channel uses its own form so a single set of limits can be submitted
+  without modifying the other channels.
+
+  Invalid sensor readings are displayed as "---" rather than zero so a
+  communication failure cannot be mistaken for a real electrical value.*/
+void sendDashboard(EthernetClient &client) {
+  sendHttpHeader(client, "200 OK", "text/html; charset=utf-8");
+
+  client.println(F(
+    "<!doctype html><html><head>"
+    "<meta charset='utf-8'>"
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+    "<title>GIGA Multi-Rail Monitor</title>"
+    "<style>"
+    "body{font-family:Arial,sans-serif;background:#101820;color:#eef4f8;margin:24px}"
+    "h1{margin-bottom:4px}"
+    "a{color:#67c7ff}"
+    "table{border-collapse:collapse;width:100%;max-width:1200px;background:#1e2b38}"
+    "th,td{border:1px solid #526579;padding:8px;text-align:center}"
+    "th{background:#26394b}"
+    "tr.alarm{background:#551f26}"
+    "tr.ok{background:#20372d}"
+    "input{width:80px;padding:5px;background:#f7fafc;border:1px solid #9aabba}""input.ipinput{width:132px}"".network{max-width:900px;background:#1e2b38;border:1px solid #526579;padding:16px;margin:18px 0}"".network label{display:inline-block;margin:6px 12px 6px 0}"
+    "button{padding:7px 12px;font-weight:bold}"
+    "code{background:#243342;padding:3px 5px}"
+    ".small{color:#b5c5d4;font-size:.9rem}"
+    "</style></head><body>"
+  ));
+
+  client.println(F("<h1>Arduino GIGA Multi-Rail Monitor</h1>"));
+  client.print(F("<p class='small'>Live LTC2945 measurements. Alarm limits are "));
+  client.print(
+    settingsStorageReady
+      ? F("saved in internal QSPI flash.")
+      : F("not persistent because storage is unavailable.")
+  );
+  client.println(F("</p>"));
+  client.print(F("<p class='small'>PSCDriver endpoint: <code>"));
+  client.print(getEthernetLocalIP());
+  client.print(F(":"));
+  client.print(PSC_PORT);
+  client.print(F("</code> &mdash; "));
+  client.print(pscIsConnected() ? F("IOC connected") : F("waiting for IOC"));
+  client.println(F("</p>"));
+
+  for (uint8_t i = 0; i < CHANNEL_COUNT; ++i) {
+    client.print(F("<form id='limitForm"));
+    client.print(i + 1);
+    client.println(F("' method='get' action='/api/limits'></form>"));
+  }
+
+  client.println(F(
+    "<table><thead><tr>"
+    "<th>Channel</th><th>Voltage</th><th>Current</th><th>State</th>"
+    "<th>V low</th><th>V high</th><th>I low</th><th>I high</th><th>Apply</th>"
+    "</tr></thead><tbody>"
+  ));
+
+  for (uint8_t i = 0; i < CHANNEL_COUNT; ++i) {
+    const MonitorChannel &channel = channels[i];
+    char formId[20];
+    snprintf(formId, sizeof(formId), "limitForm%u", i + 1);
+
+    client.print(F("<tr class='"));
+    client.print(channelIsInAlarm(channel) ? F("alarm") : F("ok"));
+    client.print(F("'>"));
+
+    client.print(F("<td><strong>"));
+    client.print(channel.name);
+    client.print(F("</strong><input type='hidden' form='"));
+    client.print(formId);
+    client.print(F("' name='ch' value='"));
+    client.print(i + 1);
+    client.println(F("'></td>"));
+
+    client.print(F("<td>"));
+    if (channel.readingValid) {
+      client.print(channel.voltage, 3);
+      client.print(F(" V"));
+    } else {
+      client.print(F("---"));
+    }
+    client.println(F("</td>"));
+
+    client.print(F("<td>"));
+    if (channel.readingValid) {
+      client.print(channel.current, 3);
+      client.print(F(" A"));
+    } else {
+      client.print(F("---"));
+    }
+    client.println(F("</td>"));
+
+    client.print(F("<td>"));
+    if (!channel.sensorOnline) {
+      client.print(F("I2C ERROR 0x"));
+      client.print(channel.sensorError, HEX);
+    } else {
+      client.print(channelIsInAlarm(channel) ? F("ALARM") : F("OK"));
+    }
+    client.println(F("</td>"));
+
+    client.print(F("<td>"));
+    printHtmlFloatInput(client, formId, "vlow", channel.limits.voltageLow);
+    client.println(F("</td>"));
+
+    client.print(F("<td>"));
+    printHtmlFloatInput(client, formId, "vhigh", channel.limits.voltageHigh);
+    client.println(F("</td>"));
+
+    client.print(F("<td>"));
+    printHtmlFloatInput(client, formId, "ilow", channel.limits.currentLow);
+    client.println(F("</td>"));
+
+    client.print(F("<td>"));
+    printHtmlFloatInput(client, formId, "ihigh", channel.limits.currentHigh);
+    client.println(F("</td>"));
+
+    client.print(F("<td><button type='submit' form='"));
+    client.print(formId);
+    client.println(F("'>Set</button></td>"));
+    client.println(F("</tr>"));
+  }
+
+  client.println(F("</tbody></table>"));
+  
+  client.println(F(
+    "<div class='network'><h2>Network settings</h2>"
+    "<p class='small'>Changes are stored immediately and applied after reset.</p>"
+    "<form method='get' action='/api/network'>"
+  ));
+
+  client.print(F("<label>IP address<br>"));
+  printHtmlIpInput(client, "ip", networkSettings.ip);
+  client.println(F("</label>"));
+
+  client.print(F("<label>Gateway<br>"));
+  printHtmlIpInput(client, "gateway", networkSettings.gateway);
+  client.println(F("</label>"));
+
+  client.print(F("<label>Subnet mask<br>"));
+  printHtmlIpInput(client, "subnet", networkSettings.subnet);
+  client.println(F("</label>"));
+
+  client.print(F("<label>DNS server<br>"));
+  printHtmlIpInput(client, "dns", networkSettings.dns);
+  client.println(F("</label>"));
+
+  client.println(F(
+    "<br><button type='submit'>Save network settings</button>"
+    "</form>"
+  ));
+
+  if (networkRestartRequired) {
+    client.println(F(
+      "<p><strong>Reset required:</strong> saved network settings differ "
+      "from the address currently in use.</p>"
+    ));
+  }
+
+  client.println(F(
+    "<p class='small'>A wrong but valid address can make this page unreachable. "
+    "Recovery: set <code>FORCE_COMPILED_NETWORK_ON_BOOT</code> to "
+    "<code>true</code> and upload over USB.</p></div>"
+  ));
+
+  client.println(F("</body></html>"));
+}
+
+/*Parse and dispatch one HTTP request.
+
+  Supported routes:
+    GET /                  - monitoring/configuration dashboard
+    GET /api/network?...   - validate and store network settings
+    GET /api/limits?...    - validate and store one channel's alarm limits
+
+  Any non-GET method returns HTTP 405.
+  Unknown paths return HTTP 404.
+  Invalid submitted values return HTTP 400 with a diagnostic message.*/
+void handleHttpRequest(EthernetClient &client, const String &requestLine) {
+  const int firstSpace = requestLine.indexOf(' ');
+  const int secondSpace = requestLine.indexOf(' ', firstSpace + 1);
+
+  if (firstSpace < 0 || secondSpace < 0) {
+    sendBadRequest(client, "Malformed HTTP request line");
+    return;
+  }
+
+  const String method = requestLine.substring(0, firstSpace);
+  const String target = requestLine.substring(firstSpace + 1, secondSpace);
+
+  if (method != "GET") {
+    sendHttpHeader(client, "405 Method Not Allowed", "text/plain; charset=utf-8");
+    client.println(F("Only GET is supported"));
+    return;
+  }
+
+  if (target == "/" || target.startsWith("/?")) {
+    sendDashboard(client);
+    return;
+  }
+
+  if (target.startsWith("/api/network?")) {
+    char errorMessage[128];
+
+    if (!updateNetworkFromRequest(
+          target,
+          errorMessage,
+          sizeof(errorMessage)
+        )) {
+      sendBadRequest(client, errorMessage);
+      return;
+    }
+
+    sendNetworkSavedPage(client);
+    return;
+  }
+
+  if (target.startsWith("/api/limits?")) {
+    char errorMessage[96];
+
+    if (!updateLimitsFromRequest(target, errorMessage, sizeof(errorMessage))) {
+      sendBadRequest(client, errorMessage);
+      return;
+    }
+
+    sendRedirectToDashboard(client);
+    return;
+  }
+
+  sendNotFound(client);
+}
+
+/*Service one pending HTTP connection.
+
+  This routine is called repeatedly from the main application loop. It
+  accepts a client, reads the request line and headers, dispatches the
+  request, then closes the connection.
+
+  The implementation intentionally uses short-lived HTTP/1.1 connections
+  rather than keeping browser connections open, which keeps the embedded
+  server simple and prevents it from monopolizing the main control loop.*/
+void serviceHttp() {
+  if (!ethernetHardwarePresent) {
+    return;
+  }
+
+  EthernetClient client = httpServer.available();
+
+  if (!client) {
+    return;
+  }
+
+  const String requestLine = readHttpLine(client, 500, 300);
+  discardHttpHeaders(client);
+
+  if (requestLine.length() > 0) {
+    Serial.println(requestLine);
+    handleHttpRequest(client, requestLine);
+  }
+
+  delay(1);
+  client.stop();
+}

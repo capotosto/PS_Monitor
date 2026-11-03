@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 17,
+    "active_layer": 2,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_netclasses": [],
@@ -50,8 +50,8 @@
       "conflict_shadows",
       "shapes"
     ],
-    "visible_layers": "ffffffff_ffffffff_aaaaaaaa_aaaaaaee",
-    "zone_display_mode": 0
+    "visible_layers": "ffffffff_ffffffff_aaaaaaaa_aaaaaaef",
+    "zone_display_mode": 1
   },
   "git": {
     "repo_type": "",
@@ -103,7 +103,7 @@
       91,
       91,
       91,
-      174
+      236
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
